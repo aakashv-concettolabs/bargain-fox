@@ -1,0 +1,39 @@
+.deal-main{
+    .deal{
+        font-size: 26px;
+    }
+    .nav-link{
+        color: #ff7900;
+    }
+}
+
+@media (max-width: 1200px){
+    .deal-main{
+        .deal {
+            font-size: 22px;
+        }
+        .nav-link{
+            font-size: 14px;
+        }
+    }
+}
+
+@media (max-width: 992px){
+    
+}
+
+@media (max-width: 768px){
+    .deal-main{
+        .deal {
+            font-size: 20px;
+        }
+        .nav-link{
+            font-size: 12px;
+        }
+    }
+}
+
+@media (max-width: 576px){
+   
+
+}
