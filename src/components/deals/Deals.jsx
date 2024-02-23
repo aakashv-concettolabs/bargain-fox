@@ -5,12 +5,44 @@ import casualShoes from "../../assets/casualShoe.png";
 import runningShoes from "../../assets/running.png";
 import sunglasses from "../../assets/sunglasses.png";
 import jwellery from "../../assets/jwellery.png";
+import Slider from "react-slick";
 
 import { Col, Container, Nav, Row } from "react-bootstrap";
 import "./deals.scss";
 import DealCard from "../dealCard/DealCard";
 
 const Deals = () => {
+  var settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 6,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+    ],
+  };
+
   return (
     <Container className="my-5 deal-main">
       <Row>
@@ -35,50 +67,56 @@ const Deals = () => {
         </Col>
       </Row>
 
-      <Row>
-        <Col className="col-12 p-0 col-md-10 offset-md-1">
-          <Row className="d-flex">
+      <Row className="mt-5">
+        <Col className="col-12 col-md-10 offset-md-1">
+          <Row>
             <Col>
-              <DealCard
-                imgUrl={womenWestern}
-                offer="Upto 40% off"
-                title="Women's Western Clothing"
-              />
-            </Col>
-            <Col>
-              <DealCard
-                imgUrl={menWestern}
-                offer="Upto 40% off"
-                title="Women's Western Clothing"
-              />
-            </Col>
-            <Col>
-              <DealCard
-                imgUrl={casualShoes}
-                offer="Upto 50% off"
-                title="Casual Shoes"
-              />
-            </Col>
-            <Col>
-              <DealCard
-                imgUrl={runningShoes}
-                offer="Upto 50% off"
-                title="Men's Running shoes"
-              />
-            </Col>
-            <Col>
-              <DealCard
-                imgUrl={jwellery}
-                offer="Upto 20% off"
-                title="Statement Fashion Jewellery"
-              />
-            </Col>
-            <Col>
-              <DealCard
-                imgUrl={sunglasses}
-                offer="Upto 10% off"
-                title="Sunglasses"
-              />
+              <div className="slider-container">
+                <Slider {...settings}>
+                  <div>
+                    <DealCard
+                      imgUrl={womenWestern}
+                      offer="Upto 40% off"
+                      title="Women's Western Clothing"
+                    />
+                  </div>
+                  <div>
+                    <DealCard
+                      imgUrl={menWestern}
+                      offer="Upto 40% off"
+                      title="Men's Western Clothing"
+                    />
+                  </div>
+                  <div>
+                    <DealCard
+                      imgUrl={casualShoes}
+                      offer="Upto 50% off"
+                      title="Casual Shoes"
+                    />
+                  </div>
+                  <div>
+                    <DealCard
+                      imgUrl={runningShoes}
+                      offer="Upto 50% off"
+                      title="Running Shoes"
+                    />
+                  </div>
+                  <div>
+                    <DealCard
+                      imgUrl={jwellery}
+                      offer="Upto 20% off"
+                      title="Statement Fashion Jewellery"
+                    />
+                  </div>
+                  <div>
+                    <DealCard
+                      imgUrl={sunglasses}
+                      offer="Upto 10% off"
+                      title="Sunglasses"
+                    />
+                  </div>
+                </Slider>
+              </div>
             </Col>
           </Row>
         </Col>

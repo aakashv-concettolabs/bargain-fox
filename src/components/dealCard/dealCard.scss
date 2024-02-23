@@ -1,5 +1,74 @@
-.dealsCard-main{
-    // border: 1px solid #f5f5fc;
-    border: 1px solid red;
-    display: none;
+.dealCard-main{
+    .card{
+        .card-img{
+            height: 200px;
+            object-fit: cover;
+        }
+    }
+}
+
+@media (max-width: 1200px){
+    .dealCard-main{
+        .card{
+            .card-img{
+                height: 200px;
+                object-fit: cover;
+            }
+        }
+    }
+
+}
+
+@media (max-width: 992px){
+    .dealCard-main{
+        .card{
+            .card-text{
+                font-size: 16px;
+            }
+            .card-title{
+                font-size: 20px;
+            }
+            .card-img{
+                height: 180px;
+                object-fit: cover;
+            }
+        }
+    }
+   
+}
+
+@media (max-width: 768px){
+    .dealCard-main{
+        .card{
+            .card-text{
+                font-size: 16px;
+            }
+            .card-title{
+                font-size: 20px;
+            }
+            .card-img{
+                height: 180px;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px){
+    .dealCard-main{
+        .card{
+            .card-text{
+                font-size: 11px;
+            }
+            .card-title{
+                font-size: 12px;
+            }
+            .card-img{
+                height: 130px;
+                object-fit: cover;
+            }
+        }
+    }
+   
+
 }

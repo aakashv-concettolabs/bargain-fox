@@ -1,10 +1,13 @@
 .deal-main{
+    
     .deal{
         font-size: 26px;
     }
     .nav-link{
         color: #ff7900;
     }
+   
+    
 }
 
 @media (max-width: 1200px){
@@ -15,6 +18,7 @@
         .nav-link{
             font-size: 14px;
         }
+      
     }
 }
 
@@ -34,6 +38,7 @@
 }
 
 @media (max-width: 576px){
-   
-
+    .deal-main{
+            
+    }
 }

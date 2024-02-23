@@ -3,6 +3,7 @@ import Category from "../../components/category/Category";
 import banner from "../../assets/banner.png";
 import "./home.scss";
 import Deals from "../../components/deals/Deals";
+import Trending from "../../components/trending/Trending";
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
         </Col>
       </Row>
       <Deals />
+      <Trending />
     </Container>
   );
 };
