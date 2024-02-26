@@ -40,6 +40,13 @@ const Deals = () => {
           slidesToScroll: 3,
         },
       },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
     ],
   };
 

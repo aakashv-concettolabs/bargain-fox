@@ -1,0 +1,54 @@
+.productCard-main{
+    .discount{
+        bottom: 20px;
+        right: 12px;
+    }
+    .price{
+        font-size: 22px;
+    }
+}
+
+
+@media (max-width: 1200px){
+}
+
+@media (max-width: 992px){
+    
+}
+
+@media (max-width: 768px){
+    .productCard-main{
+        .price{
+            font-size: 16px;
+        }
+        .body-font{
+            font-size: 14px;
+        }
+        .discount{
+            bottom: 20px;
+            right: 15px;
+        }
+        .rating{
+           img{
+            width: 14px;
+           }
+        }
+    }
+}
+
+@media (max-width: 576px){
+    .productCard-main{
+        .price{
+            font-size: 16px;
+        }
+        .body-font{
+            font-size: 12px;
+        }
+
+        .rating{
+           img{
+            width: 12px;
+           }
+        }
+    }
+}

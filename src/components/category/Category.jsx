@@ -15,22 +15,46 @@ const Category = () => {
         <Col className="col-12 col-xl-8 offset-xl-2 ">
           <Row className="d-flex">
             <Col className="col-3 col-md-2">
-              <Circle imgUrl={kitchenCategory} categoryText="Home & Kitchen" />
+              <Circle
+                imgUrl={kitchenCategory}
+                categoryText="Home & Kitchen"
+                notOffer="d-none"
+              />
             </Col>
             <Col className="col-3  col-md-2">
-              <Circle imgUrl={healthCategory} categoryText="Health & Beauty" />
+              <Circle
+                imgUrl={healthCategory}
+                categoryText="Health & Beauty"
+                notOffer="d-none"
+              />
             </Col>
             <Col className="col-3  col-md-2">
-              <Circle imgUrl={electronicCategory} categoryText="Electonics" />
+              <Circle
+                imgUrl={electronicCategory}
+                categoryText="Electonics"
+                notOffer="d-none"
+              />
             </Col>
             <Col className="col-3 col-md-2">
-              <Circle imgUrl={toyCategory} categoryText="Toys & Crafts" />
+              <Circle
+                imgUrl={toyCategory}
+                categoryText="Toys & Crafts"
+                notOffer="d-none"
+              />
             </Col>
             <Col className="d-none d-md-flex  col-md-2">
-              <Circle imgUrl={sportsCategory} categoryText="Sports & Leisure" />
+              <Circle
+                imgUrl={sportsCategory}
+                categoryText="Sports & Leisure"
+                notOffer="d-none"
+              />
             </Col>
             <Col className="d-none d-md-flex  col-md-2">
-              <Circle imgUrl={clearanceCategory} categoryText="Clearance" />
+              <Circle
+                imgUrl={clearanceCategory}
+                categoryText="Clearance"
+                notOffer="d-none"
+              />
             </Col>
           </Row>
         </Col>

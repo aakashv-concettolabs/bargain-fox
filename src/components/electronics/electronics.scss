@@ -1,21 +1,20 @@
-.deal-main{
-    
-    .deal{
+.electronics-main{
+    .electronics-title{
         font-size: 26px;
     }
     .nav-link{
         color: #ff7900;
     }
- 
-        .slick-next::before, .slick-prev::before{
-            color: #ff7900;
-        }
-    
+    .slick-next::before, .slick-prev::before{
+        color: #ff7900;
+    }
    
-    
+   
 }
 
+
 @media (max-width: 1200px){
+   
 }
 
 @media (max-width: 992px){
@@ -23,8 +22,8 @@
 }
 
 @media (max-width: 768px){
-    .deal-main{
-        .deal {
+    .electronics-main{
+        .electronics-title{
             font-size: 20px;
         }
         .nav-link{
@@ -34,12 +33,15 @@
 }
 
 @media (max-width: 576px){
-    .deal-main{
-        .deal {
+    .electronics-main{
+        .electronics-title{
             font-size: 16px;
         }
         .nav-link{
             font-size: 12px;
         }
+       
     }
+   
+
 }

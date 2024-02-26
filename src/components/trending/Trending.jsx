@@ -1,4 +1,4 @@
-import { Container, Row, Col, Nav } from "react-bootstrap";
+import { Container, Row, Col, Nav, Figure } from "react-bootstrap";
 import rightArrow from "../../assets/rightArrow.svg";
 import electronis from "../../assets/electronis.png";
 import kitchen from "../../assets/kitchen.png";
@@ -7,42 +7,14 @@ import Toytrending from "../../assets/Toy-trending.png";
 import sports from "../../assets/sports.png";
 import jobLot from "../../assets/jobLot.png";
 import pet from "../../assets/pet.png";
-import DealCard from "../dealCard/DealCard";
-
+import weeklyDeal from "../../assets/WeeklyDeal.png";
+import clearanceWeekly from "../../assets/clearanceWeekly.png";
+import trendingWeekly from "../../assets/trendingweekly.png";
 import "./trending.scss";
-import Slider from "react-slick";
+import Circle from "../circle/Circle";
+import { Link } from "react-router-dom";
 
 const Trending = () => {
-  var settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 6,
-    initialSlide: 0,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 3,
-        },
-      },
-      {
-        breakpoint: 992,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 3,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-        },
-      },
-    ],
-  };
   return (
     <Container className="trending-main">
       <Row>
@@ -73,78 +45,131 @@ const Trending = () => {
         <Col className="col-12 col-md-10 offset-md-1">
           <Row>
             <Col>
-              <div className="d-flex">
+              <div className="d-flex justify-content-between">
                 <div>
-                  <DealCard
+                  <Circle
                     imgUrl={electronis}
-                    offer="Upto 10% off"
-                    title="Electronics"
-                    offerStyle="bg-warning p-1 py-1 text-white rounded-3 d-flex justify-content-center"
-                    imgStyle=" bg-body-secondary rounded-circle p-3 h-75 w-75"
-                    titleStyle="text-center"
+                    imgStyle="bg-body-secondary rounded-circle p-1"
+                    categoryText="Electronics"
+                    offerText="Upto 50% off"
                   />
                 </div>
                 <div>
-                  <DealCard
+                  <Circle
                     imgUrl={kitchen}
-                    offer="Upto 50% off"
-                    title="Kitchen"
-                    offerStyle="bg-warning p-1 py-1 text-white rounded-3 d-flex justify-content-center"
-                    imgStyle=" bg-body-secondary rounded-circle p-3 h-75 w-75"
-                    titleStyle="text-center"
+                    imgStyle="bg-body-secondary rounded-circle p-1"
+                    categoryText="Kitchen"
+                    offerText="Upto 50% off"
                   />
                 </div>
                 <div>
-                  <DealCard
+                  <Circle
                     imgUrl={home}
-                    offer="From £50"
-                    title="Home"
-                    offerStyle="bg-warning p-1 py-1 text-white rounded-3 d-flex justify-content-center"
-                    imgStyle=" bg-body-secondary rounded-circle p-3 h-75 w-75"
-                    titleStyle="text-center"
+                    imgStyle="bg-body-secondary rounded-circle p-1"
+                    categoryText="Home"
+                    offerText="From £50"
                   />
                 </div>
-                <div>
-                  <DealCard
+                <div className="d-none d-sm-block">
+                  <Circle
                     imgUrl={Toytrending}
-                    offer="From £100"
-                    title="Toys & Crafts"
-                    offerStyle="bg-warning p-1 py-1 text-white rounded-3 d-flex justify-content-center"
-                    imgStyle=" bg-body-secondary rounded-circle p-3 h-75 "
-                    titleStyle="text-center"
+                    imgStyle="bg-body-secondary rounded-circle p-1"
+                    categoryText="Toys & Crafts"
+                    offerText="From £100"
                   />
                 </div>
-                <div>
-                  <DealCard
+                <div className="d-none d-md-block">
+                  <Circle
                     imgUrl={sports}
-                    offer="Upto 50% off"
-                    title="Sports & Leisure"
-                    offerStyle="bg-warning p-1 py-1 text-white rounded-3 d-flex justify-content-center"
-                    imgStyle=" bg-body-secondary rounded-circle p-3 h-75 w-75"
-                    titleStyle="text-center"
+                    imgStyle="bg-body-secondary rounded-circle p-1"
+                    categoryText="Sports & Leisure"
+                    offerText="Upto 50% off"
                   />
                 </div>
-                <div>
-                  <DealCard
+                <div className="d-none d-lg-block">
+                  <Circle
                     imgUrl={jobLot}
-                    offer="Upto 15% off"
-                    title="Job Lots"
-                    offerStyle="bg-warning p-1 py-1 text-white rounded-3 d-flex justify-content-center"
-                    imgStyle=" bg-body-secondary rounded-circle p-3 h-75 w-75"
-                    titleStyle="text-center"
+                    imgStyle="bg-body-secondary rounded-circle p-1"
+                    categoryText="Job Lots"
+                    offerText="Upto 15% off"
                   />
                 </div>
-                <div>
-                  <DealCard
+                <div className="d-none d-xl-block">
+                  <Circle
                     imgUrl={pet}
-                    offer="Upto 10% off"
-                    title="Pets"
-                    offerStyle="bg-warning p-1 py-1 text-white rounded-3 d-flex justify-content-center"
-                    imgStyle=" bg-body-secondary rounded-circle p-3 h-75 w-75"
-                    titleStyle="text-center"
+                    imgStyle="bg-body-secondary rounded-circle p-1"
+                    categoryText="Pets"
+                    offerText="Upto 10% off"
                   />
                 </div>
               </div>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+
+      <Row className="mt-5">
+        <Col className="col-12 col-md-10 offset-md-1">
+          <Row>
+            <Col className=" d-flex justify-content-center align-items-center col-12 col-sm-4">
+              <Figure>
+                <Figure.Image
+                  width={320}
+                  height={320}
+                  alt="Deals of the week"
+                  src={weeklyDeal}
+                />
+                <Figure.Caption className="text-center d-flex flex-column">
+                  <span className="fw-bolder text-black weeklyTitle">
+                    Deals of the Week
+                  </span>
+                  <span>
+                    <Link className="text-decoration-none productList" to="/">
+                      View all products
+                    </Link>
+                  </span>
+                </Figure.Caption>
+              </Figure>
+            </Col>
+            <Col className=" d-flex justify-content-center align-items-center col-12 col-sm-4">
+              <Figure>
+                <Figure.Image
+                  width={320}
+                  height={320}
+                  alt="trendings"
+                  src={trendingWeekly}
+                />
+                <Figure.Caption className="text-center d-flex flex-column">
+                  <span className="fw-bolder text-black weeklyTitle">
+                    Trendings
+                  </span>
+                  <span>
+                    <Link className="text-decoration-none productList" to="/">
+                      View all products
+                    </Link>
+                  </span>
+                </Figure.Caption>
+              </Figure>
+            </Col>
+            <Col className=" d-flex justify-content-center align-items-center col-12 col-sm-4">
+              <Figure>
+                <Figure.Image
+                  width={320}
+                  height={320}
+                  alt="Clearenace"
+                  src={clearanceWeekly}
+                />
+                <Figure.Caption className="text-center d-flex flex-column">
+                  <span className="fw-bolder text-black weeklyTitle">
+                    Clearance
+                  </span>
+                  <span>
+                    <Link className="text-decoration-none productList" to="/">
+                      View all products
+                    </Link>
+                  </span>
+                </Figure.Caption>
+              </Figure>
             </Col>
           </Row>
         </Col>

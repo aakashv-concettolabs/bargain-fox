@@ -8,14 +8,7 @@
 }
 
 @media (max-width: 1200px){
-    .dealCard-main{
-        .card{
-            .card-img{
-                height: 200px;
-                object-fit: cover;
-            }
-        }
-    }
+    
 
 }
 
@@ -30,7 +23,6 @@
             }
             .card-img{
                 height: 180px;
-                object-fit: cover;
             }
         }
     }
@@ -48,7 +40,6 @@
             }
             .card-img{
                 height: 180px;
-                object-fit: cover;
             }
         }
     }
@@ -63,10 +54,7 @@
             .card-title{
                 font-size: 12px;
             }
-            .card-img{
-                height: 130px;
-                object-fit: cover;
-            }
+
         }
     }
    

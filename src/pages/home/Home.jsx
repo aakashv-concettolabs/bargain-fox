@@ -4,6 +4,8 @@ import banner from "../../assets/banner.png";
 import "./home.scss";
 import Deals from "../../components/deals/Deals";
 import Trending from "../../components/trending/Trending";
+import Garden from "../../components/garden/Garden";
+import Electronics from "../../components/electronics/Electronics";
 
 const Home = () => {
   return (
@@ -16,6 +18,8 @@ const Home = () => {
       </Row>
       <Deals />
       <Trending />
+      <Garden />
+      <Electronics />
     </Container>
   );
 };
