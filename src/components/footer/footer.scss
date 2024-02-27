@@ -1,8 +1,10 @@
 .footer-main{
     background-color: #222222;
    .container{
-    a, p{
+    a, span{
         color: #a4a4b8;
+        font-size: 14px;
+
     }
     .divider{
         border-top: 1px solid #a4a4b8;
@@ -28,7 +30,7 @@
         h5{
             font-size: 16px;
         }
-        a, p{
+        a, span{
             font-size: 14px;
         }
        }
@@ -39,7 +41,7 @@
     h5{
         font-size: 14px;
     }
-    a, p{
+    a, span{
         font-size: 12px;
     }
    }

@@ -9,6 +9,7 @@ import {
   Navbar,
 } from "react-bootstrap";
 import brandLogo from "../../assets/main-logo.png";
+import { Link } from "react-router-dom";
 import wishList from "../../assets/heart.png";
 import user from "../../assets/user.png";
 import cart from "../../assets/shopping-cart.png";
@@ -17,7 +18,7 @@ import "./navbar.scss";
 
 const Header = () => {
   return (
-    <header className="header-main">
+    <header className="header-main mt-2 mt-sm-0">
       <Container fluid>
         <Row className="d-md-flex d-none d-sm-none justify-content-center align-items-center">
           <Col>
@@ -56,15 +57,87 @@ const Header = () => {
                   </span>
                 </div>
               </Nav.Link>
-              <Nav.Link href="#pricing">
-                <div className="d-flex gap-2 text-dark">
-                  <img className="py-3" src={user} alt="user-icon" />
-                  <div className="d-xl-flex d-sm-none small flex-column justify-content-center">
-                    <span>Hello there,</span>
-                    <span className="fw-bold  ">SIGN IN / REGISTER</span>
+
+              <div id="userProfile" className="position-relative">
+                <Nav.Link href="">
+                  <div className="d-flex gap-2 text-dark">
+                    <img className="py-3" src={user} alt="user-icon" />
+                    <div className="d-xl-flex d-sm-none small flex-column justify-content-center">
+                      <span>Hello there,</span>
+                      <span className="fw-bold">SIGN IN / REGISTER</span>
+                    </div>
                   </div>
-                </div>
-              </Nav.Link>
+
+                  <div
+                    id="loginHover"
+                    className="position-absolute bg-body-tertiary rounded-4 pt-4"
+                  >
+                    <div className="px-4">
+                      <Button className="rounded-5 border-0">
+                        Login/Register
+                      </Button>
+                    </div>
+                    <hr className="mb-1" />
+                    <div>
+                      <ul className="list-inline">
+                        <li>
+                          <Link
+                            className="text-decoration-none text-black ps-2"
+                            to="/"
+                          >
+                            Your Profile
+                          </Link>
+                        </li>
+                        <hr className="my-1" />
+                        <li>
+                          <Link
+                            className="text-decoration-none text-black ps-2"
+                            to="/"
+                          >
+                            BargainFox Subscription
+                          </Link>
+                        </li>
+                        <hr className="my-1" />
+                        <li>
+                          <Link
+                            className="text-decoration-none text-black ps-2"
+                            to="/"
+                          >
+                            Your Orders
+                          </Link>
+                        </li>
+                        <hr className="my-1" />
+                        <li>
+                          <Link
+                            className="text-decoration-none text-black ps-2"
+                            to="/"
+                          >
+                            Addresses
+                          </Link>
+                        </li>
+                        <hr className="my-1" />
+                        <li>
+                          <Link
+                            className="text-decoration-none text-black ps-2"
+                            to="/"
+                          >
+                            Notifications
+                          </Link>
+                        </li>
+                        <hr className="my-1" />
+                        <li>
+                          <Link
+                            className="text-decoration-none text-black ps-2"
+                            to="/"
+                          >
+                            Wishlists
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </Nav.Link>
+              </div>
             </Nav>
           </Col>
         </Row>
