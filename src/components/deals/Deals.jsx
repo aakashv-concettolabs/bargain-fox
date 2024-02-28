@@ -10,6 +10,7 @@ import Slider from "react-slick";
 import { Col, Container, Nav, Row } from "react-bootstrap";
 import "./deals.scss";
 import DealCard from "../dealCard/DealCard";
+import { Link } from "react-router-dom";
 
 const Deals = () => {
   var settings = {
@@ -81,11 +82,13 @@ const Deals = () => {
               <div className="slider-container">
                 <Slider {...settings}>
                   <div>
-                    <DealCard
-                      imgUrl={womenWestern}
-                      offer="Upto 40% off"
-                      title="Women's Western Clothing"
-                    />
+                    <Link className="text-decoration-none" to={"/productList"}>
+                      <DealCard
+                        imgUrl={womenWestern}
+                        offer="Upto 40% off"
+                        title="Women's Western Clothing"
+                      />
+                    </Link>
                   </div>
                   <div>
                     <DealCard
