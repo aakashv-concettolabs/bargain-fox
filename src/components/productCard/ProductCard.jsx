@@ -18,7 +18,10 @@ const ProductCard = ({
           <Card.Img src={imgUrl} />
         </div>
         <Card.Body className="lh-sm p-1 body-font">
-          <Card.Text>{detail}</Card.Text>
+          <Card.Text>
+            {detail.slice(0, 50)}
+            {detail.length > 50 ? "..." : ""}
+          </Card.Text>
           <Card.Text className="d-flex gap-2">
             <span className="d-flex gap-1 rating">
               <img src={ratedStar} />

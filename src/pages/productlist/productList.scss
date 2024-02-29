@@ -2,21 +2,32 @@
     .breadcrumb-item+.breadcrumb-item::before {
         content: var(--bs-breadcrumb-divider, ">");
     }
-    .list-group{
-        .list-group-item{
-            .form-check-input{
-                border-radius: 50%;
-                box-shadow: none;
-                border: 1px solid #a4a4b8;
-                background-image: none;
-               
+}
 
-                &:checked{
-                    background-color: #ff7900;
-                    border: 1px solid #a4a4b8;  
-                }
+@media (max-width: 1200px){
+    .productList-main{
+        label, select{
+            font-size: 12px;
+           
+        }
+       }
+}
 
-            }
+@media (max-width: 992px){
+    
+}
+
+@media (max-width: 768px){
+  
+}
+
+@media (max-width: 576px){
+.productList-main{
+    .fliterOptionButton{
+        img{
+            width: 25px;
+            height: 25px;
         }
     }
+}
 }

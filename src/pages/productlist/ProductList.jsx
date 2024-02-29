@@ -1,21 +1,19 @@
-import {
-  Breadcrumb,
-  Col,
-  Container,
-  Row,
-  Form,
-  ListGroup,
-} from "react-bootstrap";
+import { Breadcrumb, Col, Container, Row, Offcanvas } from "react-bootstrap";
+import { useState } from "react";
 import "./productList.scss";
 import ProductCard from "../../components/productCard/ProductCard";
 import garden1 from "../../assets/garden-1.png";
-import fourStar from "../../assets/4Star.svg";
-import threeStar from "../../assets/3Star.svg";
-import twoStar from "../../assets/2Star.svg";
-import oneStar from "../../assets/1Star.svg";
+import star from "../../assets/star.svg";
+import starColor from "../../assets/starColor.svg";
 import offerSticker from "../../assets/offerSticker.svg";
+import FilterSidebar from "../../components/filterSidebar/FilterSidebar";
+import PaginationComponent from "../../components/pagination/PaginationComponent";
 
 const ProductList = () => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <Container fluid className="productList-main">
       <Breadcrumb className="small d-none d-lg-flex">
@@ -36,88 +34,175 @@ const ProductList = () => {
           lg={3}
           className=" d-flex align-items-center justify-content-center"
         >
-          <div className="border d-flex align-items-center justify-content-center rounded-5 px-2">
-            <div>
-              <span>Sort By:</span>
-            </div>
-            <div>
-              <Form.Select className="shadow-none border-0">
+          <div className="row border rounded-5 p-2">
+            <div className="col d-flex gap-2">
+              <label className="text-secondary">Sort BY:</label>
+              <select className="shadow-none border-0 focus-ring bg-white">
                 <option>Relevency</option>
                 <option value="1">Lowest Price</option>
                 <option value="2">Highest Price</option>
                 <option value="3">Top Customers Reviews</option>
                 <option value="4">Most Recent</option>
-              </Form.Select>
+              </select>
             </div>
           </div>
         </Col>
       </Row>
-      <Row className="d-flex d-lg-none">
-        <Col className=" d-flex align-items-center">
-          <div className="border d-flex align-items-center justify-content-center rounded-5 px-2">
-            <div>
-              <span>Sort By:</span>
-            </div>
-            <div>
-              <Form.Select className="shadow-none border-0">
+
+      <Row className="d-flex d-lg-none mt-4 ms-1 align-items-center">
+        <Col className="col-5 d-flex align-items-center">
+          <div className="row border rounded-5 p-2">
+            <div className="col  d-flex gap-2">
+              <label className="text-secondary d-none d-md-flex">
+                Sort BY:
+              </label>
+              <select className="shadow-none border-0 focus-ring bg-white">
                 <option>Relevency</option>
                 <option value="1">Lowest Price</option>
                 <option value="2">Highest Price</option>
                 <option value="3">Top Customers Reviews</option>
                 <option value="4">Most Recent</option>
-              </Form.Select>
+              </select>
             </div>
           </div>
         </Col>
-        <Col>a</Col>
+        <Col
+          className="fliterOptionButton col-7 d-flex align-items-center justify-content-end gap-2"
+          onClick={handleShow}
+        >
+          <img
+            src="https://concetto-web.bargainfox.com/images/svg/filter.svg"
+            alt=""
+          />
+          <span className="text-secondary fw-medium fs-3">Filter</span>
+        </Col>
       </Row>
 
-      <Row className="d-none d-lg-flex">
-        <Col md={2}>
-          <ListGroup variant="flush">
-            <ListGroup.Item>
-              <Form.Label>Condition</Form.Label>
-              <Form.Check type="checkbox" label="Brand New" />
-              <Form.Check type="checkbox" label="Open Box" />
-              <Form.Check type="checkbox" label="Like New" />
-              <Form.Check type="checkbox" label="Very Good" />
-              <Form.Check type="checkbox" label="Good" />
-              <Form.Check type="checkbox" label="Acceptable" />
-            </ListGroup.Item>
-
-            <ListGroup.Item>
-              <Form.Label>Review</Form.Label>
-              <label htmlFor="" className="d-flex gap-1">
-                <Form.Check type="checkbox" value="4star" id="4star" />
-                <img src={fourStar} />
-              </label>
-              <label htmlFor="" className="d-flex gap-1">
-                <Form.Check type="checkbox" id="3star" />
-                <img src={threeStar} />
-              </label>
-              <label htmlFor="" className="d-flex gap-1">
-                <Form.Check type="checkbox" id="2star" />
-                <img src={twoStar} />
-              </label>
-              <label htmlFor="" className="d-flex gap-1">
-                <Form.Check type="checkbox" id="1star" />
-                <img src={oneStar} />
-              </label>
-              <Form.Check type="checkbox" label="No Review" id="noReview" />
-            </ListGroup.Item>
-
-            <ListGroup.Item>
-              <Form.Label>Price</Form.Label>
-              <Form.Check type="checkbox" label="Under $10" />
-              <Form.Check type="checkbox" label="$10 - $25" />
-              <Form.Check type="checkbox" label="$25 - $50" />
-              <Form.Check type="checkbox" label="$50 - $100" />
-              <Form.Check type="checkbox" label="Over $100" />
-            </ListGroup.Item>
-          </ListGroup>
+      <Row className="mt-3">
+        <Col lg={2} className="d-none d-lg-flex">
+          <FilterSidebar />
+          <Offcanvas show={show} onHide={handleClose}>
+            <Offcanvas.Header closeButton>
+              <span className="ps-3 text-secondary fw-medium fs-3">Filter</span>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <FilterSidebar />
+            </Offcanvas.Body>
+          </Offcanvas>
         </Col>
 
-        <Col md={10}></Col>
+        <Col md={12} lg={10} className="col-12">
+          <Row className="d-flex">
+            <Col lg={3} sm={6} xs={12} md={4} className="mt-3">
+              <ProductCard
+                imgUrl={garden1}
+                detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
+                ratedStar={starColor}
+                unratedStar={star}
+                offerPrice="44"
+                price="50"
+                offerSticker={offerSticker}
+                discount="-10%"
+              />
+            </Col>
+            <Col lg={3} sm={6} xs={12} md={4} className="mt-3">
+              <ProductCard
+                imgUrl={garden1}
+                detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
+                ratedStar={starColor}
+                unratedStar={star}
+                offerPrice="44"
+                price="50"
+                offerSticker={offerSticker}
+                discount="-10%"
+              />
+            </Col>
+            <Col lg={3} sm={6} xs={12} md={4} className="mt-3">
+              <ProductCard
+                imgUrl={garden1}
+                detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
+                ratedStar={starColor}
+                unratedStar={star}
+                offerPrice="44"
+                price="50"
+                offerSticker={offerSticker}
+                discount="-10%"
+              />
+            </Col>
+            <Col lg={3} sm={6} xs={12} md={4} className="mt-3">
+              <ProductCard
+                imgUrl={garden1}
+                detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
+                ratedStar={starColor}
+                unratedStar={star}
+                offerPrice="44"
+                price="50"
+                offerSticker={offerSticker}
+                discount="-10%"
+              />
+            </Col>
+            <Col lg={3} sm={6} xs={12} md={4} className="mt-3">
+              <ProductCard
+                imgUrl={garden1}
+                detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
+                ratedStar={starColor}
+                unratedStar={star}
+                offerPrice="44"
+                price="50"
+                offerSticker={offerSticker}
+                discount="-10%"
+              />
+            </Col>
+          </Row>
+
+          {/* <div className="d-flex ">
+            <ProductCard
+              imgUrl={garden1}
+              detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
+              ratedStar={starColor}
+              unratedStar={star}
+              offerPrice="44"
+              price="50"
+              offerSticker={offerSticker}
+              discount="-10%"
+            />
+            <ProductCard
+              imgUrl={garden1}
+              detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
+              ratedStar={starColor}
+              unratedStar={star}
+              offerPrice="44"
+              price="50"
+              offerSticker={offerSticker}
+              discount="-10%"
+            />
+            <ProductCard
+              imgUrl={garden1}
+              detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
+              ratedStar={starColor}
+              unratedStar={star}
+              offerPrice="44"
+              price="50"
+              offerSticker={offerSticker}
+              discount="-10%"
+            />
+            <ProductCard
+              imgUrl={garden1}
+              detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
+              ratedStar={starColor}
+              unratedStar={star}
+              offerPrice="44"
+              price="50"
+              offerSticker={offerSticker}
+              discount="-10%"
+            />
+          </div> */}
+        </Col>
+      </Row>
+      <Row>
+        <Col className="d-flex justify-content-center mt-5">
+          <PaginationComponent />
+        </Col>
       </Row>
     </Container>
   );

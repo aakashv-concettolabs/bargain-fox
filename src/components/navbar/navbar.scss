@@ -12,9 +12,6 @@ $themeColor: #ff7900;
                 border: 1px solid #FFFFFF;
                 box-shadow: 10px 3px 16px #292D320D;
             }
-            button{
-                background-color: #ff7900;
-            }
             &:hover{
                 #loginHover{
                     display: block;
@@ -51,7 +48,15 @@ $themeColor: #ff7900;
 
 
 @media (max-width: 1200px){
-
+.header-main{
+    .container-fluid{
+        #userProfile:hover{
+            #loginHover{
+                display: none;
+            }
+        }
+    }
+}
 }
 
 @media (max-width: 992px){

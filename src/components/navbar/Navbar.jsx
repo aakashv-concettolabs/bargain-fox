@@ -14,6 +14,7 @@ import wishList from "../../assets/heart.png";
 import user from "../../assets/user.png";
 import cart from "../../assets/shopping-cart.png";
 import SearchIcon from "../../assets/search-normal.png";
+import SignUp from "../../pages/signup/SignUP";
 import "./navbar.scss";
 
 const Header = () => {
@@ -70,12 +71,10 @@ const Header = () => {
 
                   <div
                     id="loginHover"
-                    className="position-absolute bg-body-tertiary rounded-4 pt-4"
+                    className="position-absolute bg-body-tertiary rounded-4 pt-4 z-3"
                   >
                     <div className="px-4">
-                      <Button className="rounded-5 border-0">
-                        Login/Register
-                      </Button>
+                      <SignUp />
                     </div>
                     <hr className="mb-1" />
                     <div>
