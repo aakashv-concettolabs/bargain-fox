@@ -154,49 +154,6 @@ const ProductList = () => {
               />
             </Col>
           </Row>
-
-          {/* <div className="d-flex ">
-            <ProductCard
-              imgUrl={garden1}
-              detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-              ratedStar={starColor}
-              unratedStar={star}
-              offerPrice="44"
-              price="50"
-              offerSticker={offerSticker}
-              discount="-10%"
-            />
-            <ProductCard
-              imgUrl={garden1}
-              detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-              ratedStar={starColor}
-              unratedStar={star}
-              offerPrice="44"
-              price="50"
-              offerSticker={offerSticker}
-              discount="-10%"
-            />
-            <ProductCard
-              imgUrl={garden1}
-              detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-              ratedStar={starColor}
-              unratedStar={star}
-              offerPrice="44"
-              price="50"
-              offerSticker={offerSticker}
-              discount="-10%"
-            />
-            <ProductCard
-              imgUrl={garden1}
-              detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-              ratedStar={starColor}
-              unratedStar={star}
-              offerPrice="44"
-              price="50"
-              offerSticker={offerSticker}
-              discount="-10%"
-            />
-          </div> */}
         </Col>
       </Row>
       <Row>

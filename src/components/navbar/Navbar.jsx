@@ -8,16 +8,23 @@ import {
   InputGroup,
   Navbar,
 } from "react-bootstrap";
+import { useState } from "react";
 import brandLogo from "../../assets/main-logo.png";
 import { Link } from "react-router-dom";
 import wishList from "../../assets/heart.png";
 import user from "../../assets/user.png";
 import cart from "../../assets/shopping-cart.png";
 import SearchIcon from "../../assets/search-normal.png";
-import SignUp from "../../pages/signup/SignUP";
 import "./navbar.scss";
+import SignUP from "../../pages/signup/SignUP";
 
 const Header = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    setShow(false);
+  };
+
   return (
     <header className="header-main mt-2 mt-sm-0">
       <Container fluid>
@@ -60,7 +67,7 @@ const Header = () => {
               </Nav.Link>
 
               <div id="userProfile" className="position-relative">
-                <Nav.Link href="">
+                <div href="">
                   <div className="d-flex gap-2 text-dark">
                     <img className="py-3" src={user} alt="user-icon" />
                     <div className="d-xl-flex d-sm-none small flex-column justify-content-center">
@@ -74,7 +81,12 @@ const Header = () => {
                     className="position-absolute bg-body-tertiary rounded-4 pt-4 z-3"
                   >
                     <div className="px-4">
-                      <SignUp />
+                      <Button
+                        className="border-0 rounded-5 signupBtn"
+                        onClick={() => setShow(true)}
+                      >
+                        Login/Register
+                      </Button>
                     </div>
                     <hr className="mb-1" />
                     <div>
@@ -135,7 +147,7 @@ const Header = () => {
                       </ul>
                     </div>
                   </div>
-                </Nav.Link>
+                </div>
               </div>
             </Nav>
           </Col>
@@ -177,7 +189,7 @@ const Header = () => {
                   </span>
                 </div>
               </Nav.Link>
-              <Nav.Link className="px-2">
+              <Nav.Link className="px-2" onClick={() => setShow(true)}>
                 <div className="text-dark">
                   <img src={user} alt="user-icon" />
                 </div>
@@ -201,6 +213,7 @@ const Header = () => {
           </Col>
         </Row>
       </Container>
+      {show && <SignUP show={show} handleClose={handleClose} />}
     </header>
   );
 };
