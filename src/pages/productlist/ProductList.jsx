@@ -8,6 +8,7 @@ import starColor from "../../assets/starColor.svg";
 import offerSticker from "../../assets/offerSticker.svg";
 import FilterSidebar from "../../components/filterSidebar/FilterSidebar";
 import PaginationComponent from "../../components/pagination/PaginationComponent";
+import { Link } from "react-router-dom";
 
 const ProductList = () => {
   const [show, setShow] = useState(false);
@@ -94,16 +95,18 @@ const ProductList = () => {
         <Col md={12} lg={10} className="col-12">
           <Row className="d-flex">
             <Col lg={3} sm={6} xs={12} md={4} className="mt-3">
-              <ProductCard
-                imgUrl={garden1}
-                detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-                ratedStar={starColor}
-                unratedStar={star}
-                offerPrice="44"
-                price="50"
-                offerSticker={offerSticker}
-                discount="-10%"
-              />
+              <Link to={"/productdetail"} className="text-decoration-none">
+                <ProductCard
+                  imgUrl={garden1}
+                  detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
+                  ratedStar={starColor}
+                  unratedStar={star}
+                  offerPrice="44"
+                  price="50"
+                  offerSticker={offerSticker}
+                  discount="-10%"
+                />
+              </Link>
             </Col>
             <Col lg={3} sm={6} xs={12} md={4} className="mt-3">
               <ProductCard

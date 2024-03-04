@@ -62,7 +62,9 @@ const SignUP = ({ show, handleClose }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {errors.name && touched.name ? <p>{errors.name}</p> : null}
+                {errors.name && touched.name ? (
+                  <p className="text-danger">{errors.name}</p>
+                ) : null}
               </Form.Group>
               <Form.Group
                 className="mb-3"
@@ -79,7 +81,7 @@ const SignUP = ({ show, handleClose }) => {
                   onBlur={handleBlur}
                 />
                 {errors.number && touched.number ? (
-                  <p>{errors.number}</p>
+                  <p className="text-danger">{errors.number}</p>
                 ) : null}
               </Form.Group>
               <Form.Group
@@ -96,7 +98,9 @@ const SignUP = ({ show, handleClose }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {errors.email && touched.email ? <p>{errors.email}</p> : null}
+                {errors.email && touched.email ? (
+                  <p className="text-danger">{errors.email}</p>
+                ) : null}
               </Form.Group>
               <Button type="submit" className="w-100 rounded-4">
                 Register
@@ -136,7 +140,9 @@ const SignUP = ({ show, handleClose }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
-                {errors.both && touched.both ? <p>{errors.both}</p> : null}
+                {errors.both && touched.both ? (
+                  <p className="text-danger">{errors.both}</p>
+                ) : null}
               </Form.Group>
 
               <Button type="submit" className="w-100 rounded-5">

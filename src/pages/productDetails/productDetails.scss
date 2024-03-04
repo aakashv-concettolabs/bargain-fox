@@ -1,0 +1,113 @@
+.container-fluid{
+    .shareHover{
+        display: none;
+        a{
+            color: #000;
+            &:hover{
+            color: #ff7900;
+        }}
+    }
+    .share:hover{
+        .shareHover{
+            display: block;
+            top: 20px;
+            right: 0px;
+        }
+        
+    }
+    .productTitle, .price{
+        font-size: 24px;
+    }
+    .btn:first-child:active{
+        background: rgb(250, 249, 249);
+        color: #000;
+    }
+    :not(.btn-check)+.btn:active{
+        background: rgb(250, 249, 249);
+        color: #000;
+    }
+    .btn{
+        &:hover{
+            background: rgb(250, 249, 249);
+            color: #000;
+        }
+    }
+    .learn{
+        color: #ff7900;
+    }
+    .cart{
+        background-color: #ff7900;
+        border-color: #ff7900;
+        &:hover{
+            background-color: #000;
+            border-color: black;
+            color: white;
+        }
+    }
+    .buyNow{
+        border-color: #ff7900;
+        background-color: #FF79001A;
+        color: #000;
+        &:hover{
+            background-color: #ff7900;
+            color: white;
+            border-color: #ff7900;
+        }
+    }
+    .rateCount{
+        font-size: 6rem;
+    }
+    .star{
+        height: 30px;
+    }
+    .rateThisProduct{
+        font-size: 20px;
+        color: #ff7900;
+    }
+}
+
+@media (max-width: 1200px){
+    
+    }
+    
+    @media (max-width: 992px){
+       .container-fluid{
+        .star{
+            height: 28px;
+        }
+       }
+    }
+    
+    @media (max-width: 768px){
+        
+       
+    }
+    
+    @media (max-width: 576px){
+       .container-fluid{
+        .share:hover{
+            .shareHover{
+                right: 10px;
+            }
+        }
+        .productTitle{
+            font-size: 16px;
+        }
+        p{
+            font-size: 14px;
+        }
+        .rateCount{
+            font-size: 4rem;
+        }
+        span{
+            font-size: 14px;
+        }
+        .rateThisProduct{
+            font-size: 16px;
+        }
+        .star{
+            height: 20px;
+        }
+       }
+    
+    }
