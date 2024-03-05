@@ -32,9 +32,6 @@
             color: #000;
         }
     }
-    .learn{
-        color: #ff7900;
-    }
     .cart{
         background-color: #ff7900;
         border-color: #ff7900;
@@ -60,10 +57,14 @@
     .star{
         height: 30px;
     }
+    .progress{
+        height: 8px;
+    }
     .rateThisProduct{
         font-size: 20px;
         color: #ff7900;
     }
+   
 }
 
 @media (max-width: 1200px){
@@ -71,11 +72,7 @@
     }
     
     @media (max-width: 992px){
-       .container-fluid{
-        .star{
-            height: 28px;
-        }
-       }
+      
     }
     
     @media (max-width: 768px){
@@ -100,7 +97,7 @@
             font-size: 4rem;
         }
         span{
-            font-size: 14px;
+            font-size: 12px;
         }
         .rateThisProduct{
             font-size: 16px;

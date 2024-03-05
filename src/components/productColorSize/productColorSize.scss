@@ -1,0 +1,14 @@
+.colorContainer{
+    border: 1px solid transparent;
+    padding: 1px;
+    cursor: pointer;
+    .color{
+        height: 20px;
+        width: 20px;
+    }
+    &:hover{
+            border-color: black;
+    }
+    
+
+}
