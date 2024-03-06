@@ -54,7 +54,7 @@ const Deals = () => {
   return (
     <Container className="my-5 deal-main">
       <Row>
-        <Col className="col-12 p-0 col-md-10 offset-md-1">
+        <Col className="col-12 p-0">
           <Row>
             <Col className="col-8 d-flex gap-2">
               <div className="d-flex align-items-center">
@@ -76,7 +76,7 @@ const Deals = () => {
       </Row>
 
       <Row className="mt-5">
-        <Col className="col-12 col-md-10 offset-md-1">
+        <Col className="col-12">
           <Row>
             <Col>
               <div className="slider-container">

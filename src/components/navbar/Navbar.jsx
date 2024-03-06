@@ -30,8 +30,7 @@ const Header = () => {
       <Container fluid>
         <Row className="d-md-flex d-none d-sm-none justify-content-center align-items-center">
           <Col>
-            {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
-            <Navbar.Brand href="#home">
+            <Navbar.Brand as={Link} to={"/"}>
               <img src={brandLogo} alt="Bargain-Fox logo" />
             </Navbar.Brand>
           </Col>
@@ -49,7 +48,7 @@ const Header = () => {
           </Col>
           <Col>
             <Nav className="d-flex justify-content-end align-items-center">
-              <Nav.Link href="#home">
+              <Nav.Link as={Link} to={"/wishlist"}>
                 <div className="position-relative">
                   <img src={wishList} alt="wishlist" />
                   <span className="wishlistCount small rounded-circle text-white d-flex justify-content-center align-items-center position-absolute">
@@ -57,7 +56,7 @@ const Header = () => {
                   </span>
                 </div>
               </Nav.Link>
-              <Nav.Link href="#features">
+              <Nav.Link as={Link} to="/cart">
                 <div className="position-relative">
                   <img src={cart} alt="" />
                   <span className="cartCounter small text-white rounded-circle d-flex justify-content-center align-items-center position-absolute">

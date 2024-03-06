@@ -1,120 +1,98 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, NavLink } from "react-bootstrap";
 import "./footer.scss";
-import { Link } from "react-router-dom";
 import facebook from "../../assets/facebook.svg";
 import instagram from "../../assets/instagram.svg";
 import twitter from "../../assets/twitter.svg";
 import pinterest from "../../assets/pinterest.svg";
+import FooterMenu from "./FooterMenu";
+import { Link } from "react-router-dom";
+
+const FooterDetail = [
+  {
+    id: 1,
+    title: "Help",
+    menuList: ["Delivery", "Returns", "Help Centre"],
+  },
+  {
+    id: 2,
+    title: "About Us",
+    menuList: ["About Us", "Our Blogs", "Contact Us"],
+  },
+  {
+    id: 3,
+    title: "Your Account",
+    menuList: [
+      "Your Orders",
+      "Checkout",
+      "Download the App",
+      "FastFox Subscription",
+    ],
+  },
+];
+
+const SocialConnection = [
+  {
+    id: 1,
+    imgUrl: facebook,
+    name: "facebook",
+  },
+  {
+    id: 2,
+    imgUrl: instagram,
+    name: "instagram",
+  },
+  {
+    id: 3,
+    imgUrl: twitter,
+    name: "twitter",
+  },
+  {
+    id: 4,
+    imgUrl: pinterest,
+    name: "pinterest",
+  },
+];
 
 const Footer = () => {
   return (
     <Container fluid className="footer-main mt-5 p-lg-5 p-2">
       <Container>
         <Row>
-          <Col className="col-12 col-md-10 offset-md-1 text-white">
-            <Row>
-              <Col>
-                <div>
-                  <h5>Help</h5>
-                  <ul className="list-inline">
-                    <li>
-                      <Link to="/" className="text-decoration-none">
-                        Delivery
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" className="text-decoration-none ">
-                        Returns
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" className="text-decoration-none ">
-                        Help Center
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </Col>
-              <Col className="d-flex justify-content-center">
-                <div>
-                  <h5>About Us</h5>
-                  <ul className="list-inline">
-                    <li>
-                      <Link to="/" className="text-decoration-none ">
-                        About Us
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" className="text-decoration-none ">
-                        Our Blogs
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" className="text-decoration-none ">
-                        Contact Us
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </Col>
-              <Col className="d-flex justify-content-end">
-                <div>
-                  <h5>Your Account</h5>
-                  <ul className="list-inline">
-                    <li>
-                      <Link to="/" className="text-decoration-none ">
-                        Your Orders
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" className="text-decoration-none ">
-                        Checkout
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" className="text-decoration-none ">
-                        Download the App
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" className="text-decoration-none ">
-                        BargainFox Subscription
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </Col>
-            </Row>
+          <Col className="col-12 d-flex justify-content-between text-white">
+            {FooterDetail.map((detail) => (
+              <FooterMenu
+                title={detail.title}
+                list={detail.menuList}
+                key={detail.id}
+              />
+            ))}
           </Col>
         </Row>
 
         <Row className="divider">
-          <Col className="col-12 col-md-10 offset-md-1 text-white mt-3">
+          <Col className="col-12 text-white mt-3">
             <Row>
               <Col className="col-12 col-lg-4 d-flex justify-content-center justify-content-lg-start mb-3 mb-lg-0">
                 <div className="d-flex gap-2">
-                  <div className="rounded-circle p-2 socialIcons d-flex justify-content-center align-items-center">
-                    <img src={facebook} alt="" />
-                  </div>
-                  <div className="rounded-circle p-2 socialIcons d-flex justify-content-center align-items-center">
-                    <img src={instagram} alt="" />
-                  </div>
-                  <div className="rounded-circle p-2 socialIcons d-flex justify-content-center align-items-center">
-                    <img src={twitter} alt="" />
-                  </div>
-                  <div className="rounded-circle p-2 socialIcons d-flex justify-content-center align-items-center">
-                    <img src={pinterest} alt="" />
-                  </div>
+                  {SocialConnection.map((social) => (
+                    <Link key={social.id}>
+                      <div className="rounded-circle p-2 socialIcons d-flex justify-content-center align-items-center">
+                        <img src={social.imgUrl} alt={social.name} />
+                      </div>
+                    </Link>
+                  ))}
                 </div>
               </Col>
               <Col className="col-12 col-lg-4 d-flex justify-content-center align-items-center">
                 <div className="d-flex align-items-center">
-                  <span>All rights reserved © 2023 BargainFox.com</span>
+                  <p>All rights reserved © 2023 BargainFox.com</p>
                 </div>
               </Col>
               <Col className="col-12 col-lg-4 d-flex  justify-content-center justify-content-lg-end align-items-center">
                 <div className="d-flex align-items-center">
-                  <span>Terms of Service | Privacy Policy</span>
+                  <p>
+                    <span>Terms of Service </span>|<span> Privacy Policy</span>
+                  </p>
                 </div>
               </Col>
             </Row>

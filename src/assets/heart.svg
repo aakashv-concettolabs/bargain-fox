@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="25.97" height="25.155" viewBox="0 0 25.97 25.155">
+  <g id="heart" transform="translate(-236 -188)">
+    <path id="Vector" d="M9.975,16.634a2.048,2.048,0,0,1-1.165,0C6.086,15.7,0,11.825,0,5.25A5.235,5.235,0,0,1,5.222,0c1.709,0,3.222,1.509,4.17,2.787C10.341,1.509,11.863,0,13.563,0a5.235,5.235,0,0,1,5.222,5.25C18.785,11.825,12.7,15.7,9.975,16.634Z" transform="translate(242.185 192.219)" fill="#a4a4b8" stroke="#a4a4b8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Vector-2" data-name="Vector" d="M0,0H25.155V25.155H0Z" transform="translate(236 188)" fill="none" opacity="0"/>
+  </g>
+</svg>

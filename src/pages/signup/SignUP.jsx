@@ -19,7 +19,6 @@ const SignUP = ({ show, handleClose }) => {
     useFormik({
       initialValues,
       validationSchema: signUpSchema,
-      // validationSchema2: logInSchema,
       onSubmit: (values, action) => {
         console.log(values);
         action.resetForm();

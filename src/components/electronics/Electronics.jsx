@@ -53,7 +53,7 @@ const Electronics = () => {
   return (
     <Container className="electronics-main mt-5">
       <Row>
-        <Col className="col-12 p-0 col-md-10 offset-md-1">
+        <Col className="col-12 p-0 ">
           <Row>
             <Col className="col-8 d-flex gap-2">
               <div className="d-flex align-items-center">
@@ -75,7 +75,7 @@ const Electronics = () => {
       </Row>
 
       <Row className="mt-4">
-        <Col className="col-12  col-md-10 offset-md-1">
+        <Col className="col-12">
           <Row>
             <Col>
               <div className="slider-container">

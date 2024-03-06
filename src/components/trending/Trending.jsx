@@ -18,7 +18,7 @@ const Trending = () => {
   return (
     <Container className="trending-main">
       <Row>
-        <Col className="col-12 p-0 col-md-10 offset-md-1">
+        <Col className="col-12 p-0 ">
           <Row>
             <Col className="col-8 d-flex gap-2">
               <div className="d-flex align-items-center">
@@ -42,7 +42,7 @@ const Trending = () => {
       </Row>
 
       <Row className="mt-5">
-        <Col className="col-12 col-md-10 offset-md-1">
+        <Col className="col-12 ">
           <Row>
             <Col>
               <div className="d-flex justify-content-between">
@@ -109,7 +109,7 @@ const Trending = () => {
       </Row>
 
       <Row className="mt-5">
-        <Col className="col-12 col-md-10 offset-md-1">
+        <Col className="col-12 ">
           <Row>
             <Col className=" d-flex justify-content-center align-items-center col-12 col-sm-4">
               <Figure>

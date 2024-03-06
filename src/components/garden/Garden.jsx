@@ -61,7 +61,7 @@ const Garden = () => {
   return (
     <Container className="garden-main mt-5">
       <Row>
-        <Col className="col-12 p-0 col-md-10 offset-md-1">
+        <Col className="col-12 p-0 ">
           <Row>
             <Col className="col-8 d-flex gap-2">
               <div className="d-flex align-items-center">
@@ -83,7 +83,7 @@ const Garden = () => {
       </Row>
 
       <Row className="mt-4">
-        <Col className="col-12  col-md-10 offset-md-1">
+        <Col className="col-12  ">
           <Row>
             <Col>
               <div className="slider-container">
@@ -144,7 +144,7 @@ const Garden = () => {
       </Row>
 
       <Row className="mt-5">
-        <Col className="col-12 col-md-10 offset-md-1">
+        <Col className="col-12 ">
           <Row className="newsletter p-2  p-md-4 position-relative rounded-5 text-white mx-2 justify-content-between">
             <Col className="col-12 col-lg-6 col-xl-6">
               <h3 className="text-center text-md-start">

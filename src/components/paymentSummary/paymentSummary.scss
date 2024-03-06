@@ -1,0 +1,15 @@
+.card{
+    .btn{
+        background-color: #ff7900;
+        transition: all 0.5s ease-in-out;
+        &:hover{
+            background-color: #292d32;
+        }
+    }
+    :not(.btn-check) + .btn:active {
+        background-color: #0a58ca;
+    }
+    .deliveryTag{
+        color: #ff7900;
+    }
+}
