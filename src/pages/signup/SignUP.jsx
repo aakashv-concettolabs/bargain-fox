@@ -1,14 +1,18 @@
 import "./signup.scss";
-import { useFormik } from "formik";
+import { useFormik, validateYupSchema } from "formik";
 import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 import { logInSchema, signUpSchema } from "../../schema";
 import google from "../../assets/google.png";
 import ios from "../../assets/iOS.png";
 import { useState } from "react";
 
-const initialValues = {
+const initialValueSignUp = {
   name: "",
   number: "",
+  email: "",
+};
+
+const initialValueLogin = {
   email: "",
 };
 
@@ -17,7 +21,7 @@ const SignUP = ({ show, handleClose }) => {
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
-      initialValues,
+      initialValues: initialValueSignUp,
       validationSchema: signUpSchema,
       onSubmit: (values, action) => {
         console.log(values);
@@ -25,6 +29,16 @@ const SignUP = ({ show, handleClose }) => {
         handleClose();
       },
     });
+
+  const loginFormik = useFormik({
+    initialValues: initialValueLogin,
+    validationSchema: logInSchema,
+    onSubmit: (values, action) => {
+      console.log("login", values);
+      action.resetForm();
+      handleClose();
+    },
+  });
 
   return (
     <>
@@ -124,7 +138,7 @@ const SignUP = ({ show, handleClose }) => {
               Please enter your phone number or email below.
             </span>
 
-            <Form noValidate onSubmit={handleSubmit}>
+            <Form noValidate onSubmit={loginFormik.handleSubmit}>
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlInput1"
@@ -134,13 +148,13 @@ const SignUP = ({ show, handleClose }) => {
                   type="text"
                   placeholder=""
                   className="shadow-none rounded-5"
-                  name="both"
-                  value={values.both}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+                  name="email"
+                  value={loginFormik.values.email}
+                  onChange={loginFormik.handleChange}
+                  onBlur={loginFormik.handleBlur}
                 />
-                {errors.both && touched.both ? (
-                  <p className="text-danger">{errors.both}</p>
+                {loginFormik.errors.both && loginFormik.touched.both ? (
+                  <p className="text-danger">{loginFormik.errors.both}</p>
                 ) : null}
               </Form.Group>
 

@@ -1,4 +1,4 @@
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import "./productcard.scss";
 
 const ProductCard = ({
@@ -10,10 +10,11 @@ const ProductCard = ({
   price,
   offerSticker,
   discount,
+  btnClass,
 }) => {
   return (
-    <div className="productCard-main mx-2">
-      <Card className="border">
+    <div className="productCard-main mx-2 border">
+      <Card className="border-0">
         <div className="productCardImg d-flex justify-content-center">
           <Card.Img src={imgUrl} />
         </div>
@@ -51,6 +52,9 @@ const ProductCard = ({
           </Card.Text>
         </Card.Body>
       </Card>
+      <div className="px-2">
+        <Button className={`${btnClass} cardbtn`}>Add to cart</Button>
+      </div>
     </div>
   );
 };

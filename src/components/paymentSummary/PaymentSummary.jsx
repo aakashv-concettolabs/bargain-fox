@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import "./paymentSummary.scss";
 import { Button, Card } from "react-bootstrap";
 
 const PaymentSummary = () => {
   return (
-    <Card className="border rounded-5">
+    <Card className="border rounded-4 paymentSummary-main">
       <Card.Body>
         <Card.Title className="border-bottom pb-2">Order Summary</Card.Title>
         <div>
@@ -26,7 +27,11 @@ const PaymentSummary = () => {
             <span>Total (3 Items):</span> <span>$30</span>
           </p>
         </div>
-        <Button className="w-100 rounded-5 border-0 text-white">
+        <Button
+          className="w-100 rounded-5 border-0 text-white"
+          as={Link}
+          to={"/address"}
+        >
           Proceed to Checkout
         </Button>
         <div>

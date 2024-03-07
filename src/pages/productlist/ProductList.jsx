@@ -105,6 +105,7 @@ const ProductList = () => {
                   price="50"
                   offerSticker={offerSticker}
                   discount="-10%"
+                  btnClass="d-none"
                 />
               </Link>
             </Col>

@@ -20,3 +20,13 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+.form-check-input:focus {
+  outline: 0;
+  box-shadow: none;
+}
