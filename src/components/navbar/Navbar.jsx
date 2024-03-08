@@ -9,12 +9,13 @@ import {
   Navbar,
 } from "react-bootstrap";
 import { useState } from "react";
-import brandLogo from "../../assets/main-logo.png";
+import brandLogo from "../../assets/eCartlogo.svg";
 import { Link } from "react-router-dom";
 import wishList from "../../assets/heart.png";
 import user from "../../assets/user.png";
 import cart from "../../assets/shopping-cart.png";
 import SearchIcon from "../../assets/search-normal.png";
+import humburger from "../../assets/list.svg";
 import "./navbar.scss";
 import SignUP from "../../pages/signup/SignUP";
 
@@ -26,15 +27,28 @@ const Header = () => {
   };
 
   return (
-    <header className="header-main mt-2 mt-sm-0">
+    <header className="header-main mt-0">
       <Container fluid>
-        <Row className="d-md-flex d-none d-sm-none justify-content-center align-items-center">
-          <Col>
-            <Navbar.Brand as={Link} to={"/"}>
-              <img src={brandLogo} alt="Bargain-Fox logo" />
-            </Navbar.Brand>
+        <Row className="justify-content-center align-items-center">
+          <Col xs={6} md={4} className="ps-md-5">
+            <div className="d-flex justify-content-start align-items-center gap-2">
+              <img
+                src={humburger}
+                alt=""
+                height="24px"
+                width="24px"
+                className="d-sm-flex d-md-none"
+              />
+              <Navbar.Brand as={Link} to={"/"}>
+                <img
+                  src={brandLogo}
+                  alt="Bargain-Fox logo"
+                  className="brandlogo"
+                />
+              </Navbar.Brand>
+            </div>
           </Col>
-          <Col>
+          <Col md={4} className="d-md-flex d-none">
             <InputGroup className="rounded-3">
               <Form.Control
                 className="border-0 shadow-none"
@@ -46,19 +60,19 @@ const Header = () => {
               </Button>
             </InputGroup>
           </Col>
-          <Col>
-            <Nav className="d-flex justify-content-end align-items-center">
-              <Nav.Link as={Link} to={"/wishlist"}>
-                <div className="position-relative">
-                  <img src={wishList} alt="wishlist" />
+          <Col xs={6} md={4} className="pe-md-5">
+            <Nav className="d-flex gap-2 gap-sm-3 justify-content-end align-items-center">
+              <Nav.Link as={Link} to={"/wishlist"} className="p-0">
+                <div className="position-relative ">
+                  <img src={wishList} alt="wishlist" className="wishlist" />
                   <span className="wishlistCount small rounded-circle text-white d-flex justify-content-center align-items-center position-absolute">
                     0
                   </span>
                 </div>
               </Nav.Link>
-              <Nav.Link as={Link} to="/cart">
-                <div className="position-relative">
-                  <img src={cart} alt="" />
+              <Nav.Link className="p-0" as={Link} to="/cart">
+                <div className="position-relative ">
+                  <img src={cart} alt="" className="cartimg" />
                   <span className="cartCounter small text-white rounded-circle d-flex justify-content-center align-items-center position-absolute">
                     3
                   </span>
@@ -66,10 +80,16 @@ const Header = () => {
               </Nav.Link>
 
               <div id="userProfile" className="position-relative">
-                <div href="">
-                  <div className="d-flex gap-2 text-dark">
-                    <img className="py-3" src={user} alt="user-icon" />
-                    <div className="d-xl-flex d-sm-none small flex-column justify-content-center">
+                <div>
+                  <img
+                    className="user py-3 d-flex d-xl-none"
+                    src={user}
+                    alt="user-icon"
+                    onClick={() => setShow(true)}
+                  />
+                  <div className="d-none d-xl-flex gap-2 text-dark">
+                    <img className="py-3 user" src={user} alt="user-icon" />
+                    <div className="d-flex small flex-column justify-content-center">
                       <span>Hello there,</span>
                       <span className="fw-bold">SIGN IN / REGISTER</span>
                     </div>
@@ -152,52 +172,7 @@ const Header = () => {
           </Col>
         </Row>
 
-        <Row className="d-sm-flex d-md-none justify-content-sm-between align-items-center">
-          <Col className="col-6 col-sm-6">
-            <div className="d-flex justify-content-start align-items-center gap-2">
-              <img
-                src="https://concetto-web.bargainfox.com/images/svg/menu.svg"
-                alt=""
-                height="24px"
-                width="24px"
-              />
-              <Navbar.Brand href="#home">
-                <img
-                  className="brand-logo d-flex flex-wrap"
-                  src={brandLogo}
-                  alt="Bargain-Fox logo"
-                />
-              </Navbar.Brand>
-            </div>
-          </Col>
-          <Col className=" d-flex flex-wrap justify-content-end col-6 col-sm-6">
-            <Nav className="flex-nowrap d-flex justify-content-end align-items-center">
-              <Nav.Link className="px-2" href="">
-                <div className="position-relative">
-                  <img src={wishList} alt="wishlist" />
-                  <span className="wishlistCount small text-white rounded-circle d-flex justify-content-center align-items-center position-absolute">
-                    0
-                  </span>
-                </div>
-              </Nav.Link>
-              <Nav.Link className="px-2" href="">
-                <div className="position-relative">
-                  <img src={cart} alt="" />
-                  <span className="cartCounter small rounded-circle d-flex text-white justify-content-center align-items-center position-absolute">
-                    3
-                  </span>
-                </div>
-              </Nav.Link>
-              <Nav.Link className="px-2" onClick={() => setShow(true)}>
-                <div className="text-dark">
-                  <img src={user} alt="user-icon" />
-                </div>
-              </Nav.Link>
-            </Nav>
-          </Col>
-        </Row>
-
-        <Row className="mt-2 d-sm-flex d-md-none justify-content-sm-between align-items-center">
+        <Row className="mt-2 d-flex d-md-none justify-content-sm-between align-items-center">
           <Col>
             <InputGroup className="inputGroup rounded-3">
               <Form.Control

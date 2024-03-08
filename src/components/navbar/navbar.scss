@@ -1,10 +1,13 @@
-$themeColor: #ff7900;
+$themeColor: #0063FF;
 
 
 .header-main{
     box-shadow: 10px 3px 16px #292D320D;
     .container-fluid{
         max-width: 1600px;
+        .brandlogo{
+            width: 150px;
+        }
         
         #userProfile{
             #loginHover{
@@ -76,8 +79,7 @@ $themeColor: #ff7900;
 @media (max-width: 768px){
     .header-main{
         .container-fluid{
-            .brand-logo{
-                height: 60px;
+            .brandlogo{
                 width: 130px;
             }
         }
@@ -87,10 +89,20 @@ $themeColor: #ff7900;
 @media (max-width: 576px){
     .header-main{
         .container-fluid{
-            .brand-logo{
-                height: 45px;
+            .brandlogo{
                 width: 100px;
             }
+            .wishlist, .cartimg, .user{
+                width: 75%;
+                
+            } 
+            .wishlistCount, .cartCounter{
+                background-color: $themeColor;
+                width: 16px;
+                height: 16px;
+                top: -3px;
+                right: 0px;
+                }
         }
     }
    

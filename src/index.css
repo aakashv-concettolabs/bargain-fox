@@ -30,3 +30,8 @@ textarea {
   outline: 0;
   box-shadow: none;
 }
+
+.slick-next::before,
+.slick-prev::before {
+  color: #0063ff;
+}

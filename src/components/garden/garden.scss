@@ -1,15 +1,6 @@
 .garden-main{
-    .garden-title{
-        font-size: 26px;
-    }
-    .nav-link{
-        color: #ff7900;
-    }
-    .slick-next::before, .slick-prev::before{
-        color: #ff7900;
-    }
     .newsletter{
-        background-color: #ff7900;
+        background-color: #0063FF;
         
     }
     .newsletter::before{
@@ -19,7 +10,7 @@
         height: 80px;
         width: 120px;
         top: 0px;
-        right: 520px;
+        right: 550px;
         background-repeat: no-repeat;
     }
    
@@ -30,7 +21,7 @@
     .garden-main{
         .newsletter::before{
             top: 0px;
-            right: 450px;
+            right: 470px;
         }
     }
 }
@@ -47,24 +38,11 @@
 }
 
 @media (max-width: 768px){
-    .garden-main{
-        .garden-title{
-            font-size: 20px;
-        }
-        .nav-link{
-            font-size: 14px;
-        }
-    }
+ 
 }
 
 @media (max-width: 576px){
     .garden-main{
-        .garden-title{
-            font-size: 16px;
-        }
-        .nav-link{
-            font-size: 12px;
-        }
         .newsletter{
            h3{
             font-size: 20px;

@@ -1,0 +1,45 @@
+.sectionTitleMain{
+.sectionTitle{
+    font-size: 26px;
+}
+.nav{
+    a{
+        color: #0063FF;
+    }
+}
+}
+
+@media (max-width: 1200px){
+   
+
+}
+
+@media (max-width: 992px){
+    
+}
+
+@media (max-width: 768px){
+    .sectionTitleMain{
+        .sectionTitle{
+            font-size: 20px;
+        }
+        .nav{
+            a{
+            font-size: 14px;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px){
+    .sectionTitleMain{
+        .sectionTitle{
+            font-size: 16px;
+        }
+        .nav{
+            a{
+                font-size: 12px;
+            }
+        }
+    }
+}

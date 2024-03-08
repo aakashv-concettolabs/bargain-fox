@@ -13,33 +13,12 @@ import trendingWeekly from "../../assets/trendingweekly.png";
 import "./trending.scss";
 import Circle from "../circle/Circle";
 import { Link } from "react-router-dom";
+import SectionHeading from "../sectionheading/SectionHeading";
 
 const Trending = () => {
   return (
     <Container className="trending-main">
-      <Row>
-        <Col className="col-12 p-0 ">
-          <Row>
-            <Col className="col-8 d-flex gap-2">
-              <div className="d-flex align-items-center">
-                <span className="trending-title fw-bolder">
-                  Trending on BargainFox
-                </span>
-              </div>
-            </Col>
-            <Col className="col-4 p-0">
-              <Nav className="d-flex justify-content-end">
-                <Nav.Link href="#home">
-                  <div className="d-flex gap-2">
-                    <span>View All</span>
-                    <img src={rightArrow} alt="wishlist" />
-                  </div>
-                </Nav.Link>
-              </Nav>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+      <SectionHeading sectionHeadingTitle="Trending on eCart" />
 
       <Row className="mt-5">
         <Col className="col-12 ">
