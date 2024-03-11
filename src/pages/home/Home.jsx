@@ -1,4 +1,4 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 import Category from "../../components/category/Category";
 import banner from "../../assets/banner.png";
 import "./home.scss";
@@ -13,7 +13,7 @@ const Home = () => {
       <Category />
       <Row>
         <Col className="p-0">
-          <img src={banner} alt="banner" width="100%" />
+          <Image src={banner} className="w-100" />
         </Col>
       </Row>
       <Deals />

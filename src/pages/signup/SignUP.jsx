@@ -153,8 +153,8 @@ const SignUP = ({ show, handleClose }) => {
                   onChange={loginFormik.handleChange}
                   onBlur={loginFormik.handleBlur}
                 />
-                {loginFormik.errors.both && loginFormik.touched.both ? (
-                  <p className="text-danger">{loginFormik.errors.both}</p>
+                {loginFormik.errors.email && loginFormik.touched.email ? (
+                  <p className="text-danger">{loginFormik.errors.email}</p>
                 ) : null}
               </Form.Group>
 

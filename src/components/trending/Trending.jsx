@@ -1,19 +1,29 @@
-import { Container, Row, Col, Nav, Figure } from "react-bootstrap";
-import rightArrow from "../../assets/rightArrow.svg";
-import electronis from "../../assets/electronis.png";
-import kitchen from "../../assets/kitchen.png";
-import home from "../../assets/home.png";
-import Toytrending from "../../assets/Toy-trending.png";
-import sports from "../../assets/sports.png";
-import jobLot from "../../assets/jobLot.png";
-import pet from "../../assets/pet.png";
+import { Container, Row, Col, Image, Figure } from "react-bootstrap";
 import weeklyDeal from "../../assets/WeeklyDeal.png";
-import clearanceWeekly from "../../assets/clearanceWeekly.png";
 import trendingWeekly from "../../assets/trendingweekly.png";
+import clearanceWeekly from "../../assets/clearanceWeekly.png";
 import "./trending.scss";
-import Circle from "../circle/Circle";
 import { Link } from "react-router-dom";
 import SectionHeading from "../sectionheading/SectionHeading";
+import { trendingCategoryDatas } from "../sliderSetting/SliderSetting";
+
+const FigureImgDetails = [
+  {
+    id: 1,
+    imgUrl: weeklyDeal,
+    title: "Deals of the week",
+  },
+  {
+    id: 2,
+    imgUrl: trendingWeekly,
+    title: "Trending",
+  },
+  {
+    id: 3,
+    imgUrl: clearanceWeekly,
+    title: "Clearance",
+  },
+];
 
 const Trending = () => {
   return (
@@ -21,137 +31,54 @@ const Trending = () => {
       <SectionHeading sectionHeadingTitle="Trending on eCart" />
 
       <Row className="mt-5">
-        <Col className="col-12 ">
-          <Row>
-            <Col>
-              <div className="d-flex justify-content-between">
-                <div>
-                  <Circle
-                    imgUrl={electronis}
-                    imgStyle="bg-body-secondary rounded-circle p-1"
-                    categoryText="Electronics"
-                    offerText="Upto 50% off"
-                  />
-                </div>
-                <div>
-                  <Circle
-                    imgUrl={kitchen}
-                    imgStyle="bg-body-secondary rounded-circle p-1"
-                    categoryText="Kitchen"
-                    offerText="Upto 50% off"
-                  />
-                </div>
-                <div>
-                  <Circle
-                    imgUrl={home}
-                    imgStyle="bg-body-secondary rounded-circle p-1"
-                    categoryText="Home"
-                    offerText="From £50"
-                  />
-                </div>
-                <div className="d-none d-sm-block">
-                  <Circle
-                    imgUrl={Toytrending}
-                    imgStyle="bg-body-secondary rounded-circle p-1"
-                    categoryText="Toys & Crafts"
-                    offerText="From £100"
-                  />
-                </div>
-                <div className="d-none d-md-block">
-                  <Circle
-                    imgUrl={sports}
-                    imgStyle="bg-body-secondary rounded-circle p-1"
-                    categoryText="Sports & Leisure"
-                    offerText="Upto 50% off"
-                  />
-                </div>
-                <div className="d-none d-lg-block">
-                  <Circle
-                    imgUrl={jobLot}
-                    imgStyle="bg-body-secondary rounded-circle p-1"
-                    categoryText="Job Lots"
-                    offerText="Upto 15% off"
-                  />
-                </div>
-                <div className="d-none d-xl-block">
-                  <Circle
-                    imgUrl={pet}
-                    imgStyle="bg-body-secondary rounded-circle p-1"
-                    categoryText="Pets"
-                    offerText="Upto 10% off"
-                  />
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Col>
+        {trendingCategoryDatas.map((trendingCategoryData) => (
+          <Col
+            key={trendingCategoryData.id}
+            className="d-flex flex-column justify-content-center align-items-center"
+          >
+            <div className="trendingImgDiv bg-body-secondary rounded-circle d-flex justify-content-center align-items-center">
+              <Image
+                src={trendingCategoryData.imgUrl}
+                roundedCircle
+                className="object-fit-cover"
+              />
+            </div>
+            <p className="rounded-5 bg-primary d-flex justify-content-center align-items-center text-white py-1 mb-1 px-2">
+              {trendingCategoryData.offer}
+            </p>
+            <p className="fw-medium">{trendingCategoryData.title}</p>
+          </Col>
+        ))}
       </Row>
 
       <Row className="mt-5">
-        <Col className="col-12 ">
-          <Row>
-            <Col className=" d-flex justify-content-center align-items-center col-12 col-sm-4">
-              <Figure>
-                <Figure.Image
-                  width={320}
-                  height={320}
-                  alt="Deals of the week"
-                  src={weeklyDeal}
-                />
-                <Figure.Caption className="text-center d-flex flex-column">
-                  <span className="fw-bolder text-black weeklyTitle">
-                    Deals of the Week
-                  </span>
-                  <span>
-                    <Link className="text-decoration-none productList" to="/">
-                      View all products
-                    </Link>
-                  </span>
-                </Figure.Caption>
-              </Figure>
-            </Col>
-            <Col className=" d-flex justify-content-center align-items-center col-12 col-sm-4">
-              <Figure>
-                <Figure.Image
-                  width={320}
-                  height={320}
-                  alt="trendings"
-                  src={trendingWeekly}
-                />
-                <Figure.Caption className="text-center d-flex flex-column">
-                  <span className="fw-bolder text-black weeklyTitle">
-                    Trendings
-                  </span>
-                  <span>
-                    <Link className="text-decoration-none productList" to="/">
-                      View all products
-                    </Link>
-                  </span>
-                </Figure.Caption>
-              </Figure>
-            </Col>
-            <Col className=" d-flex justify-content-center align-items-center col-12 col-sm-4">
-              <Figure>
-                <Figure.Image
-                  width={320}
-                  height={320}
-                  alt="Clearenace"
-                  src={clearanceWeekly}
-                />
-                <Figure.Caption className="text-center d-flex flex-column">
-                  <span className="fw-bolder text-black weeklyTitle">
-                    Clearance
-                  </span>
-                  <span>
-                    <Link className="text-decoration-none productList" to="/">
-                      View all products
-                    </Link>
-                  </span>
-                </Figure.Caption>
-              </Figure>
-            </Col>
-          </Row>
-        </Col>
+        {FigureImgDetails.map((FigureImgDetail) => (
+          <Col
+            xs={12}
+            sm={4}
+            className="d-flex justify-content-center align-items-center"
+            key={FigureImgDetail.id}
+          >
+            <Figure>
+              <Figure.Image
+                width={360}
+                // height={330}
+                alt={FigureImgDetail.title}
+                src={FigureImgDetail.imgUrl}
+              />
+              <Figure.Caption className="text-center d-flex flex-column">
+                <span className="fw-bolder text-black weeklyTitle">
+                  {FigureImgDetail.title}
+                </span>
+                <span>
+                  <Link className="text-decoration-none productList" to="/">
+                    View all products
+                  </Link>
+                </span>
+              </Figure.Caption>
+            </Figure>
+          </Col>
+        ))}
       </Row>
     </Container>
   );

@@ -15,9 +15,10 @@ import wishList from "../../assets/heart.png";
 import user from "../../assets/user.png";
 import cart from "../../assets/shopping-cart.png";
 import SearchIcon from "../../assets/search-normal.png";
-import humburger from "../../assets/list.svg";
 import "./navbar.scss";
 import SignUP from "../../pages/signup/SignUP";
+import MobileMenubar from "../mobileMenubar/MobileMenubar";
+import SignRegisterHovermMenu from "../signRegisterHoverMenu/SignRegisterHovermMenu";
 
 const Header = () => {
   const [show, setShow] = useState(false);
@@ -32,13 +33,7 @@ const Header = () => {
         <Row className="justify-content-center align-items-center">
           <Col xs={6} md={4} className="ps-md-5">
             <div className="d-flex justify-content-start align-items-center gap-2">
-              <img
-                src={humburger}
-                alt=""
-                height="24px"
-                width="24px"
-                className="d-sm-flex d-md-none"
-              />
+              <MobileMenubar />
               <Navbar.Brand as={Link} to={"/"}>
                 <img
                   src={brandLogo}
@@ -55,7 +50,7 @@ const Header = () => {
                 placeholder="Search Product"
                 aria-describedby="basic-addon2"
               />
-              <Button id="button-addon2">
+              <Button id="button-addon2" className="border">
                 <img src={SearchIcon} alt="" />
               </Button>
             </InputGroup>
@@ -97,74 +92,9 @@ const Header = () => {
 
                   <div
                     id="loginHover"
-                    className="position-absolute bg-body-tertiary rounded-4 pt-4 z-3"
+                    className="position-absolute bg-body-tertiary rounded-4 pt-4 z-3 px-1 w-auto"
                   >
-                    <div className="px-4">
-                      <Button
-                        className="border-0 rounded-5 signupBtn"
-                        onClick={() => setShow(true)}
-                      >
-                        Login/Register
-                      </Button>
-                    </div>
-                    <hr className="mb-1" />
-                    <div>
-                      <ul className="list-inline">
-                        <li>
-                          <Link
-                            className="text-decoration-none text-black ps-2"
-                            to="/"
-                          >
-                            Your Profile
-                          </Link>
-                        </li>
-                        <hr className="my-1" />
-                        <li>
-                          <Link
-                            className="text-decoration-none text-black ps-2"
-                            to="/"
-                          >
-                            BargainFox Subscription
-                          </Link>
-                        </li>
-                        <hr className="my-1" />
-                        <li>
-                          <Link
-                            className="text-decoration-none text-black ps-2"
-                            to="/"
-                          >
-                            Your Orders
-                          </Link>
-                        </li>
-                        <hr className="my-1" />
-                        <li>
-                          <Link
-                            className="text-decoration-none text-black ps-2"
-                            to="/"
-                          >
-                            Addresses
-                          </Link>
-                        </li>
-                        <hr className="my-1" />
-                        <li>
-                          <Link
-                            className="text-decoration-none text-black ps-2"
-                            to="/"
-                          >
-                            Notifications
-                          </Link>
-                        </li>
-                        <hr className="my-1" />
-                        <li>
-                          <Link
-                            className="text-decoration-none text-black ps-2"
-                            to="/"
-                          >
-                            Wishlists
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
+                    <SignRegisterHovermMenu />
                   </div>
                 </div>
               </div>

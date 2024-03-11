@@ -11,6 +11,7 @@ import starColor from "../../assets/starColor.svg";
 import offerSticker from "../../assets/offerSticker.svg";
 import SectionHeading from "../sectionheading/SectionHeading";
 import { settings } from "../sliderSetting/SliderSetting";
+import OfferStickerComponent from "../offerStickerComponent/OfferStickerComponent";
 
 const Garden = () => {
   return (
@@ -35,40 +36,7 @@ const Garden = () => {
                     />
                   </div>
                   <div>
-                    <ProductCard
-                      imgUrl={garden2}
-                      detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-                      ratedStar={starColor}
-                      unratedStar={star}
-                      offerPrice="44"
-                      price="50"
-                      offerSticker={offerSticker}
-                      discount="-10%"
-                    />
-                  </div>
-                  <div>
-                    <ProductCard
-                      imgUrl={garden3}
-                      detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-                      ratedStar={starColor}
-                      unratedStar={star}
-                      offerPrice="44"
-                      price="50"
-                      offerSticker={offerSticker}
-                      discount="-10%"
-                    />
-                  </div>
-                  <div>
-                    <ProductCard
-                      imgUrl={garden4}
-                      detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-                      ratedStar={starColor}
-                      unratedStar={star}
-                      offerPrice="44"
-                      price="50"
-                      offerSticker={offerSticker}
-                      discount="-10%"
-                    />
+                    <OfferStickerComponent />
                   </div>
                 </Slider>
               </div>
@@ -77,7 +45,7 @@ const Garden = () => {
         </Col>
       </Row>
 
-      <Row className="newsletter mt-5  p-md-5 position-relative rounded-5 text-white  justify-content-between">
+      <Row className="newsletter mt-5 p-4  p-md-5 position-relative rounded-5 text-white  justify-content-between">
         <Col className="col-12 col-lg-6 col-xl-6">
           <h3 className="text-center text-md-start">
             Subscribe to Our Newsletters

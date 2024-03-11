@@ -1,7 +1,7 @@
 import Slider from "react-slick";
-import { Col, Container, Nav, Row } from "react-bootstrap";
+import { Col, Container, Card, Row, Image } from "react-bootstrap";
 import "./deals.scss";
-import DealCard from "../dealCard/DealCard";
+// import DealCard from "../dealCard/DealCard";
 import { Link } from "react-router-dom";
 import SectionHeading from "../sectionheading/SectionHeading";
 import { settings, dealofthedays } from "../sliderSetting/SliderSetting.js";
@@ -23,11 +23,20 @@ const Deals = () => {
                         className="text-decoration-none"
                         to={"/productList"}
                       >
-                        <DealCard
-                          imgUrl={dealoftheday.imgUrl}
-                          offer={dealoftheday.offer}
-                          title={dealoftheday.title}
-                        />
+                        <Card>
+                          <div>
+                            <Image
+                              src={dealoftheday.imgUrl}
+                              className="w-100"
+                            />
+                          </div>
+                          <div className="px-3 mt-2 pb-4">
+                            <p className="offertext">{dealoftheday.offer}</p>
+                            <p className="fw-medium dealtitle">
+                              {dealoftheday.title}
+                            </p>
+                          </div>
+                        </Card>
                       </Link>
                     </div>
                   ))}

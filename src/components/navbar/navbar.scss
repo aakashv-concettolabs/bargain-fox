@@ -1,112 +1,97 @@
-$themeColor: #0063FF;
+$themeColor: #0063ff;
 
+.header-main {
+  box-shadow: 10px 3px 16px #292d320d;
+  .container-fluid {
+    max-width: 1600px;
+    .brandlogo {
+      width: 150px;
+    }
 
-.header-main{
-    box-shadow: 10px 3px 16px #292D320D;
-    .container-fluid{
-        max-width: 1600px;
-        .brandlogo{
-            width: 150px;
+    #userProfile {
+      #loginHover {
+        display: none;
+        min-width: max-content;
+        border: 1px solid #ffffff;
+        box-shadow: 10px 3px 16px #292d320d;
+      }
+      &:hover {
+        #loginHover {
+          display: block;
         }
-        
-        #userProfile{
-            #loginHover{
-                display: none;
-                border: 1px solid #FFFFFF;
-                box-shadow: 10px 3px 16px #292D320D;
-                .btn:first-child:active{
-                    background-color: #ff7900;
-                    }
-                .signupBtn{
-                    background-color: #ff7900;
-                    &:hover{
-                        background-color: black;
-                        transition: all 0.2s ease-in-out;
-                    }
-                }
-            }
-            &:hover{
-                #loginHover{
-                    display: block;
-                }
-            }
-            li{
-                font-size: 15px;
-            }
-        }
-        
-     .input-group{
-        border: 2px solid #f5f5fc;
+      }
+    }
 
-        button{
+    .input-group {
+      border: 2px solid #f5f5fc;
+
+      button {
         background-color: $themeColor;
         border: 1px solid $themeColor;
-        &:hover{
+        &:hover {
+          background-color: $themeColor;
+          border: 1px solid $themeColor;
+        }
+      }
+    }
+
+    .wishlistCount,
+    .cartCounter {
+      background-color: $themeColor;
+      width: 20px;
+      height: 20px;
+      top: -8px;
+      right: -8px;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .header-main {
+    .container-fluid {
+      #userProfile:hover {
+        #loginHover {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+  .header-main {
+    .container-fluid {
+      .brandlogo {
+        width: 130px;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .header-main {
+    .container-fluid {
+      .brandlogo {
+        width: 100px;
+      }
+      .wishlist,
+      .cartimg,
+      .user {
+        width: 75%;
+      }
+      .wishlistCount,
+      .cartCounter {
         background-color: $themeColor;
-        border: 1px solid $themeColor;
-            };
-        }
+        width: 16px;
+        height: 16px;
+        top: -3px;
+        right: 0px;
+      }
     }
-
-    .wishlistCount, .cartCounter{
-        background-color: $themeColor;
-        width: 20px;
-        height: 20px;
-        top: -8px;
-        right: -8px;
-        }
-    }
-}
-
-
-
-@media (max-width: 1200px){
-.header-main{
-    .container-fluid{
-        #userProfile:hover{
-            #loginHover{
-                display: none;
-            }
-        }
-    }
-}
-}
-
-@media (max-width: 992px){
-    
-}
-
-@media (max-width: 768px){
-    .header-main{
-        .container-fluid{
-            .brandlogo{
-                width: 130px;
-            }
-        }
-    }
-}
-
-@media (max-width: 576px){
-    .header-main{
-        .container-fluid{
-            .brandlogo{
-                width: 100px;
-            }
-            .wishlist, .cartimg, .user{
-                width: 75%;
-                
-            } 
-            .wishlistCount, .cartCounter{
-                background-color: $themeColor;
-                width: 16px;
-                height: 16px;
-                top: -3px;
-                right: 0px;
-                }
-        }
-    }
-   
-
+  }
 }
 
 // @import '../../../node_modules//bootstrap/scss/bootstrap.scss';

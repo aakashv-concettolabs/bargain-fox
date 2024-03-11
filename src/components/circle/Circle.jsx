@@ -1,10 +1,10 @@
 import "./circle.scss";
 import { useState } from "react";
-import { Col, Container, Row, Tab, Nav } from "react-bootstrap";
-import ImageComponent from "../imageComponent/ImageComponent";
+import { Col, Image, Row, Tab, Nav } from "react-bootstrap";
+
 import { tabMenu } from "./hoverMenuData";
 
-const Circle = ({ imgUrl, imgStyle, categoryText, offerText, notOffer }) => {
+const Circle = ({ imgUrl, categoryText }) => {
   const [activeTab, setActiveTab] = useState("first");
 
   const handleTabHover = (eventKey) => {
@@ -14,12 +14,7 @@ const Circle = ({ imgUrl, imgStyle, categoryText, offerText, notOffer }) => {
     <div className="categoryCircle position-relative ">
       <div className="d-flex flex-column align-items-center justify-content-between">
         <div className="categoryCircle d-flex flex-column justify-content-center align-items-center">
-          <ImageComponent imgUrl={imgUrl} />
-          <span
-            className={`offerText p-2 rounded-5 text-white small my-1 mb-3 ${notOffer}`}
-          >
-            {offerText}
-          </span>
+          <Image roundedCircle src={imgUrl} />
           <span className="text-center fw-medium">{categoryText}</span>
         </div>
         <div className="dot rounded-circle position-absolute"></div>
@@ -44,7 +39,6 @@ const Circle = ({ imgUrl, imgStyle, categoryText, offerText, notOffer }) => {
                         >
                           {tabmenu.menu}
                         </Nav.Link>
-                        
                       </Nav.Item>
                     </div>
                   </Nav>

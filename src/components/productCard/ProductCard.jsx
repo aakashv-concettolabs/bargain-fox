@@ -1,5 +1,6 @@
 import { Card, Button } from "react-bootstrap";
 import "./productcard.scss";
+import OfferStickerComponent from "../offerStickerComponent/OfferStickerComponent";
 
 const ProductCard = ({
   imgUrl,
@@ -43,12 +44,7 @@ const ProductCard = ({
                 <strike>${price}</strike>
               </span>
             </span>
-            <span className="d-none d-sm-flex">
-              <img src={offerSticker} className="position-relative" />
-              <span className="position-absolute discount text-white">
-                {discount}
-              </span>
-            </span>
+            <OfferStickerComponent />
           </Card.Text>
         </Card.Body>
       </Card>

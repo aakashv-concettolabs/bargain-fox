@@ -7,44 +7,37 @@ import sportsCategory from "../../assets/sport.png";
 import clearanceCategory from "../../assets/clearance.png";
 import Circle from "../../components/circle/Circle";
 import { Col, Container, Row, Tab, Nav } from "react-bootstrap";
-import { useState } from "react";
 
 const categoryDatas = [
   {
     id: 1,
     imgUrl: kitchenCategory,
     categoryText: "Home & Kitchen",
-    notOffer: "d-none",
   },
   {
     id: 2,
     imgUrl: healthCategory,
     categoryText: "Health & Beauty",
-    notOffer: "d-none",
   },
   {
     id: 3,
     imgUrl: electronicCategory,
     categoryText: "Electonics",
-    notOffer: "d-none",
   },
   {
     id: 4,
     imgUrl: toyCategory,
     categoryText: "Toys & Crafts",
-    notOffer: "d-none",
   },
   {
     id: 5,
     imgUrl: sportsCategory,
     categoryText: "Sports & Leisure",
-    notOffer: "d-none",
   },
   {
     id: 6,
     imgUrl: clearanceCategory,
     categoryText: "Clearance",
-    notOffer: "d-none",
   },
 ];
 const Category = () => {
@@ -63,7 +56,6 @@ const Category = () => {
                 <Circle
                   imgUrl={categoryData.imgUrl}
                   categoryText={categoryData.categoryText}
-                  notOffer={categoryData.notOffer}
                 />
               </Col>
             ))}

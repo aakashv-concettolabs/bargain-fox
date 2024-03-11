@@ -1,16 +1,14 @@
 .trending-main{
-    .trending-title{
-        font-size: 26px;
-    }
-    .nav-link{
-        color: #ff7900;
-    }
+   .trendingImgDiv{
+    height: 150px;
+    width: 150px;
+   }
     .weeklyTitle{
         font-size: 20px;
     }
     
     .productList{
-        color: #ff7900;
+        color: #0063FF;
         font-size: 18px;
 
         
@@ -27,43 +25,21 @@
 
 @media (max-width: 768px){
     .trending-main{
-        .trending-title{
-            font-size: 20px;
-        }
-        .nav-link{
-            font-size: 14px;
-        }
-
+     
         .weeklyTitle{
             font-size: 17px;
         }
         
         .productList{
-            font-size: 16px;
-    
-            
+            font-size: 13px;     
         }
     }
 }
 
 @media (max-width: 576px){
    
-    .trending-main{
-        .trending-title{
-            font-size: 16px;
-        }
-        .nav-link{
-            font-size: 12px;
-        }
-        .weeklyTitle{
-            font-size: 20px;
-        }
+      
         
-        .productList{
-            font-size: 18px;
-    
-            
-        }
+       
     }
 
-}

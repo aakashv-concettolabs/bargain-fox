@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
 import ProductColor from "../../components/productColorSize/ProductColor";
 import ProductSize from "../../components/productColorSize/ProductSize";
 import ReturnPolicy from "../../components/returnPolicy/ReturnPolicy";
-import FeatureProduct from "../../components/featureProduct/FeatureProduct";
 import CustomerReview from "../../components/cusomerReview/CustomerReview";
 import { useState } from "react";
 
@@ -36,7 +35,6 @@ const ProductDetails = () => {
         </Breadcrumb.Item>
       </Breadcrumb>
 
-      {/* <FeatureProduct /> */}
       <Row className="justify-content-around">
         <Col lg={1} xs={3} className="d-flex flex-column gap-3">
           {ProductImgs.map((productImg) => (
