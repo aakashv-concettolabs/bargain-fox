@@ -2,16 +2,8 @@ import "./garden.scss";
 import { Container, Row, Col, InputGroup, Form, Button } from "react-bootstrap";
 import ProductCard from "../productCard/ProductCard";
 import Slider from "react-slick";
-import garden1 from "../../assets/garden-1.png";
-import garden2 from "../../assets/garden-2.png";
-import garden3 from "../../assets/garden-3.png";
-import garden4 from "../../assets/garden-4.png";
-import star from "../../assets/star.svg";
-import starColor from "../../assets/starColor.svg";
-import offerSticker from "../../assets/offerSticker.svg";
 import SectionHeading from "../sectionheading/SectionHeading";
-import { settings } from "../sliderSetting/SliderSetting";
-import OfferStickerComponent from "../offerStickerComponent/OfferStickerComponent";
+import { settings, GardenDatas } from "../sliderSetting/SliderSetting";
 
 const Garden = () => {
   return (
@@ -23,21 +15,15 @@ const Garden = () => {
             <Col>
               <div className="slider-container">
                 <Slider {...settings}>
-                  <div>
+                  {GardenDatas.map((gardenData) => (
                     <ProductCard
-                      imgUrl={garden1}
-                      detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-                      ratedStar={starColor}
-                      unratedStar={star}
-                      offerPrice="44"
-                      price="50"
-                      offerSticker={offerSticker}
-                      discount="-10%"
+                      imgUrl={gardenData.imgUrl}
+                      detail={gardenData.detail}
+                      key={gardenData.id}
+                      price={gardenData.price}
+                      offerPrice={gardenData.offerPrice}
                     />
-                  </div>
-                  <div>
-                    <OfferStickerComponent />
-                  </div>
+                  ))}
                 </Slider>
               </div>
             </Col>

@@ -32,7 +32,7 @@ const Cart = () => {
     <Container fluid>
       <Row className="justify-content-around mt-3">
         <Col xs={12} md={8} lg={8}>
-          <Row className="align-items-center border-bottom">
+          <Row className="align-items-center">
             <Col className="d-flex flex-column flex-sm-row align-items-sm-center gap-sm-2">
               <h4>Shopping Cart</h4>
               <span className="text-body-tertiary">(3 Items)</span>
@@ -43,7 +43,11 @@ const Cart = () => {
             </Col>
           </Row>
           {cartProductDetails.map((cartProductDetail) => (
-            <div key={cartProductDetail.id}>
+            <div
+              key={cartProductDetail.id}
+              style={{ borderTop: "1px solid #f5f5fc" }}
+              className="mt-3"
+            >
               <CartCard
                 productheading={cartProductDetail.productheading}
                 imgUrl={cartProductDetail.imgUrl}

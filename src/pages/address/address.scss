@@ -1,17 +1,25 @@
-.address-container{
-    .editoption{
-        color: #ff7900;
+.address-container {
+  .editoption {
+    color: #ff7900;
+  }
+  .customborder {
+    border-top: 2px solid #f2f2f8;
+  }
+  .card {
+    border: 2px solid #f2f2f8;
+    .customborder {
+      border-top: 2px solid #f2f2f8;
     }
-    .card{
-        .btn{
-            background-color: #ff7900;
-            transition: all 0.5s ease-in-out;
-            &:hover{
-                background-color: #292d32;
-            }
-        }
-        :not(.btn-check) + .btn:active {
-            background-color: #0a58ca;
-        }
+    .btn {
+      // background-color: #ff7900;
+      transition: all 0.5s ease-in-out;
+      &:hover {
+        background-color: #292d32;
+        border-color: #292d32;
+      }
     }
+    :not(.btn-check) + .btn:active {
+      background-color: #0a58ca;
+    }
+  }
 }

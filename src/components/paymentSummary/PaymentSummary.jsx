@@ -4,11 +4,11 @@ import { Button, Card } from "react-bootstrap";
 
 const PaymentSummary = () => {
   return (
-    <Card className="border rounded-4 paymentSummary-main">
+    <Card className="rounded-4" id="paymentSummary-main">
       <Card.Body>
-        <Card.Title className="border-bottom pb-2">Order Summary</Card.Title>
+        <Card.Title className="customborder pb-2">Order Summary</Card.Title>
         <div>
-          <div className="border-bottom text-secondary-emphasis">
+          <div className="customborder text-secondary-emphasis">
             <p className="d-flex justify-content-between">
               <span>Item(s) Total:</span> <span>$45</span>
             </p>
@@ -28,7 +28,7 @@ const PaymentSummary = () => {
           </p>
         </div>
         <Button
-          className="w-100 rounded-5 border-0 text-white"
+          className="w-100 rounded-5 text-white"
           as={Link}
           to={"/address"}
         >

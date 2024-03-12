@@ -19,11 +19,7 @@
     .form-check-input{
         &:focus{
             box-shadow: none;
-            border-color: lightgray;
-        }
-        &:checked{
-            background-color: #ff7900;
-            border-color: #ff7900;
+            border-color: #dee2e6;
         }
     }
 

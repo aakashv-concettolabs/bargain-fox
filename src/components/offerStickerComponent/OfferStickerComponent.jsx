@@ -8,7 +8,7 @@ const OfferStickerComponent = () => {
       <div>
         <Image src={offerSticker} />
       </div>
-      <span className="position-absolute offerDiscount">-10%</span>
+      <span className="offerDiscount position-absolute text-white">-10%</span>
     </div>
   );
 };

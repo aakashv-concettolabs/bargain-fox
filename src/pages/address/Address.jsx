@@ -84,7 +84,7 @@ const Address = () => {
             </Row>
 
             {userAddresses.map((userAddresse) => (
-              <Row className="mt-3 pt-3 border-top" key={userAddresse.id}>
+              <Row className="mt-3 pt-3 customborder" key={userAddresse.id}>
                 <Col xs={9} className="d-flex gap-4">
                   <Form.Check type="radio" name="address" />
                   <div className=" d-flex flex-column">
@@ -106,33 +106,28 @@ const Address = () => {
           </Col>
 
           <Col xs={12} md={4} lg={3}>
-            <Card className="border rounded-4">
+            <Card className="rounded-4">
               <Card.Body>
-                <div className="border-bottom pb-3">
-                  <Button
-                    className="w-100 rounded-5 border-0 text-white"
-                    as={Link}
-                  >
+                <div className="">
+                  <Button className="w-100 rounded-5 text-white" as={Link}>
                     Continue to Payment
                   </Button>
                 </div>
-                <div>
-                  <div>
-                    <p>We Accept:</p>
-                    <Row>
-                      <Col xs={11} sm={10} md={12} className="d-flex">
-                        {paymentMethod.map((paymentmode) => (
-                          <div key={paymentmode.id} className="w-75">
-                            <Image
-                              src={paymentmode.imgUrl}
-                              alt={paymentMethod.imgName}
-                              className="w-75"
-                            />
-                          </div>
-                        ))}
-                      </Col>
-                    </Row>
-                  </div>
+                <div className="customborder mt-3 pt-3">
+                  <p>We Accept:</p>
+                  <Row>
+                    <Col xs={11} sm={10} md={12} className="d-flex">
+                      {paymentMethod.map((paymentmode) => (
+                        <div key={paymentmode.id} className="w-75">
+                          <Image
+                            src={paymentmode.imgUrl}
+                            alt={paymentMethod.imgName}
+                            className="w-75"
+                          />
+                        </div>
+                      ))}
+                    </Col>
+                  </Row>
                 </div>
               </Card.Body>
             </Card>

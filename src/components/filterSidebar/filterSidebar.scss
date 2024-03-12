@@ -1,17 +1,7 @@
 .list-group{
     .list-group-item{
-        .form-check-input{
-            border-radius: 50%;
-            box-shadow: none;
-            border: 1px solid #a4a4b8;
-            background-image: none;
-           
-
-            &:checked{
-                background-color: #ff7900;
-                border: 1px solid #a4a4b8;  
-            }
-
-        }
+       h6{
+        border-bottom: 1px solid #f5f5fc;
+       }
     }
 }

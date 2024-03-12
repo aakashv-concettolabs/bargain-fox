@@ -33,8 +33,6 @@
         }
     }
     .cart{
-        background-color: #ff7900;
-        border-color: #ff7900;
         &:hover{
             background-color: #000;
             border-color: black;
@@ -42,13 +40,11 @@
         }
     }
     .buyNow{
-        border-color: #ff7900;
-        background-color: #FF79001A;
         color: #000;
+        background-color: #cfe2ff;
         &:hover{
-            background-color: #ff7900;
+            background-color: #0063FF;
             color: white;
-            border-color: #ff7900;
         }
     }
     .rateCount{

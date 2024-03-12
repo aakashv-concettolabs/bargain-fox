@@ -1,52 +1,143 @@
 import "./filterSidebar.scss";
-import { Col, Row, Form, ListGroup } from "react-bootstrap";
+import { Form, ListGroup, Image } from "react-bootstrap";
 import fourStar from "../../assets/4Star.svg";
 import threeStar from "../../assets/3Star.svg";
 import twoStar from "../../assets/2Star.svg";
 import oneStar from "../../assets/1Star.svg";
-import offerSticker from "../../assets/offerSticker.svg";
+import { Checkbox } from "pretty-checkbox-react";
+import "@djthoms/pretty-checkbox";
+import { useState } from "react";
+
+const Conditions = [
+  {
+    id: 21,
+    label: "Brand New",
+  },
+  {
+    id: 22,
+    label: "Open Box",
+  },
+  {
+    id: 33,
+    label: "Like New",
+  },
+  {
+    id: 24,
+    label: "Very Good",
+  },
+  {
+    id: 25,
+    label: "Good",
+  },
+  {
+    id: 26,
+    label: "Acceptable",
+  },
+];
+
+const CustomerReviews = [
+  {
+    id: 7,
+    imgUrl: fourStar,
+  },
+  {
+    id: 8,
+    imgUrl: threeStar,
+  },
+  {
+    id: 9,
+    imgUrl: twoStar,
+  },
+  {
+    id: 10,
+    imgUrl: oneStar,
+  },
+];
+
+const Pricedata = [
+  {
+    id: 11,
+    price: "Under £10",
+  },
+  {
+    id: 12,
+    price: "£10 - £25",
+  },
+  {
+    id: 13,
+    price: "£25 - £50",
+  },
+  {
+    id: 14,
+    price: "£50 - £100",
+  },
+  {
+    id: 15,
+    price: "Over £100",
+  },
+];
 
 const FilterSidebar = () => {
+  const [check, setCheck] = useState(null);
+  const [reviewcheck, setReviewCheck] = useState(null);
+
+  const handleCustomerReview = (index2) => {
+    if (reviewcheck === index2) {
+      setReviewCheck(null);
+    } else setReviewCheck(index2);
+  };
+
+  const handleCheck = (index) => {
+    if (check === index) {
+      setCheck(null);
+    } else {
+      setCheck(index);
+    }
+  };
+
   return (
     <ListGroup variant="flush">
-      <ListGroup.Item>
-        <Form.Label>Condition</Form.Label>
-        <Form.Check type="checkbox" label="Brand New" />
-        <Form.Check type="checkbox" label="Open Box" />
-        <Form.Check type="checkbox" label="Like New" />
-        <Form.Check type="checkbox" label="Very Good" />
-        <Form.Check type="checkbox" label="Good" />
-        <Form.Check type="checkbox" label="Acceptable" />
+      <ListGroup.Item className="border-0 d-flex flex-column gap-3">
+        <h6 className="pb-2 fw-semibold">Condition</h6>
+        {Conditions.map((condition) => (
+          <Checkbox shape="round" color="primary" key={condition.id}>
+            {condition.label}
+          </Checkbox>
+        ))}
       </ListGroup.Item>
 
-      <ListGroup.Item>
-        <Form.Label>Review</Form.Label>
-        <label htmlFor="" className="d-flex gap-1">
-          <Form.Check type="checkbox" value="4star" id="4star" />
-          <img src={fourStar} />
+      <ListGroup.Item className="border-0 d-flex flex-column gap-3 mt-3">
+        <h6 className="pb-2 fw-semibold">Customer Review</h6>
+        {CustomerReviews.map((CustomerReview, index) => (
+          <label key={CustomerReview.id}>
+            <Checkbox
+              shape="round"
+              color="primary"
+              checked={reviewcheck === index}
+              onChange={() => handleCustomerReview(index)}
+            />
+            <Image src={CustomerReview.imgUrl} />
+          </label>
+        ))}
+        <label className="d-flex align-items-center">
+          <Checkbox shape="round" color="primary" className="d-flex" /> No
+          Review
         </label>
-        <label htmlFor="" className="d-flex gap-1">
-          <Form.Check type="checkbox" id="3star" />
-          <img src={threeStar} />
-        </label>
-        <label htmlFor="" className="d-flex gap-1">
-          <Form.Check type="checkbox" id="2star" />
-          <img src={twoStar} />
-        </label>
-        <label htmlFor="" className="d-flex gap-1">
-          <Form.Check type="checkbox" id="1star" />
-          <img src={oneStar} />
-        </label>
-        <Form.Check type="checkbox" label="No Review" id="noReview" />
       </ListGroup.Item>
 
-      <ListGroup.Item>
-        <Form.Label>Price</Form.Label>
-        <Form.Check type="checkbox" label="Under $10" />
-        <Form.Check type="checkbox" label="$10 - $25" />
-        <Form.Check type="checkbox" label="$25 - $50" />
-        <Form.Check type="checkbox" label="$50 - $100" />
-        <Form.Check type="checkbox" label="Over $100" />
+      <ListGroup.Item className="border-0 d-flex flex-column gap-3 mt-3">
+        <h6 className="pb-2 fw-semibold">Price</h6>
+        {Pricedata.map((price, index) => (
+          <Checkbox
+            shape="round"
+            color="primary"
+            key={price.id}
+            checked={check === index}
+            onChange={() => handleCheck(index)}
+          >
+            {price.price}
+          </Checkbox>
+        ))}
       </ListGroup.Item>
     </ListGroup>
   );

@@ -31,7 +31,7 @@ const ProductDetails = () => {
         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
         <Breadcrumb.Item href="/productList">Product List</Breadcrumb.Item>
         <Breadcrumb.Item href="/" active className="text-black">
-          Product List
+          Product Detail
         </Breadcrumb.Item>
       </Breadcrumb>
 

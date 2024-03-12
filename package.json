@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@djthoms/pretty-checkbox": "^3.1.0",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.3",
     "formik": "^2.4.5",
+    "pretty-checkbox-react": "^3.2.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",

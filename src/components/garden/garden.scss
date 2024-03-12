@@ -1,4 +1,10 @@
 .garden-main{
+    .slider-container {
+        .slick-track {
+          display: flex;
+          gap: 12px;
+        }
+    }
     .newsletter{
         background-color: #0063FF;
         
@@ -43,6 +49,12 @@
 
 @media (max-width: 576px){
     .garden-main{
+        .slider-container {
+            .slick-track {
+              display: flex;
+              gap: 0px;
+            }
+          }
         .newsletter{
            h3{
             font-size: 20px;

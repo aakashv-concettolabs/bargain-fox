@@ -1,38 +1,6 @@
 .offerStickerMain{
     .offerDiscount{
-        top: 15px;
-        right: 215px;
+        top: 17px;
+        right: 10px;
     }
 }
-
-@media (max-width:1400px){
-    .offerStickerMain{
-        .offerDiscount{
-            right: 178px;
-        }
-    }
-}
-
-@media (max-width: 1200px) {
-    .offerStickerMain{
-        .offerDiscount{
-            right: 143px;
-        }
-    }
-  }
-  
-  @media (max-width: 992px) {
-    .offerStickerMain{
-        .offerDiscount{
-            right: 128px;
-        }
-    }
-  }
-  
-  @media (max-width: 768px) {
-   
-  }
-  
-  @media (max-width: 576px) {
-   
-  }

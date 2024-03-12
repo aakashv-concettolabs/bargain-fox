@@ -1,56 +1,30 @@
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Image } from "react-bootstrap";
 import "./productcard.scss";
+import heart from "../../assets/heart.png";
 import OfferStickerComponent from "../offerStickerComponent/OfferStickerComponent";
+import ProductRatingStar from "../productRatingStar/ProductRatingStar";
+import ProductPriceTag from "../productPriceTag/ProductPriceTag";
 
-const ProductCard = ({
-  imgUrl,
-  detail,
-  ratedStar,
-  unratedStar,
-  offerPrice,
-  price,
-  offerSticker,
-  discount,
-  btnClass,
-}) => {
+const ProductCard = ({ imgUrl, detail, offerPrice, price, btnClass }) => {
   return (
-    <div className="productCard-main mx-2 border">
-      <Card className="border-0">
-        <div className="productCardImg d-flex justify-content-center">
-          <Card.Img src={imgUrl} />
+    <div className="productCard-main mx-2">
+      <Card className="position-relative">
+        <div className="heartDiv position-absolute bg-white rounded-circle d-flex justify-content-center align-items-center">
+          <Image src={heart} className="w-50" />
         </div>
-        <Card.Body className="lh-sm p-1 body-font">
-          <Card.Text>
-            {detail.slice(0, 50)}
-            {detail.length > 50 ? "..." : ""}
-          </Card.Text>
-          <Card.Text className="d-flex gap-2">
-            <span className="d-flex gap-1 rating">
-              <img src={ratedStar} />
-              <img src={ratedStar} />
-              <img src={ratedStar} />
-              <img src={ratedStar} />
-              <img src={unratedStar} />
-            </span>
-            <span className="text-muted">4524</span>
-          </Card.Text>
-          <Card.Text className="d-flex justify-content-between align-items-center">
-            <span className="d-flex gap-2 align-items-center">
-              <span className="fw-bold price">
-                <sup>$</sup>
-                {offerPrice}
-              </span>
-              <span className="">
-                <strike>${price}</strike>
-              </span>
-            </span>
+        <div className="productCardImg d-flex justify-content-center">
+          <Image src={imgUrl} width="100%" />
+        </div>
+        <div className="lh-sm p-2">
+          <p className="productDetail mb-1 mb-md-3">{detail}</p>
+          <ProductRatingStar />
+          <div className="d-flex justify-content-between align-items-center my-2">
+            <ProductPriceTag offerPrice={offerPrice} price={price} />
             <OfferStickerComponent />
-          </Card.Text>
-        </Card.Body>
+          </div>
+          <Button className={`${btnClass} cardbtn`}>Add to cart</Button>
+        </div>
       </Card>
-      <div className="px-2">
-        <Button className={`${btnClass} cardbtn`}>Add to cart</Button>
-      </div>
     </div>
   );
 };

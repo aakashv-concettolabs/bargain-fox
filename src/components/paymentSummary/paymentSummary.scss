@@ -1,9 +1,14 @@
-.paymentSummary-main{
+#paymentSummary-main{
+    border: 2px solid #F5F5Fc;
+    .customborder{
+        border-bottom: 2px solid #F5F5Fc;
+    }
     .btn{
-        background-color: #ff7900;
+        // background-color: #ff7900;
         transition: all 0.5s ease-in-out;
         &:hover{
             background-color: #292d32;
+            border-color: #292d32;
         }
     }
     :not(.btn-check) + .btn:active {

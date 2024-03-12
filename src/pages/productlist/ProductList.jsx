@@ -6,9 +6,11 @@ import garden1 from "../../assets/garden-1.png";
 import star from "../../assets/star.svg";
 import starColor from "../../assets/starColor.svg";
 import offerSticker from "../../assets/offerSticker.svg";
+import filter from "../../assets/filter.svg";
 import FilterSidebar from "../../components/filterSidebar/FilterSidebar";
 import PaginationComponent from "../../components/pagination/PaginationComponent";
 import { Link } from "react-router-dom";
+import { GardenDatas } from "../../components/sliderSetting/SliderSetting";
 
 const ProductList = () => {
   const [show, setShow] = useState(false);
@@ -50,7 +52,7 @@ const ProductList = () => {
         </Col>
       </Row>
 
-      <Row className="d-flex d-lg-none mt-4 ms-1 align-items-center">
+      <Row className="d-flex d-lg-none mt-4 ms-1 align-items-center justify-content-between">
         <Col className="col-5 d-flex align-items-center">
           <div className="row border rounded-5 p-2">
             <div className="col  d-flex gap-2">
@@ -67,15 +69,11 @@ const ProductList = () => {
             </div>
           </div>
         </Col>
-        <Col
-          className="fliterOptionButton col-7 d-flex align-items-center justify-content-end gap-2"
-          onClick={handleShow}
-        >
-          <img
-            src="https://concetto-web.bargainfox.com/images/svg/filter.svg"
-            alt=""
-          />
-          <span className="text-secondary fw-medium fs-3">Filter</span>
+        <Col className="fliterOptionButton col-5 d-flex align-items-center justify-content-end gap-2">
+          <img src={filter} alt="filter" onClick={handleShow} />
+          <span className="text-secondary fw-medium fs-3" onClick={handleShow}>
+            Filter
+          </span>
         </Col>
       </Row>
 
@@ -94,69 +92,25 @@ const ProductList = () => {
 
         <Col md={12} lg={10} className="col-12">
           <Row className="d-flex">
-            <Col lg={3} sm={6} xs={12} md={4} className="mt-3">
-              <Link to={"/productdetail"} className="text-decoration-none">
-                <ProductCard
-                  imgUrl={garden1}
-                  detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-                  ratedStar={starColor}
-                  unratedStar={star}
-                  offerPrice="44"
-                  price="50"
-                  offerSticker={offerSticker}
-                  discount="-10%"
-                  btnClass="d-none"
-                />
-              </Link>
-            </Col>
-            <Col lg={3} sm={6} xs={12} md={4} className="mt-3">
-              <ProductCard
-                imgUrl={garden1}
-                detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-                ratedStar={starColor}
-                unratedStar={star}
-                offerPrice="44"
-                price="50"
-                offerSticker={offerSticker}
-                discount="-10%"
-              />
-            </Col>
-            <Col lg={3} sm={6} xs={12} md={4} className="mt-3">
-              <ProductCard
-                imgUrl={garden1}
-                detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-                ratedStar={starColor}
-                unratedStar={star}
-                offerPrice="44"
-                price="50"
-                offerSticker={offerSticker}
-                discount="-10%"
-              />
-            </Col>
-            <Col lg={3} sm={6} xs={12} md={4} className="mt-3">
-              <ProductCard
-                imgUrl={garden1}
-                detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-                ratedStar={starColor}
-                unratedStar={star}
-                offerPrice="44"
-                price="50"
-                offerSticker={offerSticker}
-                discount="-10%"
-              />
-            </Col>
-            <Col lg={3} sm={6} xs={12} md={4} className="mt-3">
-              <ProductCard
-                imgUrl={garden1}
-                detail="Oismys Glow in Dark Tree Elves Fairy 20Pcs Luminous Ghost Micro Landscape Accessories Garden..."
-                ratedStar={starColor}
-                unratedStar={star}
-                offerPrice="44"
-                price="50"
-                offerSticker={offerSticker}
-                discount="-10%"
-              />
-            </Col>
+            {GardenDatas.map((gardenData) => (
+              <Col
+                lg={3}
+                sm={6}
+                xs={12}
+                md={4}
+                className="mt-3"
+                key={gardenData.id}
+              >
+                <Link to={"/productdetail"} className="text-decoration-none">
+                  <ProductCard
+                    imgUrl={gardenData.imgUrl}
+                    detail={gardenData.detail}
+                    price={gardenData.price}
+                    offerPrice={gardenData.offerPrice}
+                  />
+                </Link>
+              </Col>
+            ))}
           </Row>
         </Col>
       </Row>

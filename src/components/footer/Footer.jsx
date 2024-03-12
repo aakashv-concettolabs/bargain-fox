@@ -85,7 +85,7 @@ const Footer = () => {
               </Col>
               <Col className="col-12 col-lg-4 d-flex justify-content-center align-items-center">
                 <div className="d-flex align-items-center">
-                  <p>All rights reserved © 2023 BargainFox.com</p>
+                  <p>All rights reserved © 2023 eCart.com</p>
                 </div>
               </Col>
               <Col className="col-12 col-lg-4 d-flex  justify-content-center justify-content-lg-end align-items-center">

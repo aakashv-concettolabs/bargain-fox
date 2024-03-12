@@ -3,18 +3,19 @@
    .container{
     a, span, p{
         color: #a4a4b8;
-        font-size: 14px;
+        font-size: 16px;
     }
     a, span{
         &:hover{
-            color: #ff7900;
+            color: #0063FF;
+            cursor: pointer;
         }
     }
     .divider{
         border-top: 1px solid #a4a4b8;
     }
     .socialIcons{
-        background-color: #ff7900;
+        background-color: #0063FF;
         height: 35px;
         width: 35px;
         &:hover{
