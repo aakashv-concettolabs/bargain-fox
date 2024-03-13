@@ -1,11 +1,4 @@
-import {
-  Col,
-  Container,
-  Row,
-  Breadcrumb,
-  Button,
-  Image,
-} from "react-bootstrap";
+import { Col, Container, Row, Button, Image } from "react-bootstrap";
 import "./productDetails.scss";
 import ProductImgs from "./productImgs.js";
 import share from "../../assets/share.png";
@@ -18,6 +11,29 @@ import ProductSize from "../../components/productColorSize/ProductSize";
 import ReturnPolicy from "../../components/returnPolicy/ReturnPolicy";
 import CustomerReview from "../../components/cusomerReview/CustomerReview";
 import { useState } from "react";
+import email from "../../assets/emailimg.svg";
+import FB from "../../assets/fbimg.svg";
+import copylink from "../../assets/copylink.svg";
+import pinterest from "../../assets/pinterestimg.svg";
+
+const shareOptions = [
+  {
+    mode: "Email",
+    imgUrl: email,
+  },
+  {
+    mode: "Facebook",
+    imgUrl: FB,
+  },
+  {
+    mode: "Pinterest",
+    imgUrl: pinterest,
+  },
+  {
+    mode: "Copy Link",
+    imgUrl: copylink,
+  },
+];
 
 const ProductDetails = () => {
   const [thumnailImg, setThumnailImg] = useState(mainProductImg);
@@ -26,15 +42,7 @@ const ProductDetails = () => {
     setThumnailImg(productImg);
   };
   return (
-    <Container fluid className="mt-3">
-      <Breadcrumb className="small d-none d-lg-flex">
-        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-        <Breadcrumb.Item href="/productList">Product List</Breadcrumb.Item>
-        <Breadcrumb.Item href="/" active className="text-black">
-          Product Detail
-        </Breadcrumb.Item>
-      </Breadcrumb>
-
+    <Container fluid className="mt-3 productDetailMain">
       <Row className="justify-content-around">
         <Col lg={1} xs={3} className="d-flex flex-column gap-3">
           {ProductImgs.map((productImg) => (
@@ -70,22 +78,15 @@ const ProductDetails = () => {
                 <img src={share} alt="share" />
 
                 <div className="position-absolute shareHover pt-4 pt-sm-3">
-                  <ul className="text-decoration-none list-unstyled  border shadow-sm rounded-3 bg-body-tertiary">
-                    <li className="px-3 pt-2">
-                      <Link className="text-decoration-none">Email</Link>
-                    </li>
-                    <hr className=" my-1" />
-                    <li className="px-3 py-1">
-                      <Link className="text-decoration-none ">Twitter</Link>
-                    </li>
-                    <hr className=" my-1" />
-                    <li className="px-3 py-1">
-                      <Link className="text-decoration-none ">Pinterest</Link>
-                    </li>
-                    <hr className=" my-1" />
-                    <li className="px-3 py-1">
-                      <Link className="text-decoration-none ">Facebook</Link>
-                    </li>
+                  <ul className="text-decoration-none list-unstyled shadow-sm rounded-3 bg-body-tertiary">
+                    {shareOptions.map((shareOption) => (
+                      <li className="px-3 py-2" key={shareOption.mode}>
+                        <Link className="text-decoration-none justify-content-between d-flex">
+                          <span>{shareOption.mode}</span>
+                          <Image src={shareOption.imgUrl} />
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -102,7 +103,7 @@ const ProductDetails = () => {
                 <Col xs={12} sm={6} className="d-flex justify-content-sm-end">
                   <span className="text-muted vendor">
                     Sold, by{" "}
-                    <strong className="text-black">BargainFox Vendor</strong>
+                    <strong className="text-black">eCart Vendor</strong>
                   </span>
                 </Col>
               </Row>
@@ -149,19 +150,19 @@ const ProductDetails = () => {
               <Row className="mt-3">
                 <Col className="d-flex align-items-center gap-1">
                   <span className="text-body-tertiary">Quantity:</span>
-                  <span className="d-flex gap-1 align-items-center border">
-                    <button className="btn-outline-secondary btn border-0 border-end rounded-0">
+                  <span className="d-flex gap-1 align-items-center topBottomBorder">
+                    <button className="btn-outline-secondary btn  leftRightBorder rounded-0">
                       -
                     </button>
                     <span className="px-2">0</span>
-                    <button className="btn-outline-secondary btn border-0 border-start rounded-0">
+                    <button className="btn-outline-secondary btn leftRightBorder rounded-0">
                       +
                     </button>
                   </span>
                 </Col>
               </Row>
               <Row className="mt-3 flex-column-reverse flex-md-column">
-                <Col className="d-sm-flex gap-3 border-bottom border-top align-items-center pt-3">
+                <Col className="d-sm-flex gap-3 topBottomBorder align-items-center pt-3">
                   <ReturnPolicy />
                 </Col>
                 <Col className="d-flex justify-content-md-end align-items-center mt-2">

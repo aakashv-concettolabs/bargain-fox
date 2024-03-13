@@ -9,17 +9,25 @@ import ProductDetails from "./pages/productDetails/ProductDetails";
 import Cart from "./pages/cart/Cart";
 import Wishlist from "./pages/wishlist/Wishlist";
 import Address from "./pages/address/Address";
+import BreadcrumbComponent from "./components/breadcrumbComponent/BreadcrumbComponent";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Navbar />
+        <BreadcrumbComponent />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/productList" element={<ProductList />} />
-          <Route path="/productdetail" element={<ProductDetails />} />
+          <Route path="/productList">
+            <Route path="/productList" element={<ProductList />} />
+            <Route
+              path="/productList/productdetail"
+              element={<ProductDetails />}
+            />
+          </Route>
+
           <Route path="/cart" element={<Cart />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/address" element={<Address />} />

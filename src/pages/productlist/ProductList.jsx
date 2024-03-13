@@ -1,11 +1,7 @@
-import { Breadcrumb, Col, Container, Row, Offcanvas } from "react-bootstrap";
+import { Col, Container, Row, Offcanvas } from "react-bootstrap";
 import { useState } from "react";
 import "./productList.scss";
 import ProductCard from "../../components/productCard/ProductCard";
-import garden1 from "../../assets/garden-1.png";
-import star from "../../assets/star.svg";
-import starColor from "../../assets/starColor.svg";
-import offerSticker from "../../assets/offerSticker.svg";
 import filter from "../../assets/filter.svg";
 import FilterSidebar from "../../components/filterSidebar/FilterSidebar";
 import PaginationComponent from "../../components/pagination/PaginationComponent";
@@ -19,13 +15,6 @@ const ProductList = () => {
 
   return (
     <Container fluid className="productList-main">
-      <Breadcrumb className="small d-none d-lg-flex">
-        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-        <Breadcrumb.Item href="/" active className="text-black">
-          Western Wear
-        </Breadcrumb.Item>
-      </Breadcrumb>
-
       <Row className="d-none d-lg-flex">
         <Col lg={2} className="d-flex align-items-center fs-3 ">
           <span className="ps-3 text-secondary fw-medium">Filter</span>
@@ -101,7 +90,10 @@ const ProductList = () => {
                 className="mt-3"
                 key={gardenData.id}
               >
-                <Link to={"/productdetail"} className="text-decoration-none">
+                <Link
+                  to={"/productList/productdetail"}
+                  className="text-decoration-none"
+                >
                   <ProductCard
                     imgUrl={gardenData.imgUrl}
                     detail={gardenData.detail}

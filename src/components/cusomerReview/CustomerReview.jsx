@@ -10,11 +10,11 @@ import { ratingData, customerComments } from "./customerReviewDetails.js";
 const CustomerReview = () => {
   return (
     <>
-      <Row className="mt-3 px-md-4 flex-column-reverse flex-md-row">
-        <Col xs={12} md={6} className="border-top">
+      <Row className="customerReviewMain mt-3 px-md-4 flex-column-reverse flex-md-row">
+        <Col xs={12} md={6} className="topBorder">
           <p className="fw-bold fs-4 p-3">Customer Ratings & Reviews</p>
           <Row>
-            <Col className="border-end d-flex flex-column justify-content-center align-items-center">
+            <Col className="rightBorder d-flex flex-column justify-content-center align-items-center">
               <span className="rateCount">4</span>
               <img src={fourstar} alt="" />
               <span className="mt-2">152 Ratings & Reviews</span>
@@ -22,10 +22,13 @@ const CustomerReview = () => {
             <Col className="my-auto">
               {ratingData.map((rating) => (
                 <div
-                  className="d-flex align-items-center gap-2"
+                  className="d-flex align-items-center justify-content-center  gap-2"
                   key={rating.id}
                 >
-                  <span className="d-flex align-items-center gap-1">
+                  <span
+                    className="d-flex align-items-center gap-1"
+                    style={{ width: "40px" }}
+                  >
                     {rating.starRate} <img src={star} alt="" />
                   </span>
                   <div className="w-50">
@@ -37,7 +40,7 @@ const CustomerReview = () => {
             </Col>
           </Row>
         </Col>
-        <Col xs={12} md={6} className="border-top px-3">
+        <Col xs={12} md={6} className="topBorder px-3">
           <Row>
             <Col>
               <p className="fw-bold fs-4 px-3 py-1">HighLight</p>
@@ -48,7 +51,7 @@ const CustomerReview = () => {
             </Col>
           </Row>
           <Row>
-            <Col className="border-top mt-3">
+            <Col className="topBorder mt-3">
               <p className="fw-bold fs-4 px-3 py-1">Product Description</p>
               <span>
                 Damp Meter?Wood/Building Materials Moisture Meter & Temperature
@@ -64,11 +67,7 @@ const CustomerReview = () => {
         </Col>
       </Row>
       <Row>
-        <Col
-          xs={12}
-          md={6}
-          className="mt-3 border border-start-0 border-end-0 py-4"
-        >
+        <Col xs={12} md={6} className="mt-3 topBottomBorder py-4">
           <div className="d-flex justify-content-between align-items-center">
             <img src={fourstar} alt="" className="star" />
             <span className="rateThisProduct">Rate This Product</span>

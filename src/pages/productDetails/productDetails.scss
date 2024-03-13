@@ -1,10 +1,29 @@
-.container-fluid{
+.productDetailMain{
+    .topBottomBorder{
+        border-top: 2px solid #f2f2f8;
+        border-bottom: 2px solid #f2f2f8;
+    }
+    .leftRightBorder{
+        border-left: 2px solid #f2f2f8;
+        border-right: 2px solid #f2f2f8;
+        border-top: none;
+        border-bottom: none;
+    }
     .shareHover{
         display: none;
-        a{
-            color: #000;
-            &:hover{
-            color: #ff7900;
+        width: 160px;
+        ul {
+            border: 2px solid #f2f2f8;
+            li{
+            border-bottom: 2px solid #f2f2f8;
+            &:last-child{
+                border-bottom: none;
+            }
+            a{
+                color: #000;
+                &:hover{
+                color: #0063FF;
+            }}
         }}
     }
     .share:hover{
@@ -77,7 +96,7 @@
     }
     
     @media (max-width: 576px){
-       .container-fluid{
+       .productDetailMain{
         .share:hover{
             .shareHover{
                 right: 10px;

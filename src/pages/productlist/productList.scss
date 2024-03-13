@@ -1,8 +1,4 @@
-.productList-main{
-    .breadcrumb-item+.breadcrumb-item::before {
-        content: var(--bs-breadcrumb-divider, ">");
-    }
-}
+
 
 @media (max-width: 1200px){
     .productList-main{

@@ -165,16 +165,19 @@ const NewAddress = ({ show, handleClose }) => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
+            {errors.number && touched.number ? (
+              <p className="text-danger small m-1 ">{errors.number}</p>
+            ) : null}
           </Form.Group>
           <Row>
             <Col className="small">
               <Form.Check label="Save this information for next time" />
             </Col>
             <Row className="small">
-              <Col>
+              <Col xs={12} sm={6}>
                 <Form.Check label="Text me with news and offers" />
               </Col>
-              <Col className="d-flex justify-content-end">
+              <Col xs={12} sm={6} className="d-flex justify-content-sm-end">
                 <Form.Check
                   type="switch"
                   label="Make Default"

@@ -6,7 +6,7 @@ import toyCategory from "../../assets/toy.png";
 import sportsCategory from "../../assets/sport.png";
 import clearanceCategory from "../../assets/clearance.png";
 import Circle from "../../components/circle/Circle";
-import { Col, Container, Row, Tab, Nav } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 const categoryDatas = [
   {

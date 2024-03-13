@@ -2,7 +2,7 @@ import "./returnPolicy.scss";
 import deliveryVan from "../../assets/delivery-van.png";
 import returnDay from "../../assets/returnDay.png";
 import warranty from "../../assets/warranty.png";
-import { Image, Col } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 
 const conditions = [
   {
@@ -27,9 +27,9 @@ const ReturnPolicy = () => {
       {conditions.map((condition) => (
         <div
           key={condition.id}
-          className="d-flex flex-column justify-content-center align-items-center"
+          className="d-flex gap-2 flex-column justify-content-center align-items-center text-center returnPolicyMain"
         >
-          <div className="bg-body-secondary p-2 rounded-circle">
+          <div className="imageContainerDiv bg-body-secondary rounded-circle d-flex justify-content-center align-items-center p-2">
             <Image src={condition.imgUrl} />
           </div>
           <p>
