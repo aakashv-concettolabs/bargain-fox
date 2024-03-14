@@ -23,7 +23,7 @@ export const ratingData = [
   {
     id: 5,
     starRate: 1,
-    rateCount: 19,
+    rateCount: 9,
   },
 ];
 

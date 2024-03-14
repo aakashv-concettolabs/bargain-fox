@@ -44,15 +44,10 @@ const Category = () => {
   return (
     <Container className="my-3 category-main">
       <Row>
-        <Col className="col-12 col-xl-8 offset-xl-2 ">
-          <Row>
+        <Col className="col-12 col-xl-8 offset-xl-2 ps-0 ">
+          <Row className="categoryRow">
             {categoryDatas.map((categoryData) => (
-              <Col
-                xs={3}
-                md={2}
-                className="my-2 d-flex justify-content-start"
-                key={categoryData.id}
-              >
+              <Col xs={3} md={2} className="my-2" key={categoryData.id}>
                 <Circle
                   imgUrl={categoryData.imgUrl}
                   categoryText={categoryData.categoryText}

@@ -30,7 +30,7 @@ const PaymentSummary = () => {
         <Button
           className="w-100 rounded-5 text-white"
           as={Link}
-          to={"/address"}
+          to={"/cart/checkout"}
         >
           Proceed to Checkout
         </Button>

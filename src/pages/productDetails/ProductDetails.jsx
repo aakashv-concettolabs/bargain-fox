@@ -15,6 +15,7 @@ import email from "../../assets/emailimg.svg";
 import FB from "../../assets/fbimg.svg";
 import copylink from "../../assets/copylink.svg";
 import pinterest from "../../assets/pinterestimg.svg";
+import ProductPriceTag from "../../components/productPriceTag/ProductPriceTag.jsx";
 
 const shareOptions = [
   {
@@ -109,16 +110,7 @@ const ProductDetails = () => {
               </Row>
               <Row className="mt-3">
                 <Col className="d-flex align-items-center gap-3">
-                  <div>
-                    <span className="fw-bold price">
-                      <sup>£</sup>10.69
-                    </span>
-                  </div>
-                  <div>
-                    <span className="priceOffer">
-                      <strike>£21.99</strike>
-                    </span>
-                  </div>
+                  <ProductPriceTag offerPrice="45" price="54" />
                   <div>
                     <span className="discount bg-primary rounded-5 text-white px-3 py-1">
                       51%

@@ -1,4 +1,4 @@
-import "./address.scss";
+import "./checkout.scss";
 import {
   Col,
   Container,
@@ -55,7 +55,7 @@ const userAddresses = [
   },
 ];
 
-const Address = () => {
+const Checkout = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => {
@@ -139,4 +139,4 @@ const Address = () => {
   );
 };
 
-export default Address;
+export default Checkout;

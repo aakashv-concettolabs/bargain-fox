@@ -22,13 +22,10 @@ const CustomerReview = () => {
             <Col className="my-auto">
               {ratingData.map((rating) => (
                 <div
-                  className="d-flex align-items-center justify-content-center  gap-2"
+                  className="d-flex align-items-center ps-sm-4 ps-md-2 ps-lg-4  gap-2"
                   key={rating.id}
                 >
-                  <span
-                    className="d-flex align-items-center gap-1"
-                    style={{ width: "40px" }}
-                  >
+                  <span className="d-flex align-items-center gap-1">
                     {rating.starRate} <img src={star} alt="" />
                   </span>
                   <div className="w-50">
