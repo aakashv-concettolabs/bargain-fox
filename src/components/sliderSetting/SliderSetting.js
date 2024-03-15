@@ -27,8 +27,9 @@ import electronic2 from "../../assets/electronic2.png";
 import electronic3 from "../../assets/electronic3.png";
 import electronic4 from "../../assets/electronic4.png";
 
-// slider setting
-export const settings = {
+// deals slider setting
+
+export const dealsettings = {
   dots: false,
   infinite: false,
   speed: 500,
@@ -46,6 +47,45 @@ export const settings = {
       breakpoint: 992,
       settings: {
         slidesToShow: 4,
+        slidesToScroll: 3,
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+      },
+    },
+    {
+      breakpoint: 576,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+      },
+    },
+  ],
+};
+
+// slider setting
+export const settings = {
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 4,
+  initialSlide: 0,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 3,
+      },
+    },
+    {
+      breakpoint: 992,
+      settings: {
+        slidesToShow: 3,
         slidesToScroll: 3,
       },
     },
@@ -169,6 +209,7 @@ export const GardenDatas = [
     // unratedStar: star,
     price: "44",
     offerPrice: "40",
+    productUrl: "/",
   },
   {
     id: 2,
@@ -179,6 +220,7 @@ export const GardenDatas = [
     // unratedStar: star,
     price: "35",
     offerPrice: "30",
+    productUrl: "/",
   },
   {
     id: 3,
@@ -189,6 +231,7 @@ export const GardenDatas = [
     // unratedStar: star,
     price: "42",
     offerPrice: "38",
+    productUrl: "/",
   },
   {
     id: 4,
@@ -199,6 +242,7 @@ export const GardenDatas = [
     // unratedStar: star,
     price: "44",
     offerPrice: "40",
+    productUrl: "/",
   },
   {
     id: 5,
@@ -209,6 +253,7 @@ export const GardenDatas = [
     // unratedStar: star,
     price: "42",
     offerPrice: "38",
+    productUrl: "/",
   },
   {
     id: 6,
@@ -219,6 +264,7 @@ export const GardenDatas = [
     // unratedStar: star,
     price: "35",
     offerPrice: "30",
+    productUrl: "/",
   },
 ];
 

@@ -17,7 +17,7 @@ const initialValueLogin = {
 };
 
 const SignUP = ({ show, handleClose }) => {
-  const [isLogin, setisLogin] = useState(true);
+  const [isLogin, setisLogin] = useState(false);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({

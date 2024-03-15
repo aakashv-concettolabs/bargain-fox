@@ -18,6 +18,7 @@ input::-webkit-inner-spin-button {
 
 /* Firefox  */
 input[type="number"] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
@@ -31,7 +32,23 @@ textarea {
   box-shadow: none;
 }
 
-.slick-next::before,
+.slick-arrow::before {
+  content: "";
+  background: url(src/assets/sliderArrow.svg) no-repeat 50%;
+  background-size: contain;
+  height: 18px;
+  display: block;
+  opacity: 1;
+}
+.slick-arrow {
+  background: #f5f5fc;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  box-shadow: 0 3px 3px #292d321a;
+}
+
 .slick-prev::before {
-  color: #0063ff;
+  transform: rotate(180deg);
 }

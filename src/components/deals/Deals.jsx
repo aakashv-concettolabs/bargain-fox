@@ -4,7 +4,7 @@ import "./deals.scss";
 // import DealCard from "../dealCard/DealCard";
 import { Link } from "react-router-dom";
 import SectionHeading from "../sectionheading/SectionHeading";
-import { settings, dealofthedays } from "../sliderSetting/SliderSetting.js";
+import { dealsettings, dealofthedays } from "../sliderSetting/SliderSetting.js";
 
 const Deals = () => {
   return (
@@ -16,7 +16,7 @@ const Deals = () => {
           <Row>
             <Col>
               <div className="slider-container">
-                <Slider {...settings}>
+                <Slider {...dealsettings}>
                   {dealofthedays.map((dealoftheday) => (
                     <div key={dealoftheday.id}>
                       <Link

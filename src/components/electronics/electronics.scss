@@ -1,17 +1,59 @@
+.electronics-main{
+    .slider-container {
+        .slick-track {
+          display: flex;
+          gap: 12px;
+        }
+    }
+}
 
+@media (max-width: 1400px){
+
+}
 
 @media (max-width: 1200px){
-   
+
 }
 
 @media (max-width: 992px){
-    
+    .slider-container {
+        .slick-track {
+          display: flex;
+          gap: 6px;
+          padding: 4px;
+          .slick-slide {
+            padding: 0 4px;
+          }
+        }
+      }
 }
 
 @media (max-width: 768px){
-
+    .slider-container {
+        .slick-track {
+          display: flex;
+          gap: 6px;
+          padding: 2px;
+          .slick-slide {
+            padding: 0 2px;
+          }
+        }
+      }
 }
 
-@media (max-width: 576px){   
+@media (max-width: 576px){
+    .electronics-main{
+        .slider-container {
+            .slick-track {
+              display: flex;
+              gap: 2px;
+              padding: 2px;
+              .slick-slide {
+                padding: 0 2px;
+              }
+            }
+          }
+    }
+   
 
 }

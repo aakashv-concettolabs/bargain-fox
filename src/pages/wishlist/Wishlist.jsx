@@ -2,6 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import "./wishlist.scss";
 import ProductCard from "../../components/productCard/ProductCard";
 import { GardenDatas } from "../../components/sliderSetting/SliderSetting";
+import { Link } from "react-router-dom";
 
 const Wishlist = () => {
   return (
@@ -21,13 +22,15 @@ const Wishlist = () => {
             key={gardenData.id}
             className="my-3"
           >
-            <ProductCard
-              imgUrl={gardenData.imgUrl}
-              detail={gardenData.detail}
-              price={gardenData.price}
-              offerPrice={gardenData.offerPrice}
-              btnClass="d-block w-100 rounded-5 my-3"
-            />
+            <Link to={gardenData.productUrl} className="text-decoration-none">
+              <ProductCard
+                imgUrl={gardenData.imgUrl}
+                detail={gardenData.detail}
+                price={gardenData.price}
+                offerPrice={gardenData.offerPrice}
+                btnClass="d-block"
+              />
+            </Link>
           </Col>
         ))}
       </Row>
