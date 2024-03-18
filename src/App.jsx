@@ -7,6 +7,7 @@ import Cart from "./pages/cart/Cart";
 import Wishlist from "./pages/wishlist/Wishlist";
 import Layout from "./components/layout/Layout";
 import Checkout from "./pages/checkout/Checkout";
+import { AuthProvider } from "./context/authContext/AuthContext";
 
 function App() {
   const router = createBrowserRouter([
@@ -53,7 +54,9 @@ function App() {
   ]);
   return (
     <>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </>
   );
 }

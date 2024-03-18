@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./signRegisterHoverMenuMain.scss";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import SignUP from "../../pages/signup/SignUP";
 import { HoverMenuDetails } from "./HoverMenuDetails";
+import Login from "../login/Login";
 
 const SignRegisterHovermMenu = () => {
   const [show, setShow] = useState(false);
@@ -29,7 +29,7 @@ const SignRegisterHovermMenu = () => {
           </li>
         ))}
       </ul>
-      {show && <SignUP show={show} handleClose={handleClose} />}
+      {show && <Login show={show} handleClose={handleClose} />}
     </div>
   );
 };

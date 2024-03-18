@@ -1,0 +1,23 @@
+.login-modal-main{
+    .form-control:focus{
+        border: 1px solid rgb(224, 222, 222);
+    }:not(.btn-check)+.btn:active {
+       
+        background-color: #0063FF;
+        border-color: #0063FF;
+    }
+    .btn{
+        background-color: #0063FF;
+        border-color: #0063FF;
+        &:hover{
+            background-color: #0063FF;
+        border-color: #0063FF;
+        }
+    }
+    .modal-footer{
+        span{
+            font-size: 12px;
+        }
+    }
+    
+}

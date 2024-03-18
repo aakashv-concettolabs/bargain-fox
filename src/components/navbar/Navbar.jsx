@@ -16,9 +16,9 @@ import user from "../../assets/user.png";
 import cart from "../../assets/shopping-cart.png";
 import SearchIcon from "../../assets/search-normal.png";
 import "./navbar.scss";
-import SignUP from "../../pages/signup/SignUP";
 import MobileMenubar from "../mobileMenubar/MobileMenubar";
 import SignRegisterHovermMenu from "../signRegisterHoverMenu/SignRegisterHovermMenu";
+import Login from "../login/Login";
 
 const Header = () => {
   const [show, setShow] = useState(false);
@@ -117,7 +117,7 @@ const Header = () => {
           </Col>
         </Row>
       </Container>
-      {show && <SignUP show={show} handleClose={handleClose} />}
+      {show && <Login show={show} handleClose={handleClose} />}
     </header>
   );
 };

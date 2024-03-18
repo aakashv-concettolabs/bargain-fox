@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { Offcanvas, Button } from "react-bootstrap";
+import { Offcanvas } from "react-bootstrap";
 import humburger from "../../assets/list.svg";
-import user from "../../assets/user.png";
-import { Link } from "react-router-dom";
-import SignUP from "../../pages/signup/SignUP";
 import SignRegisterHovermMenu from "../signRegisterHoverMenu/SignRegisterHovermMenu";
+import Login from "../login/Login";
 
 const MobileMenubar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -40,7 +38,7 @@ const MobileMenubar = () => {
           <SignRegisterHovermMenu />
         </Offcanvas.Body>
       </Offcanvas>
-      {show && <SignUP show={show} handleClose={handleClose} />}
+      {show && <Login show={show} handleClose={handleClose} />}
     </>
   );
 };
