@@ -18,17 +18,18 @@ import SearchIcon from "../../assets/search-normal.png";
 import "./navbar.scss";
 import MobileMenubar from "../mobileMenubar/MobileMenubar";
 import SignRegisterHovermMenu from "../signRegisterHoverMenu/SignRegisterHovermMenu";
-import Login from "../login/Login";
+import ModalComponent from "../modal/ModalComponent";
 
 const Header = () => {
   const [show, setShow] = useState(false);
-
   const handleClose = () => {
     setShow(false);
   };
 
   return (
     <header className="header-main mt-0">
+      {show && <ModalComponent show={show} handleClose={handleClose} />}
+
       <Container fluid>
         <Row className="justify-content-center align-items-center">
           <Col xs={6} md={4} className="ps-md-5">
@@ -117,7 +118,6 @@ const Header = () => {
           </Col>
         </Row>
       </Container>
-      {show && <Login show={show} handleClose={handleClose} />}
     </header>
   );
 };

@@ -3,7 +3,7 @@ import "./signRegisterHoverMenuMain.scss";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { HoverMenuDetails } from "./HoverMenuDetails";
-import Login from "../login/Login";
+import ModalComponent from "../modal/ModalComponent";
 
 const SignRegisterHovermMenu = () => {
   const [show, setShow] = useState(false);
@@ -29,7 +29,7 @@ const SignRegisterHovermMenu = () => {
           </li>
         ))}
       </ul>
-      {show && <Login show={show} handleClose={handleClose} />}
+      {show && <ModalComponent show={show} handleClose={handleClose} />}
     </div>
   );
 };
