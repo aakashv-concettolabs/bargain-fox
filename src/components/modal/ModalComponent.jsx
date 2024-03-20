@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal } from "react-bootstrap";
 import OtpVerification from "../optVerification/OtpVerification";
 import Login from "../login/Login";
 import SignUP from "../signup/SignUP";
+import AuthContext from "../../context/authContext/AuthContext";
 
 const ModalComponent = ({ show, handleClose }) => {
   const [loginBody, setLoginBody] = useState(true);
   const [codeBody, setCodeBody] = useState(false);
   const [registerBody, setRegisterBody] = useState(false);
+  const { userDetails } = useContext(AuthContext);
 
   const handleContinue = () => {
     setLoginBody(false);
@@ -15,8 +17,12 @@ const ModalComponent = ({ show, handleClose }) => {
   };
 
   const handleVerify = () => {
-    setCodeBody(false);
-    setRegisterBody(true);
+    if (userDetails.is_new_user === false) {
+      setCodeBody(false);
+      setRegisterBody(true);
+    } else {
+      handleClose();
+    }
   };
 
   return (

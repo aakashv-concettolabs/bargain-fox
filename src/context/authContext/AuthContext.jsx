@@ -1,36 +1,61 @@
 import { createContext, useState, useContext } from "react";
 
 const AuthContext = createContext();
-const baseUrl = "https://bargainfox-dev.concettoprojects.com/api";
+
+const initialvalues = {
+  id: null,
+  customer_id: "",
+  name: "",
+  email: "",
+  country_code: "",
+  mobile: "",
+  role_id: null,
+  email_verified_at: null,
+  social_id: null,
+  apple_id: null,
+  social_type: null,
+  apple_access_token: null,
+  apple_refresh_token: null,
+  avatar: null,
+  csv_company: null,
+  csv_accept_email_marketing: null,
+  csv_accept_sms_marketing: null,
+  csv_total_spent: "",
+  csv_total_order: null,
+  csv_tags: null,
+  csv_shopify_import: null,
+  is_online: null,
+  is_block: null,
+  checkout_status: null,
+  step: null,
+  checkout_customer_id: null,
+  fast_fox_subscription: null,
+  fast_fox_subscription_end_date: null,
+  cancel_fastfox_at: null,
+  checkout_fastfox_payment_token: null,
+  checkout_fastfox_session_id: null,
+  fastfox_instrument_id: null,
+  is_fastfox_csv_import: null,
+  is_admin_vendor: null,
+  is_update_progress: null,
+  csv_filename: null,
+  created_at: "",
+  updated_at: "",
+  deleted_at: null,
+  next_token: "",
+  token: "",
+  is_new_user: false,
+  avatar_url: "",
+};
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [userDetails, setUserDetails] = useState(initialvalues);
 
-  const loginAction = async (data) => {
-    try {
-      const response = await fetch(`${baseUrl}/send-otp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const res = await response.json();
-      if (res) {
-        setUser(data);
-        return;
-      }
-    } catch (error) {
-      console.log("login error", error);
-    }
-  };
   return (
-    <AuthContext.Provider value={{ loginAction }}>
+    <AuthContext.Provider value={{ userDetails, setUserDetails }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export default AuthContext;

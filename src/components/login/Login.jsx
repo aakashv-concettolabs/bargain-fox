@@ -4,22 +4,37 @@ import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 import { logInSchema } from "../../schema";
 import google from "../../assets/google.png";
 import ios from "../../assets/iOS.png";
-import { useAuth } from "../../context/authContext/AuthContext";
+import { sendOtp } from "../../api/Apis";
+import axios from "axios";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addLoginEmail } from "../../reducers/loginSlice";
 
 const initialValueLogin = {
   email: "",
 };
 
 const Login = ({ handleContinue }) => {
-  const auth = useAuth();
-
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const loginFormik = useFormik({
     initialValues: initialValueLogin,
     validationSchema: logInSchema,
-    onSubmit: (values, action) => {
-      auth.loginAction(values);
-      action.resetForm();
-      handleContinue();
+    onSubmit: async (values, action) => {
+      setLoading("true");
+      try {
+        const response = await axios.post(sendOtp, values);
+        const responsedata = await response.config.data;
+        const userEmail = JSON.parse(responsedata).email;
+        dispatch(addLoginEmail(userEmail));
+        setTimeout(() => {
+          action.resetForm();
+          handleContinue();
+          setLoading(false);
+        }, 1000);
+      } catch (error) {
+        console.log("login error", error);
+      }
     },
   });
 
@@ -48,7 +63,7 @@ const Login = ({ handleContinue }) => {
           </Form.Group>
 
           <Button type="submit" className="w-100 rounded-5">
-            Continue
+            {loading ? "Please wait..." : "Continue"}
           </Button>
         </Form>
 

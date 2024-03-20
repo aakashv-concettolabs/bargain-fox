@@ -8,6 +8,8 @@ import Wishlist from "./pages/wishlist/Wishlist";
 import Layout from "./components/layout/Layout";
 import Checkout from "./pages/checkout/Checkout";
 import { AuthProvider } from "./context/authContext/AuthContext";
+import { Provider } from "react-redux";
+import { store } from "./reducers/Store";
 
 function App() {
   const router = createBrowserRouter([
@@ -55,7 +57,9 @@ function App() {
   return (
     <>
       <AuthProvider>
-        <RouterProvider router={router} />
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
       </AuthProvider>
     </>
   );

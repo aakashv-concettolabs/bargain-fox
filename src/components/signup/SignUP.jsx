@@ -2,32 +2,24 @@ import "./signup.scss";
 import { useFormik } from "formik";
 import { Button, Modal, Form } from "react-bootstrap";
 import { signUpSchema } from "../../schema";
-
-import { useAuth } from "../../context/authContext/AuthContext";
-
-const initialValueSignUp = {
-  name: "",
-  mobile: "",
-  email: "",
-};
+import axios from "axios";
+import { registerUser } from "../../api/Apis";
+import { useSelector } from "react-redux";
 
 const SignUP = () => {
+  const userEmail = useSelector((state) => state.userLogin.email);
+  const initialValueSignUp = {
+    name: "",
+    mobile: "",
+    email: "",
+  };
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValueSignUp,
       validationSchema: signUpSchema,
       onSubmit: async (values, action) => {
-        const response = await fetch(
-          "https://bargainfox-dev.concettoprojects.com/api/register",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          }
-        );
-        const data = await response.json();
+        const response = await axios.post(registerUser, values);
+        const data = await response;
         console.log("login", data);
         console.log("login", values);
         action.resetForm();
@@ -35,6 +27,9 @@ const SignUP = () => {
       },
     });
 
+  console.log("signup", userEmail);
+  const typeofinput = typeof userEmail;
+  console.log("typeofinput", typeofinput);
   return (
     <>
       <Modal.Body className="pt-1">
