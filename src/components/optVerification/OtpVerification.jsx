@@ -7,16 +7,37 @@ import AuthContext from "../../context/authContext/AuthContext";
 
 let currentOTPIndex = 0;
 
-const OtpVerification = ({ handleVerify }) => {
+const OtpVerification = ({ handleVerifyNew, handleVerifyOld }) => {
   const correctOTP = "000000";
   const [otp, setOtp] = useState(new Array(6).fill(""));
-  const [otpError, setOtpError] = useState(null);
+  const [otpError, setOtpError] = useState(false);
   const [activeInputBox, setActiveInputBox] = useState(0);
   const [verifyDisable, setVerifyDisable] = useState(true);
-  const otpBoxReference = useRef(null);
+  const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [resendBtn, setResendBtn] = useState(false);
+  const [otpTimer, setOtpTimer] = useState(30);
+  const otpBoxReference = useRef(null);
+
   const userEmail = useSelector((state) => state.userLogin.email);
   const { setUserDetails } = useContext(AuthContext);
+  const fixedOtpTimer = otpTimer.toString().padStart(2, "0");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      otpTimer > 0 && setOtpTimer((prev) => prev - 1);
+    }, 1000);
+
+    if (otpTimer === 0) {
+      setResendBtn(true);
+    }
+
+    return () => clearInterval(interval);
+  }, [otpTimer]);
+
+  useEffect(() => {
+    otpBoxReference.current?.focus();
+  }, [activeInputBox]);
 
   const handleChange = ({ target }) => {
     const { value } = target;
@@ -39,14 +60,17 @@ const OtpVerification = ({ handleVerify }) => {
     }
   };
 
-  useEffect(() => {
-    otpBoxReference.current?.focus();
-  }, [activeInputBox]);
-
   const handleResendCode = async () => {
+    setSending(true);
     try {
-      const response = axios.post(sendOtp, { email: userEmail });
-      console.log("otp resend", response);
+      axios.post(sendOtp, { email: userEmail });
+      setTimeout(() => {
+        setOtp(new Array(6).fill(""));
+        setSending(false);
+        setOtpError(false);
+        setResendBtn(false);
+        setOtpTimer(30);
+      }, 1000);
     } catch (error) {}
   };
 
@@ -54,7 +78,7 @@ const OtpVerification = ({ handleVerify }) => {
     e.preventDefault();
     const enteredOtp = otp.join("");
     if (enteredOtp !== correctOTP) {
-      setOtpError("Invalid");
+      setOtpError(true);
     } else {
       setLoading(true);
       setOtpError(false);
@@ -65,9 +89,12 @@ const OtpVerification = ({ handleVerify }) => {
         });
         const userResult = response.data.result;
         setUserDetails(userResult);
-        setTimeout(() => {
-          handleVerify();
-        }, 1000);
+        localStorage.setItem("token", userResult.token);
+        if (userResult.is_new_user) {
+          handleVerifyNew();
+        } else {
+          handleVerifyOld();
+        }
       } catch (error) {
         console.log("otp error", error);
       }
@@ -95,14 +122,24 @@ const OtpVerification = ({ handleVerify }) => {
               />
             ))}
           </div>
-          {otpError ? <p className="text-danger pt-2">Invalid Otp</p> : null}
+          {otpError ? (
+            <p className="text-danger pt-2">
+              OTP entered is invalid or expired.
+            </p>
+          ) : null}
         </Form.Group>
-        <Form.Group className="d-flex justify-content-between mx-3 mb-3">
-          <Form.Label>Expires in 00:30</Form.Label>
-          <Form.Label className="text-primary" onClick={handleResendCode}>
-            Resend Code
-          </Form.Label>
-        </Form.Group>
+        {!resendBtn && (
+          <Form.Group className="mx-3 mb-3">
+            <Form.Label>Expires in 00:{fixedOtpTimer}</Form.Label>
+          </Form.Group>
+        )}
+        {resendBtn && (
+          <Form.Group className="mx-3 mb-3 text-end">
+            <Form.Label className="text-primary" onClick={handleResendCode}>
+              {sending ? "Sending code" : "Resend Code"}
+            </Form.Label>
+          </Form.Group>
+        )}
         <div className="px-2">
           <Button
             type="submit"

@@ -5,31 +5,43 @@ import { signUpSchema } from "../../schema";
 import axios from "axios";
 import { registerUser } from "../../api/Apis";
 import { useSelector } from "react-redux";
+import { useContext, useState } from "react";
+import AuthContext from "../../context/authContext/AuthContext";
 
-const SignUP = () => {
+const SignUP = ({ handleClose }) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const userEmail = useSelector((state) => state.userLogin.email);
+  const { setUserDetails } = useContext(AuthContext);
+  const isNumber = /^\d+$/.test(userEmail);
+
   const initialValueSignUp = {
     name: "",
-    mobile: "",
-    email: "",
+    mobile: isNumber ? userEmail : "",
+    email: !isNumber ? userEmail : "",
   };
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValueSignUp,
       validationSchema: signUpSchema,
       onSubmit: async (values, action) => {
-        const response = await axios.post(registerUser, values);
-        const data = await response;
-        console.log("login", data);
-        console.log("login", values);
-        action.resetForm();
-        handleClose();
+        setLoading(true);
+        try {
+          const response = await axios.post(registerUser, values);
+          const data = await response.data.result;
+          setUserDetails(data);
+          localStorage.setItem("token", data.token);
+          action.resetForm();
+          handleClose();
+        } catch (error) {
+          const errorMessage = await error.response.data.message;
+          console.log("first", error);
+          setError(errorMessage);
+          setLoading(false);
+        }
       },
     });
 
-  console.log("signup", userEmail);
-  const typeofinput = typeof userEmail;
-  console.log("typeofinput", typeofinput);
   return (
     <>
       <Modal.Body className="pt-1">
@@ -83,8 +95,9 @@ const SignUP = () => {
               <p className="text-danger">{errors.email}</p>
             ) : null}
           </Form.Group>
+          {error && <p className="text-danger">{error}</p>}
           <Button type="submit" className="w-100 rounded-4">
-            Register
+            {loading ? "Please wait..." : "Register"}
           </Button>
         </Form>
       </Modal.Body>

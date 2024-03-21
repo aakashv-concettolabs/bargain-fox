@@ -5,3 +5,7 @@ export const sendOtp = `${baseUrl}/send-otp`;
 export const verifyOtp = `${baseUrl}/verify-otp`;
 
 export const registerUser = `${baseUrl}/register`;
+
+export const userDetail = `${baseUrl}/user-detail`;
+
+export const logout = `${baseUrl}/logout`;

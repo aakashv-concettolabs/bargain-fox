@@ -8,7 +8,7 @@ import {
   InputGroup,
   Navbar,
 } from "react-bootstrap";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import brandLogo from "../../assets/eCartlogo.svg";
 import { Link } from "react-router-dom";
 import wishList from "../../assets/heart.png";
@@ -19,9 +19,12 @@ import "./navbar.scss";
 import MobileMenubar from "../mobileMenubar/MobileMenubar";
 import SignRegisterHovermMenu from "../signRegisterHoverMenu/SignRegisterHovermMenu";
 import ModalComponent from "../modal/ModalComponent";
+import AuthContext from "../../context/authContext/AuthContext";
 
 const Header = () => {
   const [show, setShow] = useState(false);
+  const { userDetails } = useContext(AuthContext);
+  const userName = userDetails.name;
   const handleClose = () => {
     setShow(false);
   };
@@ -86,8 +89,10 @@ const Header = () => {
                   <div className="d-none d-xl-flex gap-2 text-dark">
                     <img className="py-3 user" src={user} alt="user-icon" />
                     <div className="d-flex small flex-column justify-content-center">
-                      <span>Hello there,</span>
-                      <span className="fw-bold">SIGN IN / REGISTER</span>
+                      <span>{userName ? "welcome" : "Hello there,"}</span>
+                      <span className="fw-bold text-capitalize">
+                        {userName ? userName : "SIGN IN / REGISTER"}
+                      </span>
                     </div>
                   </div>
 

@@ -1,4 +1,6 @@
-import { createContext, useState, useContext } from "react";
+import axios from "axios";
+import { createContext, useState, useEffect } from "react";
+import { userDetail } from "../../api/Apis";
 
 const AuthContext = createContext();
 
@@ -51,8 +53,30 @@ const initialvalues = {
 export const AuthProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(initialvalues);
 
+  const currentUserDetail = async () => {
+    try {
+      let response = await axios.get(userDetail, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setUserDetails(response.data.result);
+    } catch (error) {
+      console.log("current user error", error);
+    }
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      currentUserDetail();
+    }
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ userDetails, setUserDetails }}>
+    <AuthContext.Provider
+      value={{ userDetails, setUserDetails, initialvalues }}
+    >
       {children}
     </AuthContext.Provider>
   );
