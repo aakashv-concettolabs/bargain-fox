@@ -2,13 +2,15 @@ import "./offerStickerComponent.scss";
 import offerSticker from "../../assets/offerSticker.svg";
 import { Image } from "react-bootstrap";
 
-const OfferStickerComponent = () => {
+const OfferStickerComponent = ({ discountPercent }) => {
   return (
-    <div className="d-none d-sm-block position-relative offerStickerMain">
-      <div>
-        <Image src={offerSticker} />
+    <div className="position-relative offerStickerMain">
+      <div className="offerStickerImg">
+        <Image src={offerSticker} className="w-100 h-100" />
       </div>
-      <span className="offerDiscount position-absolute text-white">-10%</span>
+      <span className="offerDiscount position-absolute text-white">
+        {discountPercent}%
+      </span>
     </div>
   );
 };

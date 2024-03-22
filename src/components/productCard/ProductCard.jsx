@@ -1,4 +1,4 @@
-import { Card, Button, Image } from "react-bootstrap";
+import { Card, Button, Image, CardTitle } from "react-bootstrap";
 import "./productcard.scss";
 import heart from "../../assets/heart.png";
 import deleteImg from "../../assets/delete.svg";
@@ -8,7 +8,14 @@ import ProductPriceTag from "../productPriceTag/ProductPriceTag";
 import { useState } from "react";
 import SpinnerComponent from "../spinner/SpinnerComponent";
 
-const ProductCard = ({ imgUrl, detail, offerPrice, price, btnClass }) => {
+const ProductCard = ({
+  imgUrl,
+  detail,
+  offerPrice,
+  price,
+  btnClass,
+  discountPercent,
+}) => {
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -29,7 +36,7 @@ const ProductCard = ({ imgUrl, detail, offerPrice, price, btnClass }) => {
     <div className="productCard-main mx-2">
       <Card className="position-relative">
         <div
-          className={`heartDiv position-absolute  rounded-circle d-flex justify-content-center align-items-center ${
+          className={`heartDiv position-absolute rounded-circle d-flex justify-content-center align-items-center ${
             liked ? "addedwishlist" : "bg-white"
           }`}
           onClick={wishOrDelClick}
@@ -39,19 +46,20 @@ const ProductCard = ({ imgUrl, detail, offerPrice, price, btnClass }) => {
           ) : (
             <Image
               src={`${btnClass}` === "d-block" ? deleteImg : heart}
-              className="w-50"
+              height="22px"
+              width="22px"
             />
           )}
         </div>
-        <div className="productCardImg d-flex justify-content-center">
-          <Image src={imgUrl} width="100%" />
+        <div className="productCardImg d-flex justify-content-center align-items-center">
+          <Image src={imgUrl} className="w-100 h-100 object-fit-contain" />
         </div>
-        <div className="lh-sm p-2">
-          <p className="productDetail mb-1 mb-md-3">{detail}</p>
+        <div className="p-2">
+          <CardTitle className="productDetail mb-1 mb-md-3">{detail}</CardTitle>
           <ProductRatingStar />
           <div className="d-flex justify-content-between align-items-center my-2">
             <ProductPriceTag offerPrice={offerPrice} price={price} />
-            <OfferStickerComponent />
+            <OfferStickerComponent discountPercent={discountPercent} />
           </div>
           <Button className={`${btnClass} cardbtn w-100 rounded-5 mt-3 mb-2`}>
             Add to cart

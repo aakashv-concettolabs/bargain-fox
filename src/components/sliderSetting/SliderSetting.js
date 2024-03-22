@@ -92,8 +92,8 @@ export const settings = {
     {
       breakpoint: 768,
       settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
+        slidesToShow: 2,
+        slidesToScroll: 2,
       },
     },
     {
@@ -101,6 +101,13 @@ export const settings = {
       settings: {
         slidesToShow: 2,
         slidesToScroll: 2,
+      },
+    },
+    {
+      breakpoint: 400,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
       },
     },
   ],

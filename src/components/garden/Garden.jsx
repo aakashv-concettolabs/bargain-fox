@@ -3,9 +3,26 @@ import { Container, Row, Col, InputGroup, Form, Button } from "react-bootstrap";
 import ProductCard from "../productCard/ProductCard";
 import Slider from "react-slick";
 import SectionHeading from "../sectionheading/SectionHeading";
-import { settings, GardenDatas } from "../sliderSetting/SliderSetting";
+import { settings } from "../sliderSetting/SliderSetting";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { productlist } from "../../api/Apis";
 
 const Garden = () => {
+  const [responseResult, setresponseResult] = useState([]);
+
+  const productListApiCall = async () => {
+    try {
+      const response = await axios.post(productlist);
+      setresponseResult(response.data.result.data);
+    } catch (error) {
+      console.log("productlist error", error);
+    }
+  };
+  useEffect(() => {
+    productListApiCall();
+  }, []);
+
   return (
     <Container className="garden-main mt-5">
       <SectionHeading sectionHeadingTitle="Garden & DIY" />
@@ -15,13 +32,14 @@ const Garden = () => {
             <Col>
               <div className="slider-container">
                 <Slider {...settings}>
-                  {GardenDatas.map((gardenData) => (
+                  {responseResult.map((gardenData) => (
                     <ProductCard
-                      imgUrl={gardenData.imgUrl}
-                      detail={gardenData.detail}
+                      imgUrl={gardenData.product_images[0].product_image_url}
+                      detail={gardenData.name}
                       key={gardenData.id}
-                      price={gardenData.price}
-                      offerPrice={gardenData.offerPrice}
+                      price={gardenData.main_rrp}
+                      offerPrice={gardenData.my_sale_price}
+                      discountPercent={gardenData.percentage_discount}
                     />
                   ))}
                 </Slider>

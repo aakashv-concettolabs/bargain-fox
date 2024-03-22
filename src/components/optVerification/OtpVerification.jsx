@@ -103,13 +103,14 @@ const OtpVerification = ({ handleVerifyNew, handleVerifyOld }) => {
 
   return (
     <Modal.Body className="pt-1">
-      <span className="text-secondary small d-flex justify-content-center mb-3">
-        A verification code is sent to {userEmail}
-      </span>
+      <p className="text-secondary small d-flex flex-column flex-sm-row gap-sm-1 justify-content-center text-center mb-3">
+        <span>A verification code is sent to</span>
+        <span className="fw-bolder">{userEmail}</span>
+      </p>
       <Form noValidate onSubmit={handleSubmit}>
-        <Form.Group className="mx-3 mb-3">
+        <Form.Group className="mx-sm-3 mb-3">
           <Form.Label>Verification Code</Form.Label>
-          <div className="d-flex gap-4">
+          <div className="d-flex gap-2 gap-sm-4">
             {otp.map((eachotp, index) => (
               <Form.Control
                 key={index}
@@ -129,7 +130,7 @@ const OtpVerification = ({ handleVerifyNew, handleVerifyOld }) => {
           ) : null}
         </Form.Group>
         {!resendBtn && (
-          <Form.Group className="mx-3 mb-3">
+          <Form.Group className="mx-sm-3 mb-3">
             <Form.Label>Expires in 00:{fixedOtpTimer}</Form.Label>
           </Form.Group>
         )}

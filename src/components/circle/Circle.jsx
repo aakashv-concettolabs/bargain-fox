@@ -1,7 +1,6 @@
 import "./circle.scss";
 import { useState } from "react";
 import { Col, Image, Row, Tab, Nav } from "react-bootstrap";
-
 import { tabMenu } from "./hoverMenuData";
 
 const Circle = ({ imgUrl, categoryText }) => {
@@ -13,10 +12,10 @@ const Circle = ({ imgUrl, categoryText }) => {
   return (
     <div className="categoryCircle position-relative ">
       <div className="d-flex flex-column align-items-center justify-content-between">
-        <div className="categoryCircle d-flex flex-column justify-content-center align-items-center">
-          <Image roundedCircle src={imgUrl} />
-          <span className="text-center fw-medium">{categoryText}</span>
+        <div className="categoryImageContainer d-flex flex-column justify-content-center align-items-center">
+          <Image roundedCircle src={imgUrl} className="w-100" />
         </div>
+        <span className="text-center fw-medium">{categoryText}</span>
         <div className="dot rounded-circle position-absolute"></div>
       </div>
       <div className="menu position-absolute z-3">
