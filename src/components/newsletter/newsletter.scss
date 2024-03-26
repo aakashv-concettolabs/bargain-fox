@@ -1,0 +1,56 @@
+.newsletter-main{
+    .newsletter{
+        background-color: #0063FF;
+        
+    }
+    .newsletter::before{
+        content: "";
+        background-image: url("src/assets/newsarrow.svg");
+        position: absolute;
+        height: 80px;
+        width: 120px;
+        top: 0px;
+        right: 550px;
+        background-repeat: no-repeat;
+    }
+}
+
+
+@media (max-width: 1400px){
+   
+    .newsletter-main{
+        .newsletter::before{
+            top: 0px;
+            right: 470px;
+        }
+    }
+}
+
+@media (max-width: 1200px){
+    .newsletter-main{
+        .newsletter::before{
+            display: none;
+         }
+    }
+
+}
+
+
+
+@media (max-width: 576px){
+    .newsletter-main{
+        .newsletter{
+           h3{
+            font-size: 20px;
+           }
+           p{
+            font-size: 14px;
+           }
+           .form-control,button{
+            font-size: 12px;
+           }
+        }
+    }
+   
+
+}

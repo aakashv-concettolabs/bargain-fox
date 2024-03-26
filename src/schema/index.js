@@ -28,3 +28,7 @@ export const addressSchema = Yup.object({
   city: Yup.string().min(4).max(25).required("City is required"),
   postcode: Yup.number().required("Postcode number is required"),
 });
+
+export const newsletterSchema = Yup.object({
+  email: Yup.string().email().required("Please enter your email"),
+});

@@ -1,0 +1,9 @@
+#productDetailSliderMain{
+    .slick-arrow{
+        background: none;
+        box-shadow: none;
+        &::before{
+            background: none;
+        }
+    }
+}

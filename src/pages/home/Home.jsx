@@ -6,6 +6,7 @@ import Deals from "../../components/deals/Deals";
 import Trending from "../../components/trending/Trending";
 import Garden from "../../components/garden/Garden";
 import Electronics from "../../components/electronics/Electronics";
+import Newsletter from "../../components/newsletter/Newsletter";
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
       <Deals />
       <Trending />
       <Garden />
+      <Newsletter />
       <Electronics />
     </Container>
   );

@@ -1,5 +1,5 @@
 import { Col, Container, Row, Offcanvas } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./productList.scss";
 import ProductCard from "../../components/productCard/ProductCard";
 import filter from "../../assets/filter.svg";
@@ -7,11 +7,29 @@ import FilterSidebar from "../../components/filterSidebar/FilterSidebar";
 import PaginationComponent from "../../components/pagination/PaginationComponent";
 import { Link } from "react-router-dom";
 import { GardenDatas } from "../../components/sliderSetting/SliderSetting";
+import axios from "axios";
+import { productlist } from "../../api/Apis";
 
 const ProductList = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [responseResult, setresponseResult] = useState([]);
+
+  const productListApiCall = async () => {
+    try {
+      const response = await axios.post(productlist);
+      setresponseResult(response.data.result.data);
+    } catch (error) {
+      console.log("productlist error", error);
+    }
+  };
+  const abc = (e) => {
+    e.preventDefault();
+  };
+  useEffect(() => {
+    productListApiCall();
+  }, []);
 
   return (
     <Container fluid className="productList-main">
@@ -81,11 +99,11 @@ const ProductList = () => {
 
         <Col md={12} lg={10} className="col-12">
           <Row className="d-flex">
-            {GardenDatas.map((gardenData) => (
+            {responseResult.map((gardenData) => (
               <Col
-                lg={3}
-                sm={6}
                 xs={12}
+                sm={6}
+                lg={3}
                 md={4}
                 className="mt-3"
                 key={gardenData.id}
@@ -95,10 +113,12 @@ const ProductList = () => {
                   className="text-decoration-none"
                 >
                   <ProductCard
-                    imgUrl={gardenData.imgUrl}
-                    detail={gardenData.detail}
-                    price={gardenData.price}
-                    offerPrice={gardenData.offerPrice}
+                    imgUrl={gardenData.product_images[0].product_image_url}
+                    detail={gardenData.name}
+                    key={gardenData.id}
+                    price={gardenData.main_rrp}
+                    offerPrice={gardenData.my_sale_price}
+                    discountPercent={gardenData.percentage_discount}
                   />
                 </Link>
               </Col>
@@ -109,6 +129,7 @@ const ProductList = () => {
       <Row>
         <Col className="d-flex justify-content-center mt-5">
           <PaginationComponent />
+          <button onClick={abc}>next</button>
         </Col>
       </Row>
     </Container>

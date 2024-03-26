@@ -7,3 +7,4 @@ export const userDetail = `${baseUrl}/user-detail`;
 export const logout = `${baseUrl}/logout`;
 export const categorylist = `${baseUrl}/category-list`;
 export const productlist = `${baseUrl}/product/list`;
+export const newsletter = `${baseUrl}/add-newsletter`;

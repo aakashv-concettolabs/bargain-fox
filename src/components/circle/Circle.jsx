@@ -3,9 +3,8 @@ import { useState } from "react";
 import { Col, Image, Row, Tab, Nav } from "react-bootstrap";
 import { tabMenu } from "./hoverMenuData";
 
-const Circle = ({ imgUrl, categoryText }) => {
+const Circle = ({ imgUrl, categoryText, responsedResult }) => {
   const [activeTab, setActiveTab] = useState("first");
-
   const handleTabHover = (eventKey) => {
     setActiveTab(eventKey);
   };
@@ -23,9 +22,13 @@ const Circle = ({ imgUrl, categoryText }) => {
           <Tab.Container activeKey={activeTab}>
             <Row className="d-flex">
               <Col>
-                {tabMenu.map((tabmenu) => (
-                  <Nav key={tabmenu.id}>
-                    <div>
+                {responsedResult.map((tabmenu, index) => (
+                  <Nav key={index}>
+                    {/* {console.log("first", tabmenu)} */}
+                    {tabmenu.map((subtabmenu, subindex) =>
+                      console.log("first", subtabmenu)
+                    )}
+                    {/* <div>
                       <Nav.Item>
                         <Nav.Link
                           eventKey={tabmenu.id}
@@ -39,7 +42,7 @@ const Circle = ({ imgUrl, categoryText }) => {
                           {tabmenu.menu}
                         </Nav.Link>
                       </Nav.Item>
-                    </div>
+                    </div> */}
                   </Nav>
                 ))}
               </Col>

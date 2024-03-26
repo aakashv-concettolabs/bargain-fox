@@ -28,7 +28,6 @@ import electronic3 from "../../assets/electronic3.png";
 import electronic4 from "../../assets/electronic4.png";
 
 // deals slider setting
-
 export const dealsettings = {
   dots: false,
   infinite: false,
@@ -65,6 +64,26 @@ export const dealsettings = {
       },
     },
   ],
+};
+
+// product detail slider A
+export const productDetailSliderAsettings = {
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 4,
+  vertical: true,
+  verticalSwiping: true,
+  initialSlide: 0,
+};
+
+// product detail slider B
+export const productDetailSliderBsettings = {
+  dots: false,
+  infinite: false,
+  speed: 500,
+  fade: true,
+  slidesToShow: 1,
 };
 
 // slider setting

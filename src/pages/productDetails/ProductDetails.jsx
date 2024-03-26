@@ -1,8 +1,6 @@
 import { Col, Container, Row, Button, Image } from "react-bootstrap";
 import "./productDetails.scss";
-import ProductImgs from "./productImgs.js";
 import share from "../../assets/share.png";
-import mainProductImg from "../../assets/mainProductImg.png";
 import people from "../../assets/people.png";
 import fourstar from "../../assets/4Star.svg";
 import { Link } from "react-router-dom";
@@ -10,12 +8,12 @@ import ProductColor from "../../components/productColorSize/ProductColor";
 import ProductSize from "../../components/productColorSize/ProductSize";
 import ReturnPolicy from "../../components/returnPolicy/ReturnPolicy";
 import CustomerReview from "../../components/cusomerReview/CustomerReview";
-import { useState } from "react";
 import email from "../../assets/emailimg.svg";
 import FB from "../../assets/fbimg.svg";
 import copylink from "../../assets/copylink.svg";
 import pinterest from "../../assets/pinterestimg.svg";
 import ProductPriceTag from "../../components/productPriceTag/ProductPriceTag.jsx";
+import ProductDetailSlider from "../../components/productDetailSlider/ProductDetailSlider.jsx";
 
 const shareOptions = [
   {
@@ -37,29 +35,11 @@ const shareOptions = [
 ];
 
 const ProductDetails = () => {
-  const [thumnailImg, setThumnailImg] = useState(mainProductImg);
-
-  const handleProductImg = (productImg) => {
-    setThumnailImg(productImg);
-  };
   return (
     <Container fluid className="mt-3 productDetailMain">
       <Row className="justify-content-around">
-        <Col lg={1} xs={3} className="d-flex flex-column gap-3">
-          {ProductImgs.map((productImg) => (
-            <Image
-              alt="171x180"
-              src={productImg.imgUrl}
-              className="border rounded-4"
-              key={productImg.id}
-              onClick={() => handleProductImg(productImg.imgUrl)}
-            />
-          ))}
-        </Col>
-        <Col lg={4} xs={9} className="">
-          <div className="border d-flex justify-content-center bg-body-secondary">
-            <Image src={thumnailImg} alt="" height="100%" width="90%" />
-          </div>
+        <Col lg={6} xs={12}>
+          <ProductDetailSlider />
         </Col>
         <Col lg={6} xs={12} className="mt-4 mt-lg-0">
           <Row className="justify-content-between">

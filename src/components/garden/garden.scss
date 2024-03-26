@@ -5,39 +5,9 @@
           gap: 12px;
         }
     }
-    .newsletter{
-        background-color: #0063FF;
-        
-    }
-    .newsletter::before{
-        content: "";
-        background-image: url("src/assets/newsarrow.svg");
-        position: absolute;
-        height: 80px;
-        width: 120px;
-        top: 0px;
-        right: 550px;
-        background-repeat: no-repeat;
-    }
-   
 }
 
-@media (max-width: 1400px){
-   
-    .garden-main{
-        .newsletter::before{
-            top: 0px;
-            right: 470px;
-        }
-    }
-}
 
-@media (max-width: 1200px){
-    .newsletter::before{
-       display: none;
-    }
-
-}
 
 @media (max-width: 992px){
     .slider-container {
@@ -77,17 +47,6 @@
               }
             }
           }
-        .newsletter{
-           h3{
-            font-size: 20px;
-           }
-           p{
-            font-size: 14px;
-           }
-           .form-control,button{
-            font-size: 12px;
-           }
-        }
     }
    
 
