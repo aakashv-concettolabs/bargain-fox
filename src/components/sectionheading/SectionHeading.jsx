@@ -17,7 +17,7 @@ const SectionHeading = ({ sectionHeadingTitle }) => {
           </Col>
           <Col className="col-4 p-0">
             <Nav className="d-flex justify-content-end">
-              <Nav.Link as={Link} href="#home" className="d-flex gap-2">
+              <Nav.Link as={Link} to={"productList"} className="d-flex gap-2">
                 <span>View All</span>
                 <img src={rightArrow} alt="View all" />
               </Nav.Link>

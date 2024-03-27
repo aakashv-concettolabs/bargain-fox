@@ -11,9 +11,6 @@ const Category = () => {
     CategoryApiCall();
   }, []);
 
-  const responsedResultMap = responsedResult.map((item) => item.subcategory);
-  const subcategoryArray = responsedResultMap.filter((item) => item);
-
   const CategoryApiCall = async () => {
     try {
       const response = await axios.get(categorylist);
@@ -35,11 +32,7 @@ const Category = () => {
                 className="my-2 categoryCol"
                 key={categoryData.id}
               >
-                <Circle
-                  imgUrl={categoryData.thumbnail_image_url}
-                  categoryText={categoryData.title}
-                  responsedResult={subcategoryArray}
-                />
+                <Circle responsedResult={categoryData} />
               </Col>
             ))}
           </Row>

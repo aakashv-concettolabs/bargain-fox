@@ -6,7 +6,6 @@ import filter from "../../assets/filter.svg";
 import FilterSidebar from "../../components/filterSidebar/FilterSidebar";
 import PaginationComponent from "../../components/pagination/PaginationComponent";
 import { Link } from "react-router-dom";
-import { GardenDatas } from "../../components/sliderSetting/SliderSetting";
 import axios from "axios";
 import { productlist } from "../../api/Apis";
 
@@ -129,7 +128,6 @@ const ProductList = () => {
       <Row>
         <Col className="d-flex justify-content-center mt-5">
           <PaginationComponent />
-          <button onClick={abc}>next</button>
         </Col>
       </Row>
     </Container>

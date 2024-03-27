@@ -16,8 +16,14 @@
         .menu{
             display: none;
             top: 130px;
-            width: 420px;
+            width: 400px;
             right: -150px;
+            .tab-pane{
+                display: block;
+            }
+            .fade{
+                opacity: 1;
+            }
         }
         &:hover{
             .dot{
@@ -26,6 +32,7 @@
             .menu{
                 display: block;
                 .fade{
+                    color: #292d32;
                     &:hover{
                     color: #0063FF;
                 }}

@@ -10,6 +10,7 @@ import { productlist } from "../../api/Apis";
 
 const Garden = () => {
   const [responseResult, setresponseResult] = useState([]);
+  console.log("first", responseResult);
 
   const productListApiCall = async () => {
     try {
@@ -32,16 +33,21 @@ const Garden = () => {
             <Col>
               <div className="slider-container">
                 <Slider {...settings}>
-                  {responseResult.map((gardenData) => (
-                    <ProductCard
-                      imgUrl={gardenData.product_images[0].product_image_url}
-                      detail={gardenData.name}
-                      key={gardenData.id}
-                      price={gardenData.main_rrp}
-                      offerPrice={gardenData.my_sale_price}
-                      discountPercent={gardenData.percentage_discount}
-                    />
-                  ))}
+                  {responseResult.map((gardenData) => {
+                    if (gardenData.category_id != "9") {
+                      return;
+                    }
+                    return (
+                      <ProductCard
+                        imgUrl={gardenData.product_images[0].product_image_url}
+                        detail={gardenData.name}
+                        key={gardenData.id}
+                        price={gardenData.main_rrp}
+                        offerPrice={gardenData.my_sale_price}
+                        discountPercent={gardenData.percentage_discount}
+                      />
+                    );
+                  })}
                 </Slider>
               </div>
             </Col>
