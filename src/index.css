@@ -52,3 +52,7 @@ textarea {
 .slick-prev::before {
   transform: rotate(180deg);
 }
+
+.nothingtoshow {
+  height: 80vh;
+}

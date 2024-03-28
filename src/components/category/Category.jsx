@@ -32,7 +32,7 @@ const Category = () => {
                 className="my-2 categoryCol"
                 key={categoryData.id}
               >
-                <Circle responsedResult={categoryData} />
+                <Circle categoryData={categoryData} />
               </Col>
             ))}
           </Row>

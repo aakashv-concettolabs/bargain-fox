@@ -22,10 +22,10 @@ function App() {
           element: <Home />,
         },
         {
-          path: "productList",
+          path: "",
           children: [
             {
-              path: "",
+              path: "productList?/:category?/:subcategory?/:collection?",
               element: <ProductList />,
             },
             {

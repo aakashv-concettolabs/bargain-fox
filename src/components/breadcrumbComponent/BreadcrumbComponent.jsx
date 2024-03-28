@@ -10,24 +10,23 @@ const BreadcrumbComponent = () => {
     <Container fluid className="breadcrumbMain d-none d-lg-flex ps-3 pt-2">
       <Breadcrumb>
         {pathnames.length > 0 && (
-          <Link to={"/"} className="itemsOfBread">
+          <Link to={"/"} className="itemsOfBread notlastItemofBread">
             Home
           </Link>
         )}
         {pathnames.map((individualpathname, index) => {
-          breadCrumbs += `${individualpathname}`;
+          breadCrumbs += `/${individualpathname}`;
           const isLast = index === pathnames.length - 1;
           return isLast ? (
-            <Link
+            <p
               key={individualpathname}
-              //   className={isLast ? "active" : ""}
               className="active itemsOfBread text-capitalize"
             >
               {individualpathname}
-            </Link>
+            </p>
           ) : (
             <Link
-              className="itemsOfBread text-capitalize"
+              className="itemsOfBread notlastItemofBread text-capitalize"
               to={breadCrumbs}
               key={individualpathname}
             >

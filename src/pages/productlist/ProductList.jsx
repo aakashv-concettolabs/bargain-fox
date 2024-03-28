@@ -5,31 +5,56 @@ import ProductCard from "../../components/productCard/ProductCard";
 import filter from "../../assets/filter.svg";
 import FilterSidebar from "../../components/filterSidebar/FilterSidebar";
 import PaginationComponent from "../../components/pagination/PaginationComponent";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { productlist } from "../../api/Apis";
+import Dropdown from "../../components/dropdown/Dropdown";
 
 const ProductList = () => {
   const [show, setShow] = useState(false);
+  const [emptyproduct, setEmptyproduct] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [responseResult, setresponseResult] = useState([]);
-
+  const { category, subcategory, collection, sortby } = useParams();
   const productListApiCall = async () => {
+    let apiData = {};
+    if (category) {
+      apiData.category_id = category;
+    }
+    if (subcategory) {
+      apiData.sub_category_id = subcategory;
+    }
+    if (collection) {
+      apiData.collection_id = collection;
+    }
+    if (sortby) {
+      apiData.sort_by = sortby;
+    }
     try {
-      const response = await axios.post(productlist);
+      const response = await axios.post(productlist, apiData);
       setresponseResult(response.data.result.data);
+      if (response.data.result.data.length <= 0) {
+        setEmptyproduct(true);
+      } else {
+        setEmptyproduct(false);
+      }
     } catch (error) {
       console.log("productlist error", error);
     }
   };
-  const abc = (e) => {
-    e.preventDefault();
-  };
+
   useEffect(() => {
     productListApiCall();
-  }, []);
+  }, [category, subcategory, collection]);
 
+  if (emptyproduct) {
+    return (
+      <p className="nothingtoshow d-flex justify-content-center align-items-center fw-medium fs-2">
+        Nothing to show
+      </p>
+    );
+  }
   return (
     <Container fluid className="productList-main">
       <Row className="d-none d-lg-flex">
@@ -43,37 +68,13 @@ const ProductList = () => {
           lg={3}
           className=" d-flex align-items-center justify-content-center"
         >
-          <div className="row border rounded-5 p-2">
-            <div className="col d-flex gap-2">
-              <label className="text-secondary">Sort BY:</label>
-              <select className="shadow-none border-0 focus-ring bg-white">
-                <option>Relevency</option>
-                <option value="1">Lowest Price</option>
-                <option value="2">Highest Price</option>
-                <option value="3">Top Customers Reviews</option>
-                <option value="4">Most Recent</option>
-              </select>
-            </div>
-          </div>
+          <Dropdown />
         </Col>
       </Row>
 
       <Row className="d-flex d-lg-none mt-4 ms-1 align-items-center justify-content-between">
         <Col className="col-5 d-flex align-items-center">
-          <div className="row border rounded-5 p-2">
-            <div className="col  d-flex gap-2">
-              <label className="text-secondary d-none d-md-flex">
-                Sort BY:
-              </label>
-              <select className="shadow-none border-0 focus-ring bg-white">
-                <option>Relevency</option>
-                <option value="1">Lowest Price</option>
-                <option value="2">Highest Price</option>
-                <option value="3">Top Customers Reviews</option>
-                <option value="4">Most Recent</option>
-              </select>
-            </div>
-          </div>
+          <Dropdown />
         </Col>
         <Col className="fliterOptionButton col-5 d-flex align-items-center justify-content-end gap-2">
           <img src={filter} alt="filter" onClick={handleShow} />

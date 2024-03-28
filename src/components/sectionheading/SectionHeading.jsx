@@ -3,7 +3,7 @@ import { Col, Nav, Row } from "react-bootstrap";
 import rightArrow from "../../assets/rightArrow.svg";
 import { Link } from "react-router-dom";
 
-const SectionHeading = ({ sectionHeadingTitle }) => {
+const SectionHeading = ({ sectionHeadingTitle, sectionlinktarget }) => {
   return (
     <Row className="sectionTitleMain">
       <Col className="col-12 p-0">
@@ -17,7 +17,11 @@ const SectionHeading = ({ sectionHeadingTitle }) => {
           </Col>
           <Col className="col-4 p-0">
             <Nav className="d-flex justify-content-end">
-              <Nav.Link as={Link} to={"productList"} className="d-flex gap-2">
+              <Nav.Link
+                as={Link}
+                to={sectionlinktarget}
+                className="d-flex gap-2"
+              >
                 <span>View All</span>
                 <img src={rightArrow} alt="View all" />
               </Nav.Link>

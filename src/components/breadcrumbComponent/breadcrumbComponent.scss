@@ -1,16 +1,18 @@
-.breadcrumbMain{
-    .itemsOfBread+.itemsOfBread::before {
-        content: var(--bs-breadcrumb-divider, ">");
-        color: #a4a4b8;
-        margin: 0 10px;
-    }
-    .itemsOfBread{
-            text-decoration: none;
-            color: #a4a4b8;
-    }
-    .active{
-        
-            color: black;
-        
-    }
+.breadcrumbMain {
+  .itemsOfBread + .itemsOfBread::before {
+    content: var(--bs-breadcrumb-divider, ">");
+    color: #a4a4b8;
+    margin: 0 10px;
+  }
+  .itemsOfBread {
+    text-decoration: none;
+    color: #a4a4b8;
+  }
+  .active {
+    color: black;
+  }
+  .notlastItemofBread:hover{
+    color: #0063FF;
+    transition: color 0.3s ease-in-out;
+  }
 }

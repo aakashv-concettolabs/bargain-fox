@@ -13,7 +13,9 @@ const Electronics = () => {
 
   const productListApiCall = async () => {
     try {
-      const response = await axios.post(productlist);
+      const response = await axios.post(productlist, {
+        category_id: "electronics",
+      });
       setresponseResult(response.data.result.data);
     } catch (error) {
       console.log("productlist electronics error", error);
@@ -25,7 +27,10 @@ const Electronics = () => {
   }, []);
   return (
     <Container className="electronics-main mt-5">
-      <SectionHeading sectionHeadingTitle="Electronics" />
+      <SectionHeading
+        sectionHeadingTitle="Electronics"
+        sectionlinktarget="productList/electronics"
+      />
 
       <Row className="mt-4">
         <Col className="col-12">

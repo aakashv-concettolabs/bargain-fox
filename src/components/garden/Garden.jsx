@@ -7,14 +7,14 @@ import { settings } from "../sliderSetting/SliderSetting";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { productlist } from "../../api/Apis";
-
 const Garden = () => {
   const [responseResult, setresponseResult] = useState([]);
-  console.log("first", responseResult);
 
   const productListApiCall = async () => {
     try {
-      const response = await axios.post(productlist);
+      const response = await axios.post(productlist, {
+        sub_category_id: "garden-diy",
+      });
       setresponseResult(response.data.result.data);
     } catch (error) {
       console.log("productlist error", error);
@@ -26,28 +26,26 @@ const Garden = () => {
 
   return (
     <Container className="garden-main mt-5">
-      <SectionHeading sectionHeadingTitle="Garden & DIY" />
+      <SectionHeading
+        sectionHeadingTitle="Garden & DIY"
+        sectionlinktarget="productList/sports-leisure/garden-diy"
+      />
       <Row className="mt-4">
         <Col className="col-12  ">
           <Row>
             <Col>
               <div className="slider-container">
                 <Slider {...settings}>
-                  {responseResult.map((gardenData) => {
-                    if (gardenData.category_id != "9") {
-                      return;
-                    }
-                    return (
-                      <ProductCard
-                        imgUrl={gardenData.product_images[0].product_image_url}
-                        detail={gardenData.name}
-                        key={gardenData.id}
-                        price={gardenData.main_rrp}
-                        offerPrice={gardenData.my_sale_price}
-                        discountPercent={gardenData.percentage_discount}
-                      />
-                    );
-                  })}
+                  {responseResult.map((gardenData) => (
+                    <ProductCard
+                      imgUrl={gardenData.product_images[0].product_image_url}
+                      detail={gardenData.name}
+                      key={gardenData.id}
+                      price={gardenData.main_rrp}
+                      offerPrice={gardenData.my_sale_price}
+                      discountPercent={gardenData.percentage_discount}
+                    />
+                  ))}
                 </Slider>
               </div>
             </Col>
