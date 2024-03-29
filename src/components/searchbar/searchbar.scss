@@ -1,0 +1,16 @@
+.searchbar-main{
+   .form-control{
+    height: 50px;
+    border-radius: 10px 0px 0px 10px;
+    border: 1px solid #f5f5fc;
+    &:focus{
+    border-color: #f5f5fc;
+    box-shadow: none;
+   }}
+
+   .searchIconBtn{
+    border-radius: 0px 10px 10px 0px;
+    height: 50px;
+    width: 50px;
+   }
+}

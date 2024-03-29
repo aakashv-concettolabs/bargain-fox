@@ -1,25 +1,16 @@
-import {
-  Nav,
-  Container,
-  Row,
-  Col,
-  Button,
-  Form,
-  InputGroup,
-  Navbar,
-} from "react-bootstrap";
+import { Nav, Container, Row, Col, Navbar } from "react-bootstrap";
 import { useContext, useState } from "react";
 import brandLogo from "../../assets/eCartlogo.svg";
 import { Link } from "react-router-dom";
 import wishList from "../../assets/heart.png";
 import user from "../../assets/user.png";
 import cart from "../../assets/shopping-cart.png";
-import SearchIcon from "../../assets/search-normal.png";
 import "./navbar.scss";
 import MobileMenubar from "../mobileMenubar/MobileMenubar";
 import SignRegisterHovermMenu from "../signRegisterHoverMenu/SignRegisterHovermMenu";
 import ModalComponent from "../modal/ModalComponent";
 import AuthContext from "../../context/authContext/AuthContext";
+import Searchbar from "../searchbar/Searchbar";
 
 const Header = () => {
   const [show, setShow] = useState(false);
@@ -48,16 +39,7 @@ const Header = () => {
             </div>
           </Col>
           <Col md={4} className="d-md-flex d-none">
-            <InputGroup className="rounded-3">
-              <Form.Control
-                className="border-0 shadow-none"
-                placeholder="Search Product"
-                aria-describedby="basic-addon2"
-              />
-              <Button id="button-addon2" className="border">
-                <img src={SearchIcon} alt="" />
-              </Button>
-            </InputGroup>
+            <Searchbar />
           </Col>
           <Col xs={6} md={4} className="pe-md-5">
             <Nav className="d-flex gap-2 gap-sm-3 justify-content-end align-items-center">
@@ -110,16 +92,7 @@ const Header = () => {
 
         <Row className="mt-2 d-flex d-md-none justify-content-sm-between align-items-center">
           <Col>
-            <InputGroup className="inputGroup rounded-3">
-              <Form.Control
-                className="border-0 shadow-none"
-                placeholder="Search Product"
-                aria-describedby="basic-addon2"
-              />
-              <Button>
-                <img src={SearchIcon} alt="search-icon" className="h-75 w-75" />
-              </Button>
-            </InputGroup>
+            <Searchbar />
           </Col>
         </Row>
       </Container>

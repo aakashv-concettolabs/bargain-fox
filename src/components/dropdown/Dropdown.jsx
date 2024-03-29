@@ -1,17 +1,28 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import "./dropdown.scss";
 
 const Dropdown = () => {
-  const [selectedValue, setSelectedValue] = useState("lowest_price");
   const location = useLocation();
+  const navigate = useNavigate();
+  const params = new URLSearchParams(location.search);
+  const initialSelectedValue = params.get("sort_by") || "relevant";
+  const [selectedValue, setSelectedValue] = useState(initialSelectedValue);
 
   const handlechange = (e) => {
-    setSelectedValue(e.target.value);
-    const queryParams = new URLSearchParams(location.search);
-    console.log("selectedValue", queryParams);
+    const dropdownValue = e.target.value;
+    setSelectedValue(dropdownValue);
+    const sortedUrl = `${location.pathname}?sort_by=${dropdownValue}`;
+    navigate(sortedUrl);
   };
+
+  useEffect(() => {
+    const newParams = new URLSearchParams(location.search);
+    const newSelectedValue = newParams.get("sort_by") || "relevant";
+    setSelectedValue(newSelectedValue);
+  }, [location.search]);
+
   return (
     <Row className="dropdown-main border rounded-5 py-2 px-2 px-sm-1 px-md-2">
       <Col className="d-flex gap-2">
@@ -21,10 +32,11 @@ const Dropdown = () => {
           value={selectedValue}
           onChange={handlechange}
         >
+          <option value="relevant">Relevant</option>
           <option value="lowest_price">Lowest Price</option>
           <option value="highest_price">Highest Price</option>
           <option value="top_customes_reviews">Top Customers Reviews</option>
-          <option value="relevant, most_recent">Most Recent</option>
+          <option value="most_recent">Most Recent</option>
         </select>
       </Col>
     </Row>

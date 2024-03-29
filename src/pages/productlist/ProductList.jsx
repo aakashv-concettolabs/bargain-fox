@@ -5,7 +5,7 @@ import ProductCard from "../../components/productCard/ProductCard";
 import filter from "../../assets/filter.svg";
 import FilterSidebar from "../../components/filterSidebar/FilterSidebar";
 import PaginationComponent from "../../components/pagination/PaginationComponent";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { productlist } from "../../api/Apis";
 import Dropdown from "../../components/dropdown/Dropdown";
@@ -13,10 +13,13 @@ import Dropdown from "../../components/dropdown/Dropdown";
 const ProductList = () => {
   const [show, setShow] = useState(false);
   const [emptyproduct, setEmptyproduct] = useState(false);
+  const [responseResult, setresponseResult] = useState([]);
+  const { category, subcategory, collection } = useParams();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [responseResult, setresponseResult] = useState([]);
-  const { category, subcategory, collection, sortby } = useParams();
+  const location = useLocation();
+  const sortby = location.search.slice(9);
+
   const productListApiCall = async () => {
     let apiData = {};
     if (category) {
@@ -46,7 +49,7 @@ const ProductList = () => {
 
   useEffect(() => {
     productListApiCall();
-  }, [category, subcategory, collection]);
+  }, [category, subcategory, collection, sortby]);
 
   if (emptyproduct) {
     return (
