@@ -35,6 +35,10 @@ function App() {
           ],
         },
         {
+          path: "search-results?/:searchText?",
+          element: <ProductList />,
+        },
+        {
           path: "cart",
           children: [
             {

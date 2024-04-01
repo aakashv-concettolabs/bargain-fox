@@ -9,6 +9,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { productlist } from "../../api/Apis";
 import Dropdown from "../../components/dropdown/Dropdown";
+import Noproduct from "../../components/noProduct/Noproduct";
 
 const ProductList = () => {
   const [show, setShow] = useState(false);
@@ -18,7 +19,9 @@ const ProductList = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const location = useLocation();
-  const sortby = location.search.slice(9);
+  const params = new URLSearchParams(location.search);
+  const sortby = params.get("sort_by");
+  const search = params.get("searchText");
 
   const productListApiCall = async () => {
     let apiData = {};
@@ -33,6 +36,9 @@ const ProductList = () => {
     }
     if (sortby) {
       apiData.sort_by = sortby;
+    }
+    if (search) {
+      apiData.search = search;
     }
     try {
       const response = await axios.post(productlist, apiData);
@@ -49,35 +55,32 @@ const ProductList = () => {
 
   useEffect(() => {
     productListApiCall();
-  }, [category, subcategory, collection, sortby]);
+  }, [category, subcategory, collection, sortby, search]);
 
-  if (emptyproduct) {
-    return (
-      <p className="nothingtoshow d-flex justify-content-center align-items-center fw-medium fs-2">
-        Nothing to show
-      </p>
-    );
-  }
   return (
     <Container fluid className="productList-main">
       <Row className="d-none d-lg-flex">
         <Col lg={2} className="d-flex align-items-center fs-3 ">
           <span className="ps-3 text-secondary fw-medium">Filter</span>
         </Col>
-        <Col lg={7} className="d-flex align-items-center">
-          <span className="fw-bold fs-3">Results</span>
-        </Col>
-        <Col
-          lg={3}
-          className=" d-flex align-items-center justify-content-center"
-        >
-          <Dropdown />
-        </Col>
+        {!emptyproduct && (
+          <Col lg={7} className="d-flex align-items-center">
+            <span className="fw-bold fs-3">Results</span>
+          </Col>
+        )}
+        {!emptyproduct && (
+          <Col
+            lg={3}
+            className=" d-flex align-items-center justify-content-center"
+          >
+            <Dropdown />
+          </Col>
+        )}
       </Row>
 
       <Row className="d-flex d-lg-none mt-4 ms-1 align-items-center justify-content-between">
         <Col className="col-5 d-flex align-items-center">
-          <Dropdown />
+          {!emptyproduct && <Dropdown />}
         </Col>
         <Col className="fliterOptionButton col-5 d-flex align-items-center justify-content-end gap-2">
           <img src={filter} alt="filter" onClick={handleShow} />
@@ -101,7 +104,8 @@ const ProductList = () => {
         </Col>
 
         <Col md={12} lg={10} className="col-12">
-          <Row className="d-flex">
+          {emptyproduct && <Noproduct />}
+          <Row>
             {responseResult.map((gardenData) => (
               <Col
                 xs={12}
@@ -120,7 +124,9 @@ const ProductList = () => {
                     detail={gardenData.name}
                     key={gardenData.id}
                     price={gardenData.main_rrp}
-                    offerPrice={gardenData.my_sale_price}
+                    offerPrice={
+                      gardenData.my_sale_price || gardenData.sale_price
+                    }
                     discountPercent={gardenData.percentage_discount}
                   />
                 </Link>

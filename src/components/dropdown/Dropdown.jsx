@@ -7,14 +7,23 @@ const Dropdown = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
+  const searchText = params.get("searchText");
   const initialSelectedValue = params.get("sort_by") || "relevant";
   const [selectedValue, setSelectedValue] = useState(initialSelectedValue);
 
   const handlechange = (e) => {
     const dropdownValue = e.target.value;
     setSelectedValue(dropdownValue);
-    const sortedUrl = `${location.pathname}?sort_by=${dropdownValue}`;
-    navigate(sortedUrl);
+    let sortedUrl = "";
+    if (searchText) {
+      sortedUrl += "/search-results";
+      sortedUrl += `?searchText=${searchText}`;
+      sortedUrl += `&sort_by=${dropdownValue}`;
+      navigate(sortedUrl);
+    } else {
+      sortedUrl = `${location.pathname}?sort_by=${dropdownValue}`;
+      navigate(sortedUrl);
+    }
   };
 
   useEffect(() => {

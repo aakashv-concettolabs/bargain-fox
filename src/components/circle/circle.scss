@@ -11,11 +11,11 @@
     width: 10px;
     background-color: #0063ff;
     display: none;
-    top: 130px;
+    top: 115px;
   }
   .menu {
     display: none;
-    top: 130px;
+    top: 115px;
     width: 420px;
     right: -150px;
     .nav-item {
@@ -45,20 +45,11 @@
   }
 }
 
-@media (max-width: 1400px) {
-  .categoryCircle:hover {
-    .menu,
-    .dot {
-      top: 160px;
-    }
-  }
-}
-
 @media (max-width: 1200px) {
   .categoryCircle:hover {
     .menu,
     .dot {
-      top: 130px;
+      top: 115px;
     }
   }
 }
@@ -67,7 +58,7 @@
   .categoryCircle:hover {
     .menu,
     .dot {
-      top: 155px;
+      top: 135px;
     }
   }
 }

@@ -41,8 +41,10 @@ const Searchbar = () => {
 
   const handleButtonClick = () => {
     const query = typeaheadRef.current.inputNode.value;
+    const searchUrl = `/search-results?searchText=${query}`;
     if (query) {
       handleSearch(query);
+      navigate(searchUrl);
     }
   };
 

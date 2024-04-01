@@ -1,5 +1,5 @@
 import "./filterSidebar.scss";
-import { Form, ListGroup, Image } from "react-bootstrap";
+import { ListGroup, Image } from "react-bootstrap";
 import fourStar from "../../assets/4Star.svg";
 import threeStar from "../../assets/3Star.svg";
 import twoStar from "../../assets/2Star.svg";
@@ -7,6 +7,7 @@ import oneStar from "../../assets/1Star.svg";
 import { Checkbox } from "pretty-checkbox-react";
 import "@djthoms/pretty-checkbox";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Conditions = [
   {
@@ -80,11 +81,20 @@ const Pricedata = [
 const FilterSidebar = () => {
   const [check, setCheck] = useState(null);
   const [reviewcheck, setReviewCheck] = useState(null);
+  const [conditioncheck, setConditioncheck] = useState(null);
+  const location = useLocation();
+  console.log("location", location);
 
-  const handleCustomerReview = (index2) => {
-    if (reviewcheck === index2) {
+  const handleCustomerReview = (indexCustomer) => {
+    if (reviewcheck === indexCustomer) {
       setReviewCheck(null);
-    } else setReviewCheck(index2);
+    } else setReviewCheck(indexCustomer);
+  };
+
+  const handleCondition = (indexCondition) => {
+    if (conditioncheck === indexCondition) {
+      setConditioncheck(null);
+    } else setConditioncheck(indexCondition);
   };
 
   const handleCheck = (index) => {
@@ -99,8 +109,14 @@ const FilterSidebar = () => {
     <ListGroup variant="flush">
       <ListGroup.Item className="border-0 d-flex flex-column gap-3">
         <h6 className="pb-2 fw-semibold">Condition</h6>
-        {Conditions.map((condition) => (
-          <Checkbox shape="round" color="primary" key={condition.id}>
+        {Conditions.map((condition, index) => (
+          <Checkbox
+            shape="round"
+            color="primary"
+            key={condition.id}
+            checked={conditioncheck === index}
+            onChange={() => handleCondition(index)}
+          >
             {condition.label}
           </Checkbox>
         ))}
