@@ -15,13 +15,17 @@ const ProductList = () => {
   const [show, setShow] = useState(false);
   const [emptyproduct, setEmptyproduct] = useState(false);
   const [responseResult, setresponseResult] = useState([]);
+  const [result, setResult] = useState({});
   const { category, subcategory, collection } = useParams();
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const sortby = params.get("sort_by");
   const search = params.get("searchText");
+  const page = params.get("page");
+  const perpage = 5;
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const productListApiCall = async () => {
     let apiData = {};
@@ -40,8 +44,15 @@ const ProductList = () => {
     if (search) {
       apiData.search = search;
     }
+    if (page) {
+      apiData.page = page;
+    }
+    if (perpage) {
+      apiData.per_page = perpage;
+    }
     try {
       const response = await axios.post(productlist, apiData);
+      setResult(response.data.result);
       setresponseResult(response.data.result.data);
       if (response.data.result.data.length <= 0) {
         setEmptyproduct(true);
@@ -55,7 +66,7 @@ const ProductList = () => {
 
   useEffect(() => {
     productListApiCall();
-  }, [category, subcategory, collection, sortby, search]);
+  }, [category, subcategory, collection, sortby, search, page, perpage]);
 
   return (
     <Container fluid className="productList-main">
@@ -106,28 +117,28 @@ const ProductList = () => {
         <Col md={12} lg={10} className="col-12">
           {emptyproduct && <Noproduct />}
           <Row>
-            {responseResult.map((gardenData) => (
+            {responseResult.map((productData) => (
               <Col
                 xs={12}
                 sm={6}
                 lg={3}
                 md={4}
                 className="mt-3"
-                key={gardenData.id}
+                key={productData.id}
               >
                 <Link
                   to={"/productList/productdetail"}
                   className="text-decoration-none"
                 >
                   <ProductCard
-                    imgUrl={gardenData.product_images[0].product_image_url}
-                    detail={gardenData.name}
-                    key={gardenData.id}
-                    price={gardenData.main_rrp}
+                    imgUrl={productData.product_images[0].product_image_url}
+                    detail={productData.name}
+                    key={productData.id}
+                    price={productData.main_rrp}
                     offerPrice={
-                      gardenData.my_sale_price || gardenData.sale_price
+                      productData.my_sale_price || productData.sale_price
                     }
-                    discountPercent={gardenData.percentage_discount}
+                    discountPercent={productData.percentage_discount}
                   />
                 </Link>
               </Col>
@@ -137,7 +148,13 @@ const ProductList = () => {
       </Row>
       <Row>
         <Col className="d-flex justify-content-center mt-5">
-          <PaginationComponent />
+          <PaginationComponent
+            pages={result.links}
+            nextpage={result.next_page_url}
+            prevpage={result.prev_page_url}
+            currentpage={result.current_page}
+            lastpage={result.last_page}
+          />
         </Col>
       </Row>
     </Container>

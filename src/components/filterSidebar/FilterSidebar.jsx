@@ -79,11 +79,13 @@ const Pricedata = [
 ];
 
 const FilterSidebar = () => {
-  const [check, setCheck] = useState(null);
+  const [pricecheck, setPricecheck] = useState(null);
   const [reviewcheck, setReviewCheck] = useState(null);
   const [conditioncheck, setConditioncheck] = useState(null);
   const location = useLocation();
-  console.log("location", location);
+  const params = new URLSearchParams(location.search);
+  let path = `${location.pathname}`;
+  // console.log("path", path);
 
   const handleCustomerReview = (indexCustomer) => {
     if (reviewcheck === indexCustomer) {
@@ -97,11 +99,11 @@ const FilterSidebar = () => {
     } else setConditioncheck(indexCondition);
   };
 
-  const handleCheck = (index) => {
-    if (check === index) {
-      setCheck(null);
+  const handlePrice = (indexPrice) => {
+    if (pricecheck === indexPrice) {
+      setPricecheck(null);
     } else {
-      setCheck(index);
+      setPricecheck(indexPrice);
     }
   };
 
@@ -114,6 +116,7 @@ const FilterSidebar = () => {
             shape="round"
             color="primary"
             key={condition.id}
+            value={condition.label}
             checked={conditioncheck === index}
             onChange={() => handleCondition(index)}
           >
@@ -148,8 +151,8 @@ const FilterSidebar = () => {
             shape="round"
             color="primary"
             key={price.id}
-            checked={check === index}
-            onChange={() => handleCheck(index)}
+            checked={pricecheck === index}
+            onChange={() => handlePrice(index)}
           >
             {price.price}
           </Checkbox>
