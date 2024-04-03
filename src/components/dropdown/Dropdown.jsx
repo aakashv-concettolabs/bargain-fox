@@ -8,30 +8,26 @@ const Dropdown = () => {
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const searchText = params.get("searchText");
-  const initialSelectedValue = params.get("sort_by") || "relevant";
-  const [selectedValue, setSelectedValue] = useState(initialSelectedValue);
-  const pagenumber = 1;
+  const initialSortedValue = params.get("sort_by") || "relevant";
+  const [sortedValue, setSortedValue] = useState(initialSortedValue);
 
   const handlechange = (e) => {
     const dropdownValue = e.target.value;
-    setSelectedValue(dropdownValue);
+    setSortedValue(dropdownValue);
     let sortedUrl = "";
     if (searchText) {
-      sortedUrl += "/search-results";
-      sortedUrl += `?searchText=${searchText}`;
-      sortedUrl += `&page=${pagenumber}`;
-      sortedUrl += `&sort_by=${dropdownValue}`;
+      sortedUrl = `/search-results?searchText=${searchText}&page=1&sort_by=${dropdownValue}`;
       navigate(sortedUrl);
     } else {
-      sortedUrl = `${location.pathname}?page=${pagenumber}&sort_by=${dropdownValue}`;
+      sortedUrl = `${location.pathname}?page=1&sort_by=${dropdownValue}`;
       navigate(sortedUrl);
     }
   };
 
   useEffect(() => {
     const newParams = new URLSearchParams(location.search);
-    const newSelectedValue = newParams.get("sort_by") || "relevant";
-    setSelectedValue(newSelectedValue);
+    const newSortedValue = newParams.get("sort_by") || "relevant";
+    setSortedValue(newSortedValue);
   }, [location.search]);
 
   return (
@@ -40,7 +36,7 @@ const Dropdown = () => {
         <label className="text-secondary d-none d-sm-flex">Sort By:</label>
         <select
           className="shadow-none border-0 focus-ring bg-white"
-          value={selectedValue}
+          value={sortedValue}
           onChange={handlechange}
         >
           <option value="relevant">Relevant</option>

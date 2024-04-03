@@ -1,162 +1,117 @@
 import "./filterSidebar.scss";
-import { ListGroup, Image } from "react-bootstrap";
-import fourStar from "../../assets/4Star.svg";
-import threeStar from "../../assets/3Star.svg";
-import twoStar from "../../assets/2Star.svg";
-import oneStar from "../../assets/1Star.svg";
+import { ListGroup } from "react-bootstrap";
 import { Checkbox } from "pretty-checkbox-react";
 import "@djthoms/pretty-checkbox";
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
-
-const Conditions = [
-  {
-    id: 21,
-    label: "Brand New",
-  },
-  {
-    id: 22,
-    label: "Open Box",
-  },
-  {
-    id: 33,
-    label: "Like New",
-  },
-  {
-    id: 24,
-    label: "Very Good",
-  },
-  {
-    id: 25,
-    label: "Good",
-  },
-  {
-    id: 26,
-    label: "Acceptable",
-  },
-];
-
-const CustomerReviews = [
-  {
-    id: 7,
-    imgUrl: fourStar,
-  },
-  {
-    id: 8,
-    imgUrl: threeStar,
-  },
-  {
-    id: 9,
-    imgUrl: twoStar,
-  },
-  {
-    id: 10,
-    imgUrl: oneStar,
-  },
-];
-
-const Pricedata = [
-  {
-    id: 11,
-    price: "Under £10",
-  },
-  {
-    id: 12,
-    price: "£10 - £25",
-  },
-  {
-    id: 13,
-    price: "£25 - £50",
-  },
-  {
-    id: 14,
-    price: "£50 - £100",
-  },
-  {
-    id: 15,
-    price: "Over £100",
-  },
-];
+import { useEffect, useState } from "react";
+import { filterData } from "./filterData";
+import { filterCondition } from "../../api/Apis";
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+let filterUrl = "";
 
 const FilterSidebar = () => {
-  const [pricecheck, setPricecheck] = useState(null);
-  const [reviewcheck, setReviewCheck] = useState(null);
-  const [conditioncheck, setConditioncheck] = useState(null);
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  let path = `${location.pathname}`;
-  // console.log("path", path);
+  const navigate = useNavigate();
+  const [pricecheck, setPricecheck] = useState(null);
+  const [discountCheck, setDiscountCheck] = useState(null);
+  const [conditioncheck, setConditioncheck] = useState(null);
+  const [conditionData, setConditionData] = useState([]);
+  useEffect(() => {
+    const conditionDataCall = async () => {
+      try {
+        const { data } = await axios.post(filterCondition);
+        setConditionData(data.result.condition_filter);
+      } catch (error) {
+        console.log("condition error", error);
+      }
+    };
+    conditionDataCall();
+  }, []);
 
-  const handleCustomerReview = (indexCustomer) => {
-    if (reviewcheck === indexCustomer) {
-      setReviewCheck(null);
-    } else setReviewCheck(indexCustomer);
-  };
-
-  const handleCondition = (indexCondition) => {
+  const handleCondition = (indexCondition, slug) => {
     if (conditioncheck === indexCondition) {
       setConditioncheck(null);
-    } else setConditioncheck(indexCondition);
+    } else {
+      setConditioncheck(indexCondition);
+      filterUrl = `${location.pathname}?page=1&condition=${slug}`;
+      navigate(filterUrl);
+    }
   };
 
-  const handlePrice = (indexPrice) => {
+  const handleDiscount = (indexCustomer, slug) => {
+    if (discountCheck === indexCustomer) {
+      setDiscountCheck(null);
+    } else {
+      setDiscountCheck(indexCustomer);
+      filterUrl = `${location.pathname}?page=1&discount=${slug}`;
+      navigate(filterUrl);
+    }
+  };
+
+  const handlePrice = (indexPrice, slug) => {
     if (pricecheck === indexPrice) {
       setPricecheck(null);
     } else {
       setPricecheck(indexPrice);
+      filterUrl = `${location.pathname}?page=1&price_range=${slug}&min_price=${
+        slug.split("-")[0]
+      }&max_price=${slug.split("-")[1]}`;
+      navigate(filterUrl);
     }
   };
-
   return (
     <ListGroup variant="flush">
       <ListGroup.Item className="border-0 d-flex flex-column gap-3">
         <h6 className="pb-2 fw-semibold">Condition</h6>
-        {Conditions.map((condition, index) => (
-          <Checkbox
-            shape="round"
-            color="primary"
-            key={condition.id}
-            value={condition.label}
-            checked={conditioncheck === index}
-            onChange={() => handleCondition(index)}
-          >
-            {condition.label}
-          </Checkbox>
-        ))}
-      </ListGroup.Item>
-
-      <ListGroup.Item className="border-0 d-flex flex-column gap-3 mt-3">
-        <h6 className="pb-2 fw-semibold">Customer Review</h6>
-        {CustomerReviews.map((CustomerReview, index) => (
-          <label key={CustomerReview.id}>
+        {conditionData &&
+          conditionData.map((condition, index) => (
             <Checkbox
               shape="round"
               color="primary"
-              checked={reviewcheck === index}
-              onChange={() => handleCustomerReview(index)}
-            />
-            <Image src={CustomerReview.imgUrl} />
-          </label>
-        ))}
-        <label className="d-flex align-items-center">
-          <Checkbox shape="round" color="primary" className="d-flex" /> No
-          Review
-        </label>
+              key={condition.id}
+              value={condition.slug}
+              checked={conditioncheck === index}
+              onChange={() => handleCondition(index, condition.slug, condition)}
+            >
+              {condition.title}
+            </Checkbox>
+          ))}
       </ListGroup.Item>
 
       <ListGroup.Item className="border-0 d-flex flex-column gap-3 mt-3">
-        <h6 className="pb-2 fw-semibold">Price</h6>
-        {Pricedata.map((price, index) => (
-          <Checkbox
-            shape="round"
-            color="primary"
-            key={price.id}
-            checked={pricecheck === index}
-            onChange={() => handlePrice(index)}
-          >
-            {price.price}
-          </Checkbox>
-        ))}
+        <h6 className="pb-2 fw-semibold">{filterData[0].title}</h6>
+        {filterData &&
+          filterData[0].data &&
+          filterData[0].data.map((discount, index) => (
+            <Checkbox
+              key={discount.id}
+              shape="round"
+              color="primary"
+              value={discount.slug}
+              checked={discountCheck === index}
+              onChange={() => handleDiscount(index, discount.slug)}
+            >
+              {discount.title}
+            </Checkbox>
+          ))}
+      </ListGroup.Item>
+
+      <ListGroup.Item className="border-0 d-flex flex-column gap-3 mt-3">
+        <h6 className="pb-2 fw-semibold">{filterData[1].title}</h6>
+        {filterData &&
+          filterData[1].data &&
+          filterData[1].data.map((price, index) => (
+            <Checkbox
+              shape="round"
+              color="primary"
+              key={price.id}
+              value={price.slug}
+              checked={pricecheck === index}
+              onChange={() => handlePrice(index, price.slug)}
+            >
+              {price.title}
+            </Checkbox>
+          ))}
       </ListGroup.Item>
     </ListGroup>
   );

@@ -1,36 +1,45 @@
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./pagination.scss";
 import { Pagination } from "react-bootstrap";
-import he from "he";
-import { useState } from "react";
 
-const PaginationComponent = ({ pages, lastpage }) => {
-  const [activepage, setActivepage] = useState(1);
+const PaginationComponent = ({ lastpage }) => {
   const navigate = useNavigate();
-  let items = [];
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const initialActivePage = Number(params.get("page")) || 1;
+  const [activePage, setactivePage] = useState(initialActivePage);
+
+  useEffect(() => {
+    if (initialActivePage !== activePage) {
+      setactivePage(initialActivePage);
+    }
+  }, [params.get("page")]);
 
   const handlePageClick = (page) => {
-    setActivepage(page);
-    navigate(`?page=${page}`);
+    params.set("page", page.toString());
+    navigate(`${location.pathname}?${params.toString()}`);
   };
 
   const handlePrev = () => {
-    if (activepage > 1) {
-      setActivepage(activepage - 1);
-      navigate(`?page=${activepage - 1}`);
+    if (activePage > 1) {
+      params.set("page", (activePage - 1).toString());
+      navigate(`${location.pathname}?${params.toString()}`);
     }
   };
   const handleNext = () => {
-    if (activepage < lastpage) {
-      setActivepage(activepage + 1);
-      navigate(`?page=${activepage + 1}`);
+    if (activePage < lastpage) {
+      params.set("page", (activePage + 1).toString());
+      navigate(`${location.pathname}?${params.toString()}`);
     }
   };
+
+  let items = [];
   for (let page = 1; page <= lastpage; page++) {
     items.push(
       <Pagination.Item
         key={page}
-        active={page === activepage}
+        active={page === activePage}
         onClick={() => handlePageClick(page)}
       >
         {page}
@@ -39,15 +48,20 @@ const PaginationComponent = ({ pages, lastpage }) => {
   }
   return (
     <div>
-      <Pagination>
-        <Pagination.Prev onClick={handlePrev} disabled={activepage < 1}>
-          {pages && he.decode(pages[0].label)}
-        </Pagination.Prev>
-        {items}
-        <Pagination.Next onClick={handleNext} disabled={activepage == lastpage}>
-          {pages && he.decode(pages[pages.length - 1].label)}
-        </Pagination.Next>
-      </Pagination>
+      {items.length > 1 && (
+        <Pagination>
+          <Pagination.Prev onClick={handlePrev} disabled={activePage <= 1}>
+            &laquo; Previous
+          </Pagination.Prev>
+          {items}
+          <Pagination.Next
+            onClick={handleNext}
+            disabled={activePage == lastpage}
+          >
+            Next &raquo;
+          </Pagination.Next>
+        </Pagination>
+      )}
     </div>
   );
 };
