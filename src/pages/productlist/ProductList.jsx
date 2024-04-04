@@ -1,6 +1,6 @@
 import { Col, Container, Row, Offcanvas } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { productlist } from "../../api/Apis";
 import axios from "axios";
 import "./productList.scss";
@@ -14,6 +14,7 @@ import Noproduct from "../../components/noProduct/Noproduct";
 const ProductList = () => {
   const [show, setShow] = useState(false);
   const [responseResult, setResponseResult] = useState([]);
+  const [emptyProduct, setEmptyProduct] = useState(false);
   const [result, setResult] = useState({});
   const { category, subcategory, collection } = useParams();
   const location = useLocation();
@@ -21,7 +22,7 @@ const ProductList = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  console.log("first", result);
   useEffect(() => {
     const productListCall = async () => {
       const apiData = {
@@ -31,15 +32,24 @@ const ProductList = () => {
         sort_by: params.get("sort_by"),
         search: params.get("searchText"),
         page: params.get("page"),
-        condition_id: params.get("condition"),
+        condition: params.get("condition"),
         discount: params.get("discount"),
+        price_range: params.get("price_range"),
         min_price: params.get("min_price"),
         max_price: params.get("max_price"),
       };
+
       try {
-        const { data } = await axios.post(productlist, apiData);
-        setResult(data.result);
-        setResponseResult(data.result.data);
+        const response = await axios.post(productlist, apiData);
+        if (response.status === 200) {
+          if (response.data.result.data == 0) {
+            setEmptyProduct(true);
+          } else {
+            setEmptyProduct(false);
+          }
+          setResult(response.data.result);
+          setResponseResult(response.data.result.data);
+        }
       } catch (error) {
         console.log("productlist error", error);
       }
@@ -54,16 +64,20 @@ const ProductList = () => {
           <span className="ps-3 text-secondary fw-medium">Filter</span>
         </Col>
 
-        <Col lg={7} className="d-flex align-items-center">
-          <span className="fw-bold fs-3">Results</span>
-        </Col>
+        {!emptyProduct && (
+          <Col lg={7} className="d-flex align-items-center">
+            <span className="fw-bold fs-3">Results</span>
+          </Col>
+        )}
 
-        <Col
-          lg={3}
-          className=" d-flex align-items-center justify-content-center"
-        >
-          <Dropdown />
-        </Col>
+        {!emptyProduct && (
+          <Col
+            lg={3}
+            className=" d-flex align-items-center justify-content-center"
+          >
+            <Dropdown />
+          </Col>
+        )}
       </Row>
 
       <Row className="d-flex d-lg-none mt-4 ms-1 align-items-center justify-content-between">
@@ -88,9 +102,13 @@ const ProductList = () => {
             </Offcanvas.Body>
           </Offcanvas>
         </Col>
-
-        <Col md={12} lg={10} className="col-12">
+        <Col md={12} lg={10}>
           <Row>
+            {emptyProduct && (
+              <Col>
+                <Noproduct />
+              </Col>
+            )}
             {responseResult &&
               responseResult.map((productData) => (
                 <Col
@@ -101,21 +119,7 @@ const ProductList = () => {
                   className="mt-3"
                   key={productData.id}
                 >
-                  <Link
-                    to={"/productList/productdetail"}
-                    className="text-decoration-none"
-                  >
-                    <ProductCard
-                      imgUrl={productData.product_images[0].product_image_url}
-                      detail={productData.name}
-                      key={productData.id}
-                      price={productData.main_rrp}
-                      offerPrice={
-                        productData.my_sale_price || productData.sale_price
-                      }
-                      discountPercent={productData.percentage_discount}
-                    />
-                  </Link>
+                  <ProductCard productData={productData} />
                 </Col>
               ))}
           </Row>

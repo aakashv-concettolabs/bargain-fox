@@ -35,8 +35,16 @@ function App() {
           ],
         },
         {
+          path: "?/:category?/:subcategory?/:collection?",
+          element: <ProductList />,
+        },
+        {
           path: "search-results?/:searchText?",
           element: <ProductList />,
+        },
+        {
+          path: "/productdetail",
+          element: <ProductDetails />,
         },
         {
           path: "cart",
