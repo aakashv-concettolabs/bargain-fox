@@ -8,26 +8,40 @@ const Dropdown = () => {
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const searchText = params.get("searchText");
-  const initialSortedValue = params.get("sort_by") || "relevant";
-  const [sortedValue, setSortedValue] = useState(initialSortedValue);
+  const condition = params.get("condition");
+  const discount = params.get("discount");
+  const pricerange = params.get("price_range");
+  const minprice = params.get("min_price");
+  const maxprice = params.get("max_price");
 
-  const handlechange = (e) => {
+  const [sortedValue, setSortedValue] = useState(
+    params.get("sort_by") || "relevant"
+  );
+
+  const handleChange = (e) => {
     const dropdownValue = e.target.value;
     setSortedValue(dropdownValue);
-    let sortedUrl = "";
-    if (searchText) {
-      sortedUrl = `/search-results?searchText=${searchText}&page=1&sort_by=${dropdownValue}`;
-      navigate(sortedUrl);
-    } else {
-      sortedUrl = `${location.pathname}?page=1&sort_by=${dropdownValue}`;
-      navigate(sortedUrl);
+
+    let sortedUrl = searchText ? "/search-results" : location.pathname;
+    let params = new URLSearchParams(
+      searchText ? { searchText, page: 1 } : { page: 1 }
+    );
+
+    params.set("sort_by", dropdownValue);
+
+    if (condition) params.set("condition", condition);
+    if (discount) params.set("discount", discount);
+    if (pricerange) {
+      params.set("price_range", pricerange);
+      params.set("min_price", minprice);
+      params.set("max_price", maxprice);
     }
+
+    navigate(`${sortedUrl}?${params.toString()}`);
   };
 
   useEffect(() => {
-    const newParams = new URLSearchParams(location.search);
-    const newSortedValue = newParams.get("sort_by") || "relevant";
-    setSortedValue(newSortedValue);
+    setSortedValue(params.get("sort_by") || "relevant");
   }, [location.search]);
 
   return (
@@ -37,7 +51,7 @@ const Dropdown = () => {
         <select
           className="shadow-none border-0 focus-ring bg-white"
           value={sortedValue}
-          onChange={handlechange}
+          onChange={handleChange}
         >
           <option value="relevant">Relevant</option>
           <option value="lowest_price">Lowest Price</option>

@@ -7,112 +7,111 @@ import { filterData } from "./filterData";
 import { filterCondition } from "../../api/Apis";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-let filterUrl = "";
 
 const FilterSidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [pricecheck, setPricecheck] = useState(null);
-  const [discountCheck, setDiscountCheck] = useState(null);
-  const [conditioncheck, setConditioncheck] = useState(null);
+  const [filters, setFilters] = useState({
+    condition: null,
+    discount: null,
+    price_range: null,
+  });
   const [conditionData, setConditionData] = useState([]);
+
   useEffect(() => {
-    const conditionDataCall = async () => {
+    const fetchData = async () => {
       try {
         const { data } = await axios.post(filterCondition);
         setConditionData(data.result.condition_filter);
       } catch (error) {
-        console.log("condition error", error);
+        console.error("condition error", error);
       }
     };
-    conditionDataCall();
-  }, []);
+    fetchData();
+    const params = new URLSearchParams(location.search);
 
-  const handleCondition = (indexCondition, slug) => {
-    if (conditioncheck === indexCondition) {
-      setConditioncheck(null);
+    setFilters({
+      condition: params.get("condition") || null,
+      discount: params.get("discount") || null,
+      price_range: params.get("price_range") || null,
+    });
+  }, [location.search]);
+
+  const handleFilterChange = (filterType, value) => {
+    let updatedFilters;
+
+    if (filterType === "price_range" && filters[filterType] === value) {
+      updatedFilters = { ...filters, [filterType]: null };
     } else {
-      setConditioncheck(indexCondition);
-      filterUrl = `${location.pathname}?page=1&condition=${slug}`;
-      navigate(filterUrl);
+      updatedFilters = {
+        ...filters,
+        [filterType]: filters[filterType] === value ? null : value,
+      };
     }
+    setFilters(updatedFilters);
+
+    const urlParams = new URLSearchParams(location.search);
+    const currentPage = urlParams.get("page") || 1;
+    urlParams.set("page", 1);
+
+    if (filterType === "price_range") {
+      if (updatedFilters[filterType]) {
+        const [minPrice, maxPrice] = value.split("-");
+        urlParams.set("price_range", value);
+        urlParams.set("min_price", minPrice);
+        urlParams.set("max_price", maxPrice);
+      } else {
+        urlParams.delete("price_range");
+        urlParams.delete("min_price");
+        urlParams.delete("max_price");
+        urlParams.delete(filterType);
+      }
+    } else {
+      if (updatedFilters[filterType]) {
+        urlParams.set(filterType, value);
+      } else {
+        urlParams.delete(filterType);
+      }
+    }
+
+    const newSearchParams = urlParams.toString();
+    const newPath = currentPage
+      ? `${location.pathname}?${newSearchParams}`
+      : `${location.pathname}?page=1&${newSearchParams}`;
+
+    navigate(newPath);
   };
 
-  const handleDiscount = (indexCustomer, slug) => {
-    if (discountCheck === indexCustomer) {
-      setDiscountCheck(null);
-    } else {
-      setDiscountCheck(indexCustomer);
-      filterUrl = `${location.pathname}?page=1&discount=${slug}`;
-      navigate(filterUrl);
-    }
-  };
+  const isChecked = (filterType, value) => filters[filterType] === value;
 
-  const handlePrice = (indexPrice, slug) => {
-    if (pricecheck === indexPrice) {
-      setPricecheck(null);
-    } else {
-      setPricecheck(indexPrice);
-      filterUrl = `${location.pathname}?page=1&price_range=${slug}&min_price=${
-        slug.split("-")[0]
-      }&max_price=${slug.split("-")[1]}`;
-      navigate(filterUrl);
-    }
-  };
+  const renderCheckboxGroup = (title, data, filterType) => (
+    <ListGroup.Item className="border-0 d-flex flex-column gap-3">
+      <h6 className="pb-2 fw-semibold">{title}</h6>
+      {data.map((item) => (
+        <Checkbox
+          shape="round"
+          color="primary"
+          key={item.id}
+          value={item.slug}
+          checked={isChecked(filterType, item.slug)}
+          onChange={() => handleFilterChange(filterType, item.slug)}
+        >
+          {item.title}
+        </Checkbox>
+      ))}
+    </ListGroup.Item>
+  );
+
   return (
     <ListGroup variant="flush">
-      <ListGroup.Item className="border-0 d-flex flex-column gap-3">
-        <h6 className="pb-2 fw-semibold">Condition</h6>
-        {conditionData &&
-          conditionData.map((condition, index) => (
-            <Checkbox
-              shape="round"
-              color="primary"
-              key={condition.id}
-              value={condition.slug}
-              checked={conditioncheck === index}
-              onChange={() => handleCondition(index, condition.slug, condition)}
-            >
-              {condition.title}
-            </Checkbox>
-          ))}
-      </ListGroup.Item>
-
-      <ListGroup.Item className="border-0 d-flex flex-column gap-3 mt-3">
-        <h6 className="pb-2 fw-semibold">{filterData[0].title}</h6>
-        {filterData &&
-          filterData[0].data &&
-          filterData[0].data.map((discount, index) => (
-            <Checkbox
-              key={discount.id}
-              shape="round"
-              color="primary"
-              value={discount.slug}
-              checked={discountCheck === index}
-              onChange={() => handleDiscount(index, discount.slug)}
-            >
-              {discount.title}
-            </Checkbox>
-          ))}
-      </ListGroup.Item>
-
-      <ListGroup.Item className="border-0 d-flex flex-column gap-3 mt-3">
-        <h6 className="pb-2 fw-semibold">{filterData[1].title}</h6>
-        {filterData &&
-          filterData[1].data &&
-          filterData[1].data.map((price, index) => (
-            <Checkbox
-              shape="round"
-              color="primary"
-              key={price.id}
-              value={price.slug}
-              checked={pricecheck === index}
-              onChange={() => handlePrice(index, price.slug)}
-            >
-              {price.title}
-            </Checkbox>
-          ))}
-      </ListGroup.Item>
+      {renderCheckboxGroup("Condition", conditionData, "condition")}
+      {filterData.map((filter, index) =>
+        renderCheckboxGroup(
+          filter.title,
+          filter.data,
+          index === 0 ? "discount" : "price_range"
+        )
+      )}
     </ListGroup>
   );
 };
