@@ -40,14 +40,8 @@ const Electronics = () => {
                 <Slider {...settings}>
                   {responseResult.map((electronicData) => (
                     <ProductCard
-                      imgUrl={
-                        electronicData.product_images[0].product_image_url
-                      }
-                      detail={electronicData.name}
                       key={electronicData.id}
-                      price={electronicData.main_rrp}
-                      offerPrice={electronicData.my_sale_price}
-                      discountPercent={electronicData.percentage_discount}
+                      productData={electronicData}
                     />
                   ))}
                 </Slider>

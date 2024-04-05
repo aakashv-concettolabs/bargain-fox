@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Button, Image, FormCheck } from "react-bootstrap";
 import CartJewelry from "../../assets/cartjewelry.png";
+import Counter from "../../components/counter/Counter";
 
 const CartCard = ({ productheading, imgUrl }) => {
   return (
@@ -25,19 +26,8 @@ const CartCard = ({ productheading, imgUrl }) => {
               </div>
             </Col>
             <Col className="d-none d-sm-flex gap-2 mt-3">
-              <div className="d-flex align-items-center gap-2">
-                <span className="text-body-tertiary">Quantity:</span>
-                <span className="d-flex gap-1 align-items-center border">
-                  <button className="btn-outline-secondary btn border-0 border-end rounded-0">
-                    -
-                  </button>
-                  <span className="px-2">0</span>
-                  <button className="btn-outline-secondary btn border-0 border-start rounded-0">
-                    +
-                  </button>
-                </span>
-              </div>
-              <div className="d-flex gap-2 align-items-center text-body-tertiary text-opacity-25">
+              <Counter />
+              <div className="d-flex  align-items-center text-body-tertiary text-opacity-25">
                 <Button className="border-0 text-black bg-transparent fw-bold">
                   Delete
                 </Button>
@@ -51,20 +41,7 @@ const CartCard = ({ productheading, imgUrl }) => {
         </div>
       </Col>
       <Col className="d-flex d-sm-none mt-2">
-        <div>
-          <p className="text-body-tertiary d-flex align-items-center gap-1 m-0">
-            Quantity:
-            <span className="d-flex align-items-center border">
-              <button className="btn-outline-secondary btn border-0 border-end rounded-0 px-2">
-                -
-              </button>
-              <span className="px-2">0</span>
-              <button className="btn-outline-secondary btn border-0 border-start rounded-0 px-2">
-                +
-              </button>
-            </span>
-          </p>
-        </div>
+        <Counter />
         <div className="d-flex gap-1 align-items-center text-body-tertiary text-opacity-25">
           <Button className="border-0 text-black bg-transparent fw-medium pe-0">
             Delete

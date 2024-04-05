@@ -37,14 +37,7 @@ const Garden = () => {
               <div className="slider-container">
                 <Slider {...settings}>
                   {responseResult.map((gardenData) => (
-                    <ProductCard
-                      imgUrl={gardenData.product_images[0].product_image_url}
-                      detail={gardenData.name}
-                      key={gardenData.id}
-                      price={gardenData.main_rrp}
-                      offerPrice={gardenData.my_sale_price}
-                      discountPercent={gardenData.percentage_discount}
-                    />
+                    <ProductCard key={gardenData.id} productData={gardenData} />
                   ))}
                 </Slider>
               </div>

@@ -9,3 +9,4 @@ export const categorylist = `${baseUrl}/category-list`;
 export const productlist = `${baseUrl}/product/list`;
 export const filterCondition = `${baseUrl}/product/filter-list`;
 export const newsletter = `${baseUrl}/add-newsletter`;
+export const productDetailApi = `${baseUrl}/product/detail`;

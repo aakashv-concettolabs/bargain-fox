@@ -7,13 +7,11 @@ import ProductRatingStar from "../productRatingStar/ProductRatingStar";
 import ProductPriceTag from "../productPriceTag/ProductPriceTag";
 import { useState } from "react";
 import SpinnerComponent from "../spinner/SpinnerComponent";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ btnClass, productData }) => {
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
 
   const wishOrDelClick = (e) => {
     e.preventDefault();
@@ -29,12 +27,13 @@ const ProductCard = ({ btnClass, productData }) => {
     }
   };
 
-  const handleProduct = () => {
-    navigate(`/productDetail/${productData.name}/${productData.unique_id}`);
-  };
   return (
     <div className="productCard-main mx-2">
-      <Card className="position-relative" onClick={handleProduct}>
+      <Card
+        className="position-relative text-decoration-none"
+        as={Link}
+        to={`/productDetail/${productData?.slug}/${productData?.unique_id}`}
+      >
         <div
           className={`heartDiv position-absolute rounded-circle d-flex justify-content-center align-items-center ${
             liked ? "addedwishlist" : "bg-white"
@@ -53,22 +52,22 @@ const ProductCard = ({ btnClass, productData }) => {
         </div>
         <div className="productCardImg d-flex justify-content-center align-items-center">
           <Image
-            src={productData.product_images[0].product_image_url}
+            src={productData?.product_images[0]?.product_image_url}
             className="w-100 h-100 object-fit-contain"
           />
         </div>
         <div className="p-2">
           <CardTitle className="productDetail mb-1 mb-md-3">
-            {productData.name}
+            {productData?.name}
           </CardTitle>
           <ProductRatingStar />
           <div className="d-flex justify-content-between align-items-center my-2">
             <ProductPriceTag
-              offerPrice={productData.my_sale_price || productData.sale_price}
-              price={productData.main_rrp}
+              offerPrice={productData?.my_sale_price || productData?.sale_price}
+              price={productData?.main_rrp}
             />
             <OfferStickerComponent
-              discountPercent={productData.percentage_discount}
+              discountPercent={productData?.percentage_discount}
             />
           </div>
           <Button className={`${btnClass} cardbtn w-100 rounded-5 mt-3 mb-2`}>

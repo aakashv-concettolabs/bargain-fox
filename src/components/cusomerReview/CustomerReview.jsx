@@ -6,8 +6,16 @@ import brandlist from "../../assets/brandlist.svg";
 import star from "../../assets/star.svg";
 import { Col, Row, ProgressBar, Image } from "react-bootstrap";
 import { ratingData, customerComments } from "./customerReviewDetails.js";
+import RatingStar from "../ratingStar/RatingStar.jsx";
 
-const CustomerReview = () => {
+const CustomerReview = ({
+  totalPurchase,
+  description,
+  specifications,
+  averageRating,
+  totalReview,
+  rantingCount,
+}) => {
   return (
     <>
       <Row className="customerReviewMain mt-3 px-md-4 flex-column-reverse flex-md-row">
@@ -15,9 +23,9 @@ const CustomerReview = () => {
           <p className="fw-bold fs-4 p-3">Customer Ratings & Reviews</p>
           <Row>
             <Col className="rightBorder d-flex flex-column justify-content-center align-items-center">
-              <span className="rateCount">4</span>
-              <img src={fourstar} alt="" />
-              <span className="mt-2">152 Ratings & Reviews</span>
+              <span className="rateCount">{averageRating}</span>
+              <RatingStar />
+              <span className="mt-2">{totalReview} Ratings & Reviews</span>
             </Col>
             <Col className="my-auto">
               {ratingData.map((rating) => (
@@ -41,24 +49,24 @@ const CustomerReview = () => {
           <Row>
             <Col>
               <p className="fw-bold fs-4 px-3 py-1">HighLight</p>
-              <span>
-                <img src={tick} alt="" height="20px" width="20px" />1 Customers
-                bought this item
+              <span className="d-flex align-items-center gap-1">
+                <img src={tick} alt="" height="20px" width="20px" />
+                {totalPurchase} Customers bought this item
               </span>
             </Col>
           </Row>
           <Row>
             <Col className="topBorder mt-3">
               <p className="fw-bold fs-4 px-3 py-1">Product Description</p>
-              <span>
-                Damp Meter?Wood/Building Materials Moisture Meter & Temperature
-                Detector with LCD Display?8 Calibration Scales(A-H) for
-                Different Types of Wood Materials(2*AAA 1.5V Batteries Included)
-              </span>
-              <p className="d-flex gap-1 mt-2">
-                <img src={brandlist} alt="" />
-                <strong>Brand:</strong>Beaspire
-              </p>
+              <span>{description}</span>
+              {specifications &&
+                specifications.map((specification) => (
+                  <p className="d-flex gap-2 mt-2" key={specification.id}>
+                    <img src={brandlist} alt="cirlce" />
+                    <strong>{specification.spec_name}:</strong>
+                    {specification.spec_value}
+                  </p>
+                ))}
             </Col>
           </Row>
         </Col>

@@ -1,19 +1,24 @@
 import "./productColorSize.scss";
+import { Col, Row } from "react-bootstrap";
 
-const colors = ["orange", "black", "green", "magenta", "purple"];
-
-const ProductColorSize = () => {
+const ProductColorSize = ({ productcolor }) => {
   return (
-    <div className="d-flex gap-2">
-      {colors.map((color, index) => (
-        <div className="colorContainer rounded " key={index}>
-          <div
-            className="color rounded"
-            style={{ backgroundColor: `${color}` }}
-          ></div>
+    <Row className="mt-3">
+      <Col>
+        <span className="text-body-tertiary">Color: </span>
+        <strong>{productcolor[0].variation_name}</strong>
+        <div className="d-flex gap-2">
+          {productcolor.map((color) => (
+            <div className="colorContainer rounded " key={color.variation_id}>
+              <div
+                className="color rounded"
+                style={{ backgroundColor: `${color.variation_name}` }}
+              ></div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </Col>
+    </Row>
   );
 };
 

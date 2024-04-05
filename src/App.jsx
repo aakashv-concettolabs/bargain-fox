@@ -22,19 +22,6 @@ function App() {
           element: <Home />,
         },
         {
-          path: "",
-          children: [
-            {
-              path: "productList?/:category?/:subcategory?/:collection?",
-              element: <ProductList />,
-            },
-            {
-              path: "/productList/productdetail",
-              element: <ProductDetails />,
-            },
-          ],
-        },
-        {
           path: "?/:category?/:subcategory?/:collection?",
           element: <ProductList />,
         },
@@ -43,7 +30,7 @@ function App() {
           element: <ProductList />,
         },
         {
-          path: "/productdetail",
+          path: "productdetail?/:productSlug?/:productId?",
           element: <ProductDetails />,
         },
         {

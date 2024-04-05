@@ -22,7 +22,6 @@ const ProductList = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  console.log("first", result);
   useEffect(() => {
     const productListCall = async () => {
       const apiData = {

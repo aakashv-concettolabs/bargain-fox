@@ -1,15 +1,26 @@
 import "./productColorSize.scss";
+import { Col, Row } from "react-bootstrap";
 
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
-const ProductSize = () => {
+const ProductSize = ({ productsize }) => {
   return (
-    <div className="d-flex gap-2">
-      {sizes.map((size, index) => (
-        <div key={index} className="border rounded-4 px-md-3 px-2 small">
-          <div>{size}</div>
+    <Row className="mt-3">
+      <Col>
+        <div className="d-flex gap-2">
+          <span className="text-body-tertiary">Size:</span>{" "}
+          <div className="d-flex gap-2">
+            {productsize.map((size) => (
+              <div
+                key={size.variation_id}
+                className="border rounded-4 px-md-3 px-2 small"
+              >
+                <div>{size.variation_name}</div>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
+      </Col>
+    </Row>
   );
 };
 

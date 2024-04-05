@@ -9,7 +9,7 @@ import {
   productDetailSliderBsettings,
 } from "../sliderSetting/SliderSetting.js";
 
-const ProductDetailSlider = () => {
+const ProductDetailSlider = ({ productImages }) => {
   const [thumnailImg, setThumnailImg] = useState(mainProductImg);
 
   const handleProductImg = (productImg) => {
