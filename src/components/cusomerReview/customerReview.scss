@@ -1,12 +1,43 @@
 .customerReviewMain{
-     .topBottomBorder{
-        border-top: 2px solid #f2f2f8;
-        border-bottom: 2px solid #f2f2f8;
-    }
     .topBorder{
         border-top: 2px solid #f2f2f8;
     }
     .rightBorder{
         border-right: 2px solid #f2f2f8;
     }
+    .rateCount{
+        font-size: 6rem;
+    }
+  
+    .progress{
+        height: 8px;
+    }
+   
 }
+.topBottomBorder{
+    border-top: 2px solid #f2f2f8;
+    border-bottom: 2px solid #f2f2f8;
+    .star{
+        height: 40px;
+    }
+    .rateThisProduct{
+        font-size: 22px;
+        color: #0063FF;
+    }
+}
+
+@media (max-width: 576px){
+    .customerReviewMain{
+        .rateCount{
+            font-size: 4rem;
+        }
+    }
+    .topBottomBorder{
+        .star{
+            height: 20px;
+        }
+        .rateThisProduct{
+            font-size: 16px;
+        }
+    } 
+ }

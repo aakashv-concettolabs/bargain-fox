@@ -29,7 +29,7 @@ const Electronics = () => {
     <Container className="electronics-main mt-5">
       <SectionHeading
         sectionHeadingTitle="Electronics"
-        sectionlinktarget="productList/electronics"
+        sectionlinktarget="/electronics"
       />
 
       <Row className="mt-4">

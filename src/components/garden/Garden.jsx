@@ -28,7 +28,7 @@ const Garden = () => {
     <Container className="garden-main mt-5">
       <SectionHeading
         sectionHeadingTitle="Garden & DIY"
-        sectionlinktarget="productList/sports-leisure/garden-diy"
+        sectionlinktarget="/sports-leisure/garden-diy"
       />
       <Row className="mt-4">
         <Col className="col-12  ">

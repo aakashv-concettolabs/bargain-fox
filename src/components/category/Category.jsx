@@ -5,7 +5,6 @@ import axios from "axios";
 import { categorylist } from "../../api/Apis";
 import { useEffect, useState } from "react";
 import SpinnerComponent from "../spinner/SpinnerComponent";
-import { dividerClasses } from "@mui/material";
 
 const Category = () => {
   const [responsedResult, setResponsedResult] = useState([]);

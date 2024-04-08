@@ -8,6 +8,7 @@ const Counter = ({ productCounter, handlePlus, handleMinus }) => {
         <button
           className="btn-outline-secondary btn border-0 border-end rounded-0"
           onClick={handleMinus}
+          disabled={productCounter <= 1}
         >
           -
         </button>

@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { productDetailApi } from "../../api/Apis.js";
 import RatingStar from "../../components/ratingStar/RatingStar.jsx";
+import { toast } from "react-toastify";
 
 const shareOptions = [
   {
@@ -38,19 +39,73 @@ const shareOptions = [
   },
 ];
 
+const initialProductDetail = {
+  avg_rating: null,
+  cart_qty_count: null,
+
+  category_id: null,
+  category_info: null,
+  collection_id: null,
+  color: null,
+  condition_id: null,
+  created_at: null,
+  description: null,
+  discount_value: null,
+  expected_delivery: null,
+  fastfox_enabled: null,
+  id: null,
+  is_added_cart: null,
+  is_discount_on: null,
+  is_out_stock: null,
+  is_purchased: null,
+  is_wishlisted: null,
+  main_rrp: null,
+  minimum_sale_price: null,
+  name: null,
+  parent_id: null,
+  percentage_discount: null,
+  price: null,
+  product_condition: null,
+  product_images: null,
+  product_specification: null,
+  product_view: null,
+  purchase_count: null,
+  rating_count: null,
+  review: null,
+  sale_price: null,
+  share_url: null,
+  size: null,
+  size_chart: null,
+  size_chart_url: null,
+  sku: null,
+  slug: null,
+  standard_expected_delivery: null,
+  stock: null,
+  sub_category_id: null,
+  total_review: null,
+  unique_id: null,
+  variation_list: null,
+  vendor_id: null,
+  vendor_info: null,
+};
+
 const ProductDetails = () => {
   const { productSlug, productId } = useParams();
-  const [productDetail, setProductDetail] = useState({});
-  const [productCounter, setProductCounter] = useState(
-    productDetail.cart_qty_count || 0
-  );
+  const [productDetail, setProductDetail] = useState(initialProductDetail);
+  const [productCounter, setProductCounter] = useState(0);
 
   const handlePlus = () => {
     setProductCounter(productCounter + 1);
+    if (productCounter >= 40) {
+      setProductCounter(productCounter);
+      toast.error("We're sorry! Only 40 unit(s) allowed in each order");
+    }
   };
+
   const handleMinus = () => {
     setProductCounter(productCounter - 1);
   };
+
   useEffect(() => {
     const detailApiCall = async () => {
       try {
@@ -58,7 +113,24 @@ const ProductDetails = () => {
           `${productDetailApi}/${productSlug}/${productId}`
         );
         if (response.status == 200) {
+          setProductDetail({ price: response.data.result.description });
           setProductDetail(response.data.result);
+          if (response.data.result.variation_list.length > 0) {
+            setProductDetail({
+              ...response.data.result,
+              description: response.data.result.variation_list[0].description,
+              percentage_discount:
+                response.data.result.variation_list[0].percentage_discount,
+              product_condition:
+                response.data.result.variation_list[0].product_condition,
+              main_rrp: response.data.result.variation_list[0].rrp,
+              sale_price: response.data.result.variation_list[0].sale_price,
+              avg_rating:
+                response.data.result.variation_list[0].variation_avg_rating,
+              product_images:
+                response.data.result.variation_list[0].product_images,
+            });
+          }
         }
       } catch (error) {
         console.log("product detail error", error);
@@ -67,7 +139,8 @@ const ProductDetails = () => {
 
     detailApiCall();
   }, []);
-  // console.log("productDetail", productDetail);
+  console.log("productDetail", productDetail);
+
   return (
     <Container fluid className="mt-3 productDetailMain">
       <Row className="justify-content-around">
@@ -87,7 +160,9 @@ const ProductDetails = () => {
               className="d-flex justify-content-lg-center justify-content-end align-items-center"
             >
               <div className="position-relative share">
-                <img src={share} alt="share" />
+                <div className="shareImage p-3 d-flex rounded-circle">
+                  <img src={share} alt="share" />
+                </div>
 
                 <div className="position-absolute shareHover pt-4 pt-sm-3">
                   <ul className="text-decoration-none list-unstyled shadow-sm rounded-3 bg-body-tertiary">
@@ -129,7 +204,7 @@ const ProductDetails = () => {
                   />
                   <div>
                     <span className="discount bg-primary rounded-5 text-white px-3 py-1">
-                      {productDetail?.discount_percentage}%
+                      {productDetail?.percentage_discount}%
                     </span>
                   </div>
                 </Col>
@@ -172,7 +247,9 @@ const ProductDetails = () => {
                   <Row>
                     <Col>
                       <Button className="w-100 rounded-5 cart">
-                        Add to Cart
+                        {productDetail.is_added_cart
+                          ? "Go to Cart"
+                          : "Add to Cart"}
                       </Button>
                     </Col>
                     <Col>
@@ -202,7 +279,7 @@ const ProductDetails = () => {
         specifications={productDetail.product_specification}
         averageRating={productDetail.avg_rating}
         totalReview={productDetail.total_review}
-        rantingCount={productDetail.rating_count}
+        ratingCount={productDetail.rating_count}
       />
     </Container>
   );

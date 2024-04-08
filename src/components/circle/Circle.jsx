@@ -18,7 +18,7 @@ const Circle = ({ categoryData }) => {
       <div className="d-flex flex-column align-items-center justify-content-between">
         <Link
           className="text-decoration-none d-flex flex-column justify-content-center align-items-center"
-          to={`productList/${categoryData.slug}`}
+          to={`/${categoryData.slug}`}
         >
           <div className="categoryImageContainer d-flex flex-column justify-content-center align-items-center">
             <Image
@@ -47,7 +47,7 @@ const Circle = ({ categoryData }) => {
                         activeTab === index ? "bg-body-secondary" : null
                       }`}
                       as={Link}
-                      to={`productList/${categoryData.slug}/${subcategory.slug}`}
+                      to={`${categoryData.slug}/${subcategory.slug}`}
                       onMouseEnter={() => handleMouseEnter(index)}
                       onMouseLeave={() => handleMouseLeave(index)}
                     >
@@ -69,7 +69,7 @@ const Circle = ({ categoryData }) => {
                           <Tab.Pane
                             key={index}
                             as={Link}
-                            to={`productList/${categoryData.slug}/${subcategoryData[activeTab].slug}/${slug}`}
+                            to={`${categoryData.slug}/${subcategoryData[activeTab].slug}/${slug}`}
                             className="text-decoration-none"
                           >
                             {title}
