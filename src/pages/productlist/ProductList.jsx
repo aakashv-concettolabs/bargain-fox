@@ -19,12 +19,15 @@ const ProductList = () => {
   const { category, subcategory, collection } = useParams();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const perpage = 8;
+  console.log("responseResult", responseResult);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   useEffect(() => {
     const productListCall = async () => {
       const apiData = {
+        per_page: perpage,
         category_id: category,
         sub_category_id: subcategory,
         collection_id: collection,
@@ -65,7 +68,10 @@ const ProductList = () => {
 
         {!emptyProduct && (
           <Col lg={7} className="d-flex align-items-center">
-            <span className="fw-bold fs-3">Results</span>
+            <p className="fw-semibold fs-4">
+              {`Showing ${result.from} - ${result.to} of ${result.total} result `}
+              {params.get("searchText") && `for "${params.get("searchText")}"`}
+            </p>
           </Col>
         )}
 
@@ -113,7 +119,7 @@ const ProductList = () => {
                 <Col
                   xs={12}
                   sm={6}
-                  lg={3}
+                  xxl={3}
                   md={4}
                   className="mt-3"
                   key={productData.id}

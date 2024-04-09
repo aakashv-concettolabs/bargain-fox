@@ -2,7 +2,7 @@ import { Col, Container, Row, Button, Image } from "react-bootstrap";
 import "./productDetails.scss";
 import share from "../../assets/share.png";
 import people from "../../assets/people.png";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import ProductColor from "../../components/productColorSize/ProductColor";
 import ProductSize from "../../components/productColorSize/ProductSize";
 import ReturnPolicy from "../../components/returnPolicy/ReturnPolicy";
@@ -92,7 +92,11 @@ const initialProductDetail = {
 const ProductDetails = () => {
   const { productSlug, productId } = useParams();
   const [productDetail, setProductDetail] = useState(initialProductDetail);
-  const [productCounter, setProductCounter] = useState(0);
+  const [productCounter, setProductCounter] = useState(1);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const urlSku = params.get("sku");
+  console.log("productDetail", productDetail);
 
   const handlePlus = () => {
     setProductCounter(productCounter + 1);
@@ -113,33 +117,30 @@ const ProductDetails = () => {
           `${productDetailApi}/${productSlug}/${productId}`
         );
         if (response.status == 200) {
-          setProductDetail({ price: response.data.result.description });
           setProductDetail(response.data.result);
           if (response.data.result.variation_list.length > 0) {
-            setProductDetail({
-              ...response.data.result,
-              description: response.data.result.variation_list[0].description,
-              percentage_discount:
-                response.data.result.variation_list[0].percentage_discount,
-              product_condition:
-                response.data.result.variation_list[0].product_condition,
-              main_rrp: response.data.result.variation_list[0].rrp,
-              sale_price: response.data.result.variation_list[0].sale_price,
-              avg_rating:
-                response.data.result.variation_list[0].variation_avg_rating,
-              product_images:
-                response.data.result.variation_list[0].product_images,
-            });
+            response.data.result.variation_list
+              .filter((product) => product.sku === urlSku)
+              .map((filterraj) =>
+                setProductDetail({
+                  ...response.data.result,
+                  description: filterraj.description,
+                  percentage_discount: filterraj.percentage_discount,
+                  product_condition: filterraj.product_condition,
+                  product_images: filterraj.product_images,
+                  main_rrp: filterraj.rrp,
+                  sale_price: filterraj.sale_price,
+                  avg_rating: filterraj.variation_avg_rating,
+                })
+              );
           }
         }
       } catch (error) {
         console.log("product detail error", error);
       }
     };
-
     detailApiCall();
-  }, []);
-  console.log("productDetail", productDetail);
+  }, [productSlug, productId]);
 
   return (
     <Container fluid className="mt-3 productDetailMain">
@@ -185,7 +186,7 @@ const ProductDetails = () => {
               <Row>
                 <Col xs={12} sm={6} className="d-flex gap-2 align-items-center">
                   <RatingStar averageRating={productDetail.avg_rating} />
-                  <span>{productDetail?.avg_rating}</span>
+                  <span>{Math.floor(productDetail?.avg_rating)}</span>
                 </Col>
                 <Col xs={12} sm={6} className="d-flex justify-content-sm-end">
                   <span className="text-muted vendor">

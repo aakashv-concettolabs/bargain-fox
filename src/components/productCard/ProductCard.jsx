@@ -3,7 +3,7 @@ import "./productcard.scss";
 import heart from "../../assets/heart.png";
 import deleteImg from "../../assets/delete.svg";
 import OfferStickerComponent from "../offerStickerComponent/OfferStickerComponent";
-import ProductRatingStar from "../productRatingStar/ProductRatingStar";
+import RatingStar from "../ratingStar/RatingStar";
 import ProductPriceTag from "../productPriceTag/ProductPriceTag";
 import { useState } from "react";
 import SpinnerComponent from "../spinner/SpinnerComponent";
@@ -32,7 +32,7 @@ const ProductCard = ({ btnClass, productData }) => {
       <Card
         className="position-relative text-decoration-none"
         as={Link}
-        to={`/productDetail/${productData?.slug}/${productData?.unique_id}`}
+        to={`/productDetail/${productData?.slug}/${productData?.unique_id}?sku=${productData?.sku}`}
       >
         <div
           className={`heartDiv position-absolute rounded-circle d-flex justify-content-center align-items-center ${
@@ -60,14 +60,30 @@ const ProductCard = ({ btnClass, productData }) => {
           <CardTitle className="productDetail mb-1 mb-md-3">
             {productData?.name}
           </CardTitle>
-          <ProductRatingStar />
+          <div className="d-flex gap-1 align-items-center text-muted">
+            <RatingStar />
+            <span>
+              {Math.floor(
+                productData?.product_var_avg_rating || productData?.avg_rating
+              )}
+            </span>
+          </div>
           <div className="d-flex justify-content-between align-items-center my-2">
             <ProductPriceTag
-              offerPrice={productData?.my_sale_price || productData?.sale_price}
-              price={productData?.main_rrp}
+              offerPrice={
+                productData?.product_var_sale_price ||
+                productData?.my_sale_price ||
+                productData?.sale_price
+              }
+              price={productData?.product_var_rrp || productData?.main_rrp}
             />
             <OfferStickerComponent
-              discountPercent={productData?.percentage_discount}
+              discountPercent={Math.floor(
+                productData?.product_var_percentage_discount ||
+                  productData?.percentage_discount
+              )
+                .toString()
+                .padStart(2, "0")}
             />
           </div>
           <Button className={`${btnClass} cardbtn w-100 rounded-5 mt-3 mb-2`}>

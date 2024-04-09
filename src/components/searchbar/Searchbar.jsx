@@ -2,7 +2,7 @@ import "react-bootstrap-typeahead/css/Typeahead.css";
 import "./searchbar.scss";
 import axios from "axios";
 import searchIcon from "../../assets/search-normal.png";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { productlist } from "../../api/Apis";
 import { Button, Image } from "react-bootstrap";
@@ -33,9 +33,17 @@ const Searchbar = () => {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter" && selectedProduct) {
-      console.log("Selected User:", selectedProduct.name);
-      navigate("/productList/productdetail");
+    if (event.key === "Enter") {
+      const query = typeaheadRef.current.getInput().value;
+
+      if (selectedProduct) {
+        console.log("Selected Product:", selectedProduct);
+        navigate(
+          `/productdetail/${selectedProduct.slug}/${selectedProduct.unique_id}`
+        );
+      } else if (query) {
+        navigate(`/search-results?searchText=${query}`);
+      }
     }
   };
 
@@ -46,6 +54,9 @@ const Searchbar = () => {
       handleSearch(query);
       navigate(searchUrl);
     }
+  };
+  const handleProductClick = (option) => {
+    navigate(`/productDetail/${option.slug}/${option.unique_id}`);
   };
 
   return (
@@ -64,11 +75,11 @@ const Searchbar = () => {
         options={options}
         placeholder="Search Product"
         renderMenuItemChildren={(option) => (
-          <>
+          <div onClick={() => handleProductClick(option)}>
             <Image
               roundedCircle
               alt={option.login}
-              src={option.product_images[0].product_image_url}
+              src={option?.product_images[0]?.product_image_url}
               style={{
                 height: "30px",
                 marginRight: "10px",
@@ -76,7 +87,7 @@ const Searchbar = () => {
               }}
             />
             <span>{option.name}</span>
-          </>
+          </div>
         )}
         onChange={(selected) => {
           setselectedProduct(selected[0]);
