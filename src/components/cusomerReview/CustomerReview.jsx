@@ -25,7 +25,7 @@ const CustomerReview = ({
           <p className="fw-bold fs-4 p-3">Customer Ratings & Reviews</p>
           <Row>
             <Col className="rightBorder d-flex flex-column justify-content-center align-items-center">
-              <span className="rateCount">{averageRating}</span>
+              <span className="rateCount">{Math.floor(averageRating)}</span>
               <RatingStar />
               <span className="mt-2">{totalReview} Ratings & Reviews</span>
             </Col>

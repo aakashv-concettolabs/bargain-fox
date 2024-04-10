@@ -11,13 +11,24 @@ import SignRegisterHovermMenu from "../signRegisterHoverMenu/SignRegisterHovermM
 import ModalComponent from "../modal/ModalComponent";
 import AuthContext from "../../context/authContext/AuthContext";
 import Searchbar from "../searchbar/Searchbar";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
   const { userDetails } = useContext(AuthContext);
   const userName = userDetails.name;
+  console.log("userDetails", userName);
   const handleClose = () => {
     setShow(false);
+  };
+
+  const handleCartClick = () => {
+    if (userName) {
+      navigate("/cart");
+    } else {
+      setShow(true);
+    }
   };
 
   return (
@@ -51,7 +62,7 @@ const Header = () => {
                   </span>
                 </div>
               </Nav.Link>
-              <Nav.Link className="p-0" as={Link} to="/cart">
+              <Nav.Link className="p-0" as={Link} onClick={handleCartClick}>
                 <div className="position-relative ">
                   <img src={cart} alt="" className="cartimg" />
                   <span className="cartCounter small text-white rounded-circle d-flex justify-content-center align-items-center position-absolute">

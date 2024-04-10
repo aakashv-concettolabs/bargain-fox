@@ -2,7 +2,7 @@ import { Col, Container, Row, Button, Image } from "react-bootstrap";
 import "./productDetails.scss";
 import share from "../../assets/share.png";
 import people from "../../assets/people.png";
-import { Link, useParams, useLocation } from "react-router-dom";
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
 import ProductColor from "../../components/productColorSize/ProductColor";
 import ProductSize from "../../components/productColorSize/ProductSize";
 import ReturnPolicy from "../../components/returnPolicy/ReturnPolicy";
@@ -16,7 +16,7 @@ import ProductDetailSlider from "../../components/productDetailSlider/ProductDet
 import Counter from "../../components/counter/Counter.jsx";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { productDetailApi } from "../../api/Apis.js";
+import { addToCartApi, productDetailApi } from "../../api/Apis.js";
 import RatingStar from "../../components/ratingStar/RatingStar.jsx";
 import { toast } from "react-toastify";
 
@@ -94,20 +94,67 @@ const ProductDetails = () => {
   const [productDetail, setProductDetail] = useState(initialProductDetail);
   const [productCounter, setProductCounter] = useState(1);
   const location = useLocation();
+  const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const urlSku = params.get("sku");
-  console.log("productDetail", productDetail);
+  // console.log("product detail", productDetail);
+  const handleColorClick = (variation_id) => {
+    setSelectedVariationId(variation_id);
+    const changeUrl = productDetail?.variation_list?.filter(
+      (variation) => variation?.color === variation_id
+    );
+    navigate(`${location.pathname}?sku=${changeUrl[0].sku}`);
+  };
+
+  const handleSizeClick = (variation_id) => {
+    setSelectedSize(variation_id);
+    const sizeFilter = productDetail.variation_list.find(
+      (product) => product.size === variation_id
+    );
+    setProductDetail({
+      ...productDetail,
+      cart_qty_count: sizeFilter.cart_qty_count,
+      condition_id: sizeFilter.condition_id,
+      is_added_cart: sizeFilter.is_added_cart,
+      is_out_stock: sizeFilter.is_out_stock,
+      is_purchased: sizeFilter.is_purchased,
+      is_wishlisted: sizeFilter.is_wishlisted,
+      percentage_discount: sizeFilter.percentage_discount,
+      main_rrp: sizeFilter.rrp,
+      sale_price: sizeFilter.sale_price,
+      stock: sizeFilter.stock,
+      avg_rating: sizeFilter.variation_avg_rating,
+    });
+  };
+
+  const clickedColor = productDetail?.variation_list?.filter(
+    (product) => product?.sku === urlSku
+  );
+
+  const activeColor = productDetail?.color?.filter(
+    (color) => color?.variation_id === clickedColor[0]?.color
+  );
+
+  const defaultcolor = activeColor && activeColor[0]?.variation_id;
+  const [selectedVariationId, setSelectedVariationId] = useState(defaultcolor);
+  const [selectedSize, setSelectedSize] = useState();
+
+  const selectedColor = productDetail?.color?.find(
+    (color) => color?.variation_id === selectedVariationId
+  );
 
   const handlePlus = () => {
-    setProductCounter(productCounter + 1);
-    if (productCounter >= 40) {
-      setProductCounter(productCounter);
+    if (productCounter < 40) {
+      setProductCounter(productCounter + 1);
+    } else {
       toast.error("We're sorry! Only 40 unit(s) allowed in each order");
     }
   };
 
   const handleMinus = () => {
-    setProductCounter(productCounter - 1);
+    if (productCounter > 1) {
+      setProductCounter(productCounter - 1);
+    }
   };
 
   useEffect(() => {
@@ -116,31 +163,63 @@ const ProductDetails = () => {
         const response = await axios.get(
           `${productDetailApi}/${productSlug}/${productId}`
         );
-        if (response.status == 200) {
-          setProductDetail(response.data.result);
-          if (response.data.result.variation_list.length > 0) {
-            response.data.result.variation_list
-              .filter((product) => product.sku === urlSku)
-              .map((filterraj) =>
-                setProductDetail({
-                  ...response.data.result,
-                  description: filterraj.description,
-                  percentage_discount: filterraj.percentage_discount,
-                  product_condition: filterraj.product_condition,
-                  product_images: filterraj.product_images,
-                  main_rrp: filterraj.rrp,
-                  sale_price: filterraj.sale_price,
-                  avg_rating: filterraj.variation_avg_rating,
-                })
-              );
+        if (response.status === 200) {
+          const result = response.data.result;
+          setProductDetail(result);
+
+          if (result?.variation_list?.length > 0) {
+            const defaultVariation = result.variation_list.find(
+              (variation) => variation.sku === urlSku
+            );
+
+            if (defaultVariation) {
+              setSelectedVariationId(defaultVariation.color);
+              setProductDetail({
+                ...result,
+                description: defaultVariation.description,
+                percentage_discount: defaultVariation.percentage_discount,
+                product_condition: defaultVariation.product_condition,
+                product_images: defaultVariation.product_images,
+                main_rrp: defaultVariation.rrp,
+                sale_price: defaultVariation.sale_price,
+                avg_rating: defaultVariation.variation_avg_rating,
+              });
+            }
           }
         }
       } catch (error) {
-        console.log("product detail error", error);
+        console.log("Error product details:", error);
       }
     };
+
     detailApiCall();
-  }, [productSlug, productId]);
+  }, [productSlug, productId, location.search, urlSku]);
+
+  const addToCartCall = async () => {
+    const apiData = {
+      product_id: productDetail.id,
+      quantity: productCounter,
+    };
+    try {
+      const addToCartResponse = await axios.post(addToCartApi, apiData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (addToCartResponse.status === 200) {
+        toast.success(addToCartResponse.data.message);
+      }
+    } catch (error) {
+      console.log("add to cart error", error);
+    }
+  };
+  const handleClickCart = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    if (token) {
+      addToCartCall();
+    }
+  };
 
   return (
     <Container fluid className="mt-3 productDetailMain">
@@ -185,7 +264,7 @@ const ProductDetails = () => {
             <Col>
               <Row>
                 <Col xs={12} sm={6} className="d-flex gap-2 align-items-center">
-                  <RatingStar averageRating={productDetail.avg_rating} />
+                  <RatingStar averageRating={productDetail?.avg_rating} />
                   <span>{Math.floor(productDetail?.avg_rating)}</span>
                 </Col>
                 <Col xs={12} sm={6} className="d-flex justify-content-sm-end">
@@ -210,11 +289,21 @@ const ProductDetails = () => {
                   </div>
                 </Col>
               </Row>
-              {productDetail.color && productDetail.color?.length > 0 && (
-                <ProductColor productcolor={productDetail.color} />
+              {productDetail?.color && productDetail?.color?.length > 0 && (
+                <ProductColor
+                  productcolor={productDetail.color}
+                  productvariation={productDetail?.variation_list}
+                  handleColorClick={handleColorClick}
+                  selectedVariationId={selectedVariationId}
+                  selectedColor={selectedColor}
+                />
               )}
-              {productDetail.size && productDetail.size?.length > 0 && (
-                <ProductSize productsize={productDetail.size} />
+              {productDetail?.size && productDetail?.size?.length > 0 && (
+                <ProductSize
+                  productsize={productDetail.size}
+                  handleSizeClick={handleSizeClick}
+                  selectedSize={selectedSize}
+                />
               )}
               <Row className="mt-3">
                 <Col>
@@ -238,7 +327,7 @@ const ProductDetails = () => {
                 <Col className="d-flex justify-content-md-end align-items-center mt-2 gap-1">
                   <div className="bg-body-secondary rounded-2 px-2 py-1 d-flex justify-content-between align-items-center gap-1">
                     <img src={people} alt="people" />
-                    <span>{productDetail.product_view}</span>
+                    <span>{productDetail?.product_view}</span>
                   </div>
                   <span className="fw-medium">
                     People looked for this product
@@ -247,10 +336,12 @@ const ProductDetails = () => {
                 <Col className="mt-3">
                   <Row>
                     <Col>
-                      <Button className="w-100 rounded-5 cart">
-                        {productDetail.is_added_cart
-                          ? "Go to Cart"
-                          : "Add to Cart"}
+                      <Button
+                        className="w-100 rounded-5 cart"
+                        type="submit"
+                        onClick={handleClickCart}
+                      >
+                        Add to Cart
                       </Button>
                     </Col>
                     <Col>
@@ -275,12 +366,12 @@ const ProductDetails = () => {
         </Col>
       </Row>
       <CustomerReview
-        totalPurchase={productDetail.purchase_count}
-        description={productDetail.description}
-        specifications={productDetail.product_specification}
-        averageRating={productDetail.avg_rating}
-        totalReview={productDetail.total_review}
-        ratingCount={productDetail.rating_count}
+        totalPurchase={productDetail?.purchase_count}
+        description={productDetail?.description}
+        specifications={productDetail?.product_specification}
+        averageRating={productDetail?.avg_rating}
+        totalReview={productDetail?.total_review}
+        ratingCount={productDetail?.rating_count}
       />
     </Container>
   );

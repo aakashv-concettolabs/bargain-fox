@@ -20,7 +20,6 @@ const ProductList = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const perpage = 8;
-  console.log("responseResult", responseResult);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -40,7 +39,6 @@ const ProductList = () => {
         min_price: params.get("min_price"),
         max_price: params.get("max_price"),
       };
-
       try {
         const response = await axios.post(productlist, apiData);
         if (response.status === 200) {

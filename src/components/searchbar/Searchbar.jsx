@@ -2,7 +2,7 @@ import "react-bootstrap-typeahead/css/Typeahead.css";
 import "./searchbar.scss";
 import axios from "axios";
 import searchIcon from "../../assets/search-normal.png";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { productlist } from "../../api/Apis";
 import { Button, Image } from "react-bootstrap";
