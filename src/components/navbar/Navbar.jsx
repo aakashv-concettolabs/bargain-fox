@@ -1,5 +1,5 @@
 import { Nav, Container, Row, Col, Navbar } from "react-bootstrap";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import brandLogo from "../../assets/eCartlogo.svg";
 import { Link } from "react-router-dom";
 import wishList from "../../assets/heart.png";
@@ -12,16 +12,42 @@ import ModalComponent from "../modal/ModalComponent";
 import AuthContext from "../../context/authContext/AuthContext";
 import Searchbar from "../searchbar/Searchbar";
 import { useNavigate } from "react-router-dom";
+import { cartItemCountApi } from "../../api/Apis";
+import axios from "axios";
 
 const Header = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const { userDetails } = useContext(AuthContext);
+  const [cartItemNumber, setCartItemNumber] = useState(0);
   const userName = userDetails.name;
-  console.log("userDetails", userName);
+
   const handleClose = () => {
     setShow(false);
   };
+
+  const cartItemCount = async () => {
+    if (userName) {
+      try {
+        const itemCountResponse = await axios.get(cartItemCountApi, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        if (itemCountResponse.status === 200) {
+          setCartItemNumber(itemCountResponse.data.result.cart_item_count);
+        }
+      } catch (error) {
+        console.log("item count error", error);
+      }
+    } else {
+      setCartItemNumber(0);
+    }
+  };
+
+  useEffect(() => {
+    cartItemCount();
+  }, [userName]);
 
   const handleCartClick = () => {
     if (userName) {
@@ -62,11 +88,11 @@ const Header = () => {
                   </span>
                 </div>
               </Nav.Link>
-              <Nav.Link className="p-0" as={Link} onClick={handleCartClick}>
+              <Nav.Link className="p-0" onClick={handleCartClick}>
                 <div className="position-relative ">
                   <img src={cart} alt="" className="cartimg" />
                   <span className="cartCounter small text-white rounded-circle d-flex justify-content-center align-items-center position-absolute">
-                    3
+                    {cartItemNumber}
                   </span>
                 </div>
               </Nav.Link>

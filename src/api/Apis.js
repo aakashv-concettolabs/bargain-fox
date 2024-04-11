@@ -11,3 +11,6 @@ export const filterCondition = `${baseUrl}/product/filter-list`;
 export const newsletter = `${baseUrl}/add-newsletter`;
 export const productDetailApi = `${baseUrl}/product/detail`;
 export const addToCartApi = `${baseUrl}/add-to-cart`;
+export const cartItemCountApi = `${baseUrl}/cart-item-count`;
+export const myCartApi = `${baseUrl}/my-cart`;
+export const removeFromCartApi = `${baseUrl}/remove-from-cart`;

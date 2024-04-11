@@ -97,7 +97,6 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const urlSku = params.get("sku");
-  // console.log("product detail", productDetail);
   const handleColorClick = (variation_id) => {
     setSelectedVariationId(variation_id);
     const changeUrl = productDetail?.variation_list?.filter(
@@ -124,6 +123,7 @@ const ProductDetails = () => {
       sale_price: sizeFilter.sale_price,
       stock: sizeFilter.stock,
       avg_rating: sizeFilter.variation_avg_rating,
+      variation_id: sizeFilter.product_variation_id,
     });
   };
 
@@ -133,6 +133,11 @@ const ProductDetails = () => {
 
   const activeColor = productDetail?.color?.filter(
     (color) => color?.variation_id === clickedColor[0]?.color
+  );
+
+  const variationId = productDetail?.variation_list?.find(
+    (variation) =>
+      variation?.product_variation_id === clickedColor[0]?.product_variation_id
   );
 
   const defaultcolor = activeColor && activeColor[0]?.variation_id;
@@ -174,6 +179,7 @@ const ProductDetails = () => {
 
             if (defaultVariation) {
               setSelectedVariationId(defaultVariation.color);
+              setSelectedSize(defaultVariation.size);
               setProductDetail({
                 ...result,
                 description: defaultVariation.description,
@@ -183,6 +189,7 @@ const ProductDetails = () => {
                 main_rrp: defaultVariation.rrp,
                 sale_price: defaultVariation.sale_price,
                 avg_rating: defaultVariation.variation_avg_rating,
+                variation_id: defaultVariation.product_variation_id,
               });
             }
           }
@@ -197,8 +204,9 @@ const ProductDetails = () => {
 
   const addToCartCall = async () => {
     const apiData = {
-      product_id: productDetail.id,
+      product_id: variationId ? variationId.product_id : productDetail.id,
       quantity: productCounter,
+      product_variation_id: variationId.product_variation_id,
     };
     try {
       const addToCartResponse = await axios.post(addToCartApi, apiData, {

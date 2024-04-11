@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "./paymentSummary.scss";
 import { Button, Card } from "react-bootstrap";
 
-const PaymentSummary = () => {
+const PaymentSummary = ({ cartItem }) => {
   return (
     <Card className="rounded-4" id="paymentSummary-main">
       <Card.Body>
@@ -10,21 +10,28 @@ const PaymentSummary = () => {
         <div>
           <div className="customborder text-secondary-emphasis">
             <p className="d-flex justify-content-between">
-              <span>Item(s) Total:</span> <span>$45</span>
+              <span>Item(s) Total:</span> <span>{cartItem?.cart_total}</span>
             </p>
             <p className="d-flex justify-content-between">
               <span>Item(s) DisCount:</span>
-              <span className="text-primary">-$15</span>
+              <span className="text-primary">
+                {cartItem?.product_discount_total}
+              </span>
             </p>
             <p className="d-flex justify-content-between">
-              <span>Subtotal:</span> <span>$30</span>
+              <span>Subtotal:</span> <span>{cartItem?.cart_sub_total}</span>
             </p>
             <p className="d-flex justify-content-between">
-              <span>Delivery:</span> <span className="text-success">Free</span>
+              <span>Delivery:</span>
+              {cartItem?.delivery_charge > 0 ? (
+                cartItem?.delivery_charge
+              ) : (
+                <span className="text-success">Free</span>
+              )}
             </p>
           </div>
           <p className="d-flex justify-content-between fw-medium pt-3">
-            <span>Total (3 Items):</span> <span>$30</span>
+            <span>Total (3 Items):</span> <span>{cartItem?.grand_total}</span>
           </p>
         </div>
         <Button
