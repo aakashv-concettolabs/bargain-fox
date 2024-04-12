@@ -5,8 +5,9 @@ import { toast } from "react-toastify";
 import { removeFromCartApi } from "../../api/Apis";
 import axios from "axios";
 
-const CartCard = ({ productInfo, quantity, id, myCart }) => {
-  const [productCounter, setProductCounter] = useState(quantity);
+const CartCard = ({ id, myCart, eachCart }) => {
+  const { product_info } = eachCart;
+  const [productCounter, setProductCounter] = useState(eachCart?.quantity);
 
   const removeFromCart = async () => {
     try {
@@ -33,8 +34,8 @@ const CartCard = ({ productInfo, quantity, id, myCart }) => {
   };
 
   const handlePlus = () => {
-    if (productCounter >= productInfo.stock) {
-      toast.error(`We have ${productInfo.stock} items left only`);
+    if (productCounter >= product_info.stock) {
+      toast.error(`We have ${product_info.stock} items left only`);
     } else {
       setProductCounter(productCounter + 1);
     }
@@ -50,28 +51,28 @@ const CartCard = ({ productInfo, quantity, id, myCart }) => {
       <Col xs={12} xl={8} className="d-flex align-items-center gap-2">
         <FormCheck />
         <Image
-          src={productInfo.product_images[0].product_image_url}
+          src={product_info?.product_images[0]?.product_image_url}
           className="productImg"
         />
         <div>
           <Row className="flex-column ms-1 gap-1">
             <Col className="">
-              <p className="productHeading">{productInfo.name}</p>
+              <p className="productHeading">{product_info?.name}</p>
             </Col>
             <Col>
               <div className="d-flex gap-2 align-items-center">
                 <span className="fw-bold lead">
                   <sup>$</sup>
-                  {productInfo.sale_price}
+                  {product_info?.sale_price}
                 </span>
                 <span className="text-muted small">
-                  <strike>{productInfo.main_rrp}</strike>
+                  <strike>{product_info?.main_rrp}</strike>
                 </span>
                 <span className="text-primary small">
                   {Math.floor(
-                    productInfo?.percentage_discount != 0
-                      ? productInfo?.percentage_discount
-                      : productInfo?.discount_percentage
+                    product_info?.percentage_discount != 0
+                      ? product_info?.percentage_discount
+                      : product_info?.discount_percentage
                   )}
                   %
                 </span>
@@ -128,7 +129,7 @@ const CartCard = ({ productInfo, quantity, id, myCart }) => {
           <p className="text-body-tertiary">
             Condition:{" "}
             <span className="text-black">
-              {productInfo?.product_condition?.title}
+              {product_info?.product_condition?.title}
             </span>
           </p>
         </div>
@@ -136,9 +137,9 @@ const CartCard = ({ productInfo, quantity, id, myCart }) => {
           <p className="text-body-tertiary">
             Sold, by{" "}
             <span className="text-black">
-              {productInfo?.vendor_info?.trading_name},{" "}
+              {product_info?.vendor_info?.trading_name},{" "}
             </span>
-            <span className="leftItem">{productInfo?.stock} left</span>
+            <span className="leftItem">{product_info?.stock} left</span>
           </p>
         </div>
       </Col>

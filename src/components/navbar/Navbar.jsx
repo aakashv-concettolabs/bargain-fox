@@ -14,13 +14,19 @@ import Searchbar from "../searchbar/Searchbar";
 import { useNavigate } from "react-router-dom";
 import { cartItemCountApi } from "../../api/Apis";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { addProductCount } from "../../reducers/cartSlice";
 
 const Header = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const { userDetails } = useContext(AuthContext);
-  const [cartItemNumber, setCartItemNumber] = useState(0);
   const userName = userDetails.name;
+  const noOfProduct = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const [cartCount, setCartCount] = useState(
+    noOfProduct > 0 ? noOfProduct.productCount : 0
+  );
 
   const handleClose = () => {
     setShow(false);
@@ -34,20 +40,22 @@ const Header = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
+
         if (itemCountResponse.status === 200) {
-          setCartItemNumber(itemCountResponse.data.result.cart_item_count);
+          setCartCount(itemCountResponse.data.result.cart_item_count);
+          dispatch(
+            addProductCount(itemCountResponse.data.result.cart_item_count)
+          );
         }
       } catch (error) {
         console.log("item count error", error);
       }
-    } else {
-      setCartItemNumber(0);
     }
   };
 
   useEffect(() => {
     cartItemCount();
-  }, [userName]);
+  }, [userName, noOfProduct]);
 
   const handleCartClick = () => {
     if (userName) {
@@ -92,7 +100,7 @@ const Header = () => {
                 <div className="position-relative ">
                   <img src={cart} alt="" className="cartimg" />
                   <span className="cartCounter small text-white rounded-circle d-flex justify-content-center align-items-center position-absolute">
-                    {cartItemNumber}
+                    {cartCount}
                   </span>
                 </div>
               </Nav.Link>

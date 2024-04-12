@@ -79,6 +79,7 @@ const Cart = () => {
                   quantity={cartProductDetail.quantity}
                   id={cartProductDetail.id}
                   myCart={myCart}
+                  eachCart={cartProductDetail}
                 />
               </div>
             ))}

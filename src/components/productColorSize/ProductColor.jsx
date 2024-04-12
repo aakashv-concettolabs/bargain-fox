@@ -4,7 +4,7 @@ import { Col, Row } from "react-bootstrap";
 
 const ProductColor = ({
   productcolor,
-  handleColorClick,
+  handleColorChange,
   selectedVariationId,
   selectedColor,
 }) => {
@@ -12,22 +12,23 @@ const ProductColor = ({
     <Row className="mt-3">
       <Col>
         <span className="text-body-tertiary">Color: </span>
-        <strong>{selectedColor?.variation_name}</strong>
+        <strong>{selectedColor}</strong>
         <div className="d-flex gap-2">
-          {productcolor.map((color) => (
-            <div
-              className={`colorContainer rounded ${
-                color.variation_id === selectedVariationId ? "selected" : ""
-              }`}
-              key={color.variation_id}
-              onClick={() => handleColorClick(color.variation_id)}
-            >
+          {productcolor &&
+            productcolor.map((color) => (
               <div
-                className="color rounded"
-                style={{ backgroundColor: `${color.variation_name}` }}
-              ></div>
-            </div>
-          ))}
+                className={`colorContainer rounded ${
+                  color.variation_id === selectedVariationId ? "selected" : ""
+                }`}
+                key={color.variation_id}
+                onClick={() => handleColorChange(color.variation_id)}
+              >
+                <div
+                  className="color rounded"
+                  style={{ backgroundColor: `${color.variation_name}` }}
+                ></div>
+              </div>
+            ))}
         </div>
       </Col>
     </Row>

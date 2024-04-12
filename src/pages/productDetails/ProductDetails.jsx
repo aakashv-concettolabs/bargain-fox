@@ -3,7 +3,6 @@ import "./productDetails.scss";
 import share from "../../assets/share.png";
 import people from "../../assets/people.png";
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom";
-import ProductColor from "../../components/productColorSize/ProductColor";
 import ProductSize from "../../components/productColorSize/ProductSize";
 import ReturnPolicy from "../../components/returnPolicy/ReturnPolicy";
 import CustomerReview from "../../components/cusomerReview/CustomerReview";
@@ -19,6 +18,8 @@ import axios from "axios";
 import { addToCartApi, productDetailApi } from "../../api/Apis.js";
 import RatingStar from "../../components/ratingStar/RatingStar.jsx";
 import { toast } from "react-toastify";
+import ProductColor from "../../components/productColorSize/ProductColor.jsx";
+import ModalComponent from "../../components/modal/ModalComponent.jsx";
 
 const shareOptions = [
   {
@@ -42,7 +43,6 @@ const shareOptions = [
 const initialProductDetail = {
   avg_rating: null,
   cart_qty_count: null,
-
   category_id: null,
   category_info: null,
   collection_id: null,
@@ -87,66 +87,29 @@ const initialProductDetail = {
   variation_list: null,
   vendor_id: null,
   vendor_info: null,
+  product_id: null,
+  product_variation_id: null,
+  color_id: null,
+  color_name: null,
+  size_id: null,
 };
 
 const ProductDetails = () => {
   const { productSlug, productId } = useParams();
-  const [productDetail, setProductDetail] = useState(initialProductDetail);
-  const [productCounter, setProductCounter] = useState(1);
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const urlSku = params.get("sku");
-  const handleColorClick = (variation_id) => {
-    setSelectedVariationId(variation_id);
-    const changeUrl = productDetail?.variation_list?.filter(
-      (variation) => variation?.color === variation_id
-    );
-    navigate(`${location.pathname}?sku=${changeUrl[0].sku}`);
+  const [productDetail, setProductDetail] = useState(initialProductDetail);
+  const [productCounter, setProductCounter] = useState(1);
+  const [isaddCart, setIsaddCart] = useState(false);
+  const [show, setShow] = useState(false);
+  const token = localStorage.getItem("token");
+
+  const handleClose = () => {
+    setShow(false);
   };
-
-  const handleSizeClick = (variation_id) => {
-    setSelectedSize(variation_id);
-    const sizeFilter = productDetail.variation_list.find(
-      (product) => product.size === variation_id
-    );
-    setProductDetail({
-      ...productDetail,
-      cart_qty_count: sizeFilter.cart_qty_count,
-      condition_id: sizeFilter.condition_id,
-      is_added_cart: sizeFilter.is_added_cart,
-      is_out_stock: sizeFilter.is_out_stock,
-      is_purchased: sizeFilter.is_purchased,
-      is_wishlisted: sizeFilter.is_wishlisted,
-      percentage_discount: sizeFilter.percentage_discount,
-      main_rrp: sizeFilter.rrp,
-      sale_price: sizeFilter.sale_price,
-      stock: sizeFilter.stock,
-      avg_rating: sizeFilter.variation_avg_rating,
-      variation_id: sizeFilter.product_variation_id,
-    });
-  };
-
-  const clickedColor = productDetail?.variation_list?.filter(
-    (product) => product?.sku === urlSku
-  );
-
-  const activeColor = productDetail?.color?.filter(
-    (color) => color?.variation_id === clickedColor[0]?.color
-  );
-
-  const variationId = productDetail?.variation_list?.find(
-    (variation) =>
-      variation?.product_variation_id === clickedColor[0]?.product_variation_id
-  );
-
-  const defaultcolor = activeColor && activeColor[0]?.variation_id;
-  const [selectedVariationId, setSelectedVariationId] = useState(defaultcolor);
-  const [selectedSize, setSelectedSize] = useState();
-
-  const selectedColor = productDetail?.color?.find(
-    (color) => color?.variation_id === selectedVariationId
-  );
+  console.log("product detail", productDetail);
 
   const handlePlus = () => {
     if (productCounter < 40) {
@@ -170,27 +133,95 @@ const ProductDetails = () => {
         );
         if (response.status === 200) {
           const result = response.data.result;
-          setProductDetail(result);
+          setProductDetail((prevproductDetail) => ({
+            ...prevproductDetail,
+            avg_rating: result.avg_rating,
+            cart_qty_count: result.cart_qty_count,
+            category_id: result.category_id,
+            category_info: result.category_info,
+            collection_id: result.collection_id,
+            color: result.color,
+            condition_id: result.condition_id,
+            created_at: result.created_at,
+            description: result.description,
+            discount_value: result.discount_value,
+            expected_delivery: result.expected_delivery,
+            fastfox_enabled: result.fastfox_enabled,
+            id: result.id,
+            is_added_cart: result.is_added_cart,
+            is_discount_on: result.is_discount_on,
+            is_out_stock: result.is_out_stock,
+            is_purchased: result.is_purchased,
+            is_wishlisted: result.is_wishlisted,
+            main_rrp: result.main_rrp,
+            minimum_sale_price: result.minimum_sale_price,
+            name: result.name,
+            parent_id: result.parent_id,
+            percentage_discount: result.percentage_discount,
+            price: result.price,
+            product_condition: result.product_condition,
+            product_images: result.product_images,
+            product_specification: result.product_specification,
+            product_view: result.product_view,
+            purchase_count: result.purchase_count,
+            rating_count: result.rating_count,
+            review: result.review,
+            sale_price: result.sale_price,
+            share_url: result.share_url,
+            size: result.size,
+            size_chart: result.size_chart,
+            size_chart_url: result.size_chart_url,
+            sku: result.sku,
+            slug: result.slug,
+            standard_expected_delivery: result.standard_expected_delivery,
+            stock: result.stock,
+            sub_category_id: result.sub_category_id,
+            total_review: result.total_review,
+            unique_id: result.unique_id,
+            variation_list: result.variation_list,
+            vendor_id: result.vendor_id,
+            vendor_info: result.vendor_info,
+          }));
 
           if (result?.variation_list?.length > 0) {
             const defaultVariation = result.variation_list.find(
               (variation) => variation.sku === urlSku
             );
 
+            const colorVariationName = result.color.find(
+              (variationName) =>
+                variationName.variation_id == defaultVariation.color
+            );
+            if (colorVariationName) {
+              setProductDetail((prevproductDetail) => ({
+                ...prevproductDetail,
+                color_name: colorVariationName.variation_name,
+              }));
+            }
+
             if (defaultVariation) {
-              setSelectedVariationId(defaultVariation.color);
-              setSelectedSize(defaultVariation.size);
-              setProductDetail({
-                ...result,
+              setProductDetail((prevproductDetail) => ({
+                ...prevproductDetail,
+                cart_qty_count: defaultVariation.cart_qty_count,
+                condition_id: defaultVariation.condition_id,
                 description: defaultVariation.description,
+                is_added_cart: defaultVariation.is_added_cart,
+                is_out_stock: defaultVariation.is_out_stock,
+                is_purchased: defaultVariation.is_purchased,
+                is_wishlisted: defaultVariation.is_wishlisted,
                 percentage_discount: defaultVariation.percentage_discount,
                 product_condition: defaultVariation.product_condition,
+                product_id: defaultVariation.product_id,
                 product_images: defaultVariation.product_images,
+                product_variation_id: defaultVariation.product_variation_id,
                 main_rrp: defaultVariation.rrp,
                 sale_price: defaultVariation.sale_price,
+                share_url: defaultVariation.share_url,
+                sku: defaultVariation.sku,
+                stock: defaultVariation.stock,
                 avg_rating: defaultVariation.variation_avg_rating,
-                variation_id: defaultVariation.product_variation_id,
-              });
+                color_id: defaultVariation.color,
+              }));
             }
           }
         }
@@ -202,16 +233,82 @@ const ProductDetails = () => {
     detailApiCall();
   }, [productSlug, productId, location.search, urlSku]);
 
+  const handleColorChange = (Id) => {
+    const selectColor = productDetail.variation_list.find(
+      (product) => product.color == Id
+    );
+
+    const updatedUrl = new URLSearchParams(location.search);
+    updatedUrl.set("sku", selectColor.sku);
+    navigate({ search: updatedUrl.toString() });
+
+    if (selectColor) {
+      setProductDetail((prevproductDetail) => ({
+        ...prevproductDetail,
+        cart_qty_count: selectColor.cart_qty_count,
+        condition_id: selectColor.condition_id,
+        description: selectColor.description,
+        is_added_cart: selectColor.is_added_cart,
+        is_out_stock: selectColor.is_out_stock,
+        is_purchased: selectColor.is_purchased,
+        is_wishlisted: selectColor.is_wishlisted,
+        percentage_discount: selectColor.percentage_discount,
+        product_condition: selectColor.product_condition,
+        product_id: selectColor.product_id,
+        product_images: selectColor.product_images,
+        product_variation_id: selectColor.product_variation_id,
+        main_rrp: selectColor.rrp,
+        sale_price: selectColor.sale_price,
+        share_url: selectColor.share_url,
+        sku: selectColor.sku,
+        stock: selectColor.stock,
+        avg_rating: selectColor.variation_avg_rating,
+        color_id: selectColor.color,
+      }));
+    }
+  };
+
+  const handleSizeChange = (Id) => {
+    const selectSize = productDetail.variation_list.find(
+      (product) => product.size == Id && product.color == productDetail.color_id
+    );
+    console.log("size change", selectSize);
+    if (selectSize) {
+      setProductDetail((prevproductDetail) => ({
+        ...prevproductDetail,
+        avg_rating: selectSize.variation_avg_rating,
+        cart_qty_count: selectSize.cart_qty_count,
+        condition: selectSize.condition,
+        is_added_cart: selectSize.is_added_cart,
+        is_discount_on: selectSize.is_discount_on,
+        is_out_stock: selectSize.is_out_stock,
+        is_purchased: selectSize.is_purchased,
+        is_wishlisted: selectSize.is_wishlisted,
+        main_rrp: selectSize.rrp,
+        sale_price: selectSize.sale_price,
+        percentage_discount: selectSize.percentage_discount,
+        product_condition: selectSize.product_condition,
+        product_id: selectSize.product_id,
+        product_variation_id: selectSize.product_variation_id,
+        product_view: selectSize.product_view,
+        stock: selectSize.stock,
+        total_review: selectSize.total_review,
+        share_url: selectSize.share_url,
+        size_id: selectSize.size,
+      }));
+    }
+  };
+
   const addToCartCall = async () => {
     const apiData = {
-      product_id: variationId ? variationId.product_id : productDetail.id,
+      product_id: productDetail.product_id,
       quantity: productCounter,
-      product_variation_id: variationId.product_variation_id,
+      product_variation_id: productDetail.product_variation_id,
     };
     try {
       const addToCartResponse = await axios.post(addToCartApi, apiData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       if (addToCartResponse.status === 200) {
@@ -221,16 +318,34 @@ const ProductDetails = () => {
       console.log("add to cart error", error);
     }
   };
-  const handleClickCart = async (e) => {
+
+  const handleAddToCart = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
     if (token) {
+      setIsaddCart(true);
       addToCartCall();
+    } else {
+      setShow(true);
+    }
+  };
+
+  const handleGoToCart = (e) => {
+    e.preventDefault();
+    navigate("/cart");
+  };
+
+  const handleBuyNow = (e) => {
+    e.preventDefault();
+    if (token) {
+      navigate("/cart/checkout");
+    } else {
+      setShow(true);
     }
   };
 
   return (
     <Container fluid className="mt-3 productDetailMain">
+      {show && <ModalComponent show={show} handleClose={handleClose} />}
       <Row className="justify-content-around">
         <Col lg={6} xs={12}>
           <ProductDetailSlider productImages={productDetail?.product_images} />
@@ -297,20 +412,19 @@ const ProductDetails = () => {
                   </div>
                 </Col>
               </Row>
-              {productDetail?.color && productDetail?.color?.length > 0 && (
+              {productDetail.color && productDetail.color.length > 0 && (
                 <ProductColor
                   productcolor={productDetail.color}
-                  productvariation={productDetail?.variation_list}
-                  handleColorClick={handleColorClick}
-                  selectedVariationId={selectedVariationId}
-                  selectedColor={selectedColor}
+                  handleColorChange={handleColorChange}
+                  selectedVariationId={productDetail.color_id}
+                  selectedColor={productDetail.color_name}
                 />
               )}
               {productDetail?.size && productDetail?.size?.length > 0 && (
                 <ProductSize
                   productsize={productDetail.size}
-                  handleSizeClick={handleSizeClick}
-                  selectedSize={selectedSize}
+                  handleSizeClick={handleSizeChange}
+                  selectedSize={productDetail.size_id}
                 />
               )}
               <Row className="mt-3">
@@ -344,16 +458,27 @@ const ProductDetails = () => {
                 <Col className="mt-3">
                   <Row>
                     <Col>
-                      <Button
-                        className="w-100 rounded-5 cart"
-                        type="submit"
-                        onClick={handleClickCart}
-                      >
-                        Add to Cart
-                      </Button>
+                      {isaddCart ? (
+                        <Button
+                          className="w-100 rounded-5 cart bg-success border-success"
+                          onClick={handleGoToCart}
+                        >
+                          Go to Cart
+                        </Button>
+                      ) : (
+                        <Button
+                          className="w-100 rounded-5 cart"
+                          onClick={handleAddToCart}
+                        >
+                          Add to Cart
+                        </Button>
+                      )}
                     </Col>
                     <Col>
-                      <Button className="w-100 rounded-5 buyNow">
+                      <Button
+                        className="w-100 rounded-5 buyNow"
+                        onClick={handleBuyNow}
+                      >
                         Buy Now
                       </Button>
                     </Col>
