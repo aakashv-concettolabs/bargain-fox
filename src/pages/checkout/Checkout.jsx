@@ -15,7 +15,10 @@ import visa from "../../assets/visa.png";
 import american from "../../assets/american.png";
 import { Link } from "react-router-dom";
 import NewAddress from "../../components/newAddress/NewAddress";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import NoAddress from "../../assets/no-address.svg";
+import axios from "axios";
+import { storedAddress } from "../../api/Apis";
 
 const paymentMethod = [
   {
@@ -40,23 +43,32 @@ const paymentMethod = [
   },
 ];
 
-const userAddresses = [
-  {
-    id: 1,
-    userName: "Aman Patel",
-    postalAddress: "22 Walden Road, Greenland, UK, KW14 3XY",
-    mobNumber: "+44 9876543210",
-  },
-  {
-    id: 2,
-    userName: "Aditya Patel",
-    postalAddress: "22 Walden Road, Greenland, UK, KW14 3XY",
-    mobNumber: "+44 9876543210",
-  },
-];
-
 const Checkout = () => {
   const [show, setShow] = useState(false);
+  const [addresses, setAddresses] = useState([]);
+  const token = localStorage.getItem("token");
+  // console.log("addresses", addresses);
+
+  const userStoredAddressCall = async () => {
+    if (token) {
+      try {
+        const storedAddressResponse = await axios.get(storedAddress, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (storedAddressResponse.status == 200) {
+          setAddresses(storedAddressResponse.data.result);
+        }
+      } catch (error) {
+        console.log("store delivery address error", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    userStoredAddressCall();
+  }, []);
 
   const handleClose = () => {
     setShow(false);
@@ -65,6 +77,13 @@ const Checkout = () => {
   return (
     <>
       <Container fluid className="address-container">
+        {show && (
+          <NewAddress
+            show={show}
+            handleClose={handleClose}
+            addressList={userStoredAddressCall}
+          />
+        )}
         <Row className="justify-content-around mt-3">
           <Col xs={12} md={8} lg={8}>
             <Row>
@@ -82,27 +101,47 @@ const Checkout = () => {
                 </Button>
               </Col>
             </Row>
-
-            {userAddresses.map((userAddresse) => (
-              <Row className="mt-3 pt-3 customborder" key={userAddresse.id}>
-                <Col xs={9} className="d-flex gap-4">
-                  <Form.Check type="radio" name="address" />
-                  <div className=" d-flex flex-column">
-                    <span className="fw-bold lead">
-                      {userAddresse.userName}
-                    </span>
-                    <span>{userAddresse.postalAddress}</span>
-                    <span>
-                      <strong>Phone Number: </strong>
-                      {userAddresse.mobNumber}
-                    </span>
+            {addresses.length == 0 && (
+              <Row>
+                <Col className="text-center my-4">
+                  <div>
+                    <Image src={NoAddress} />
                   </div>
-                </Col>
-                <Col xs={3} className="d-flex justify-content-end">
-                  <p className="editoption">Edit Address</p>
+                  <h2 className="mt-4">No Address Yet</h2>
+                  <p className="my-3">
+                    Please add your address for your better experience.
+                  </p>
+                  <Link
+                    className="btn btn-primary rounded-5 px-3 py-2"
+                    to={"/"}
+                  >
+                    Return to Shop
+                  </Link>
                 </Col>
               </Row>
-            ))}
+            )}
+
+            {addresses &&
+              addresses.map((userAddress) => (
+                <Row className="mt-3 pt-3 customborder" key={userAddress.id}>
+                  <Col xs={9} className="d-flex gap-4">
+                    <Form.Check type="radio" name="address" />
+                    <div className=" d-flex flex-column">
+                      <h2 className="fw-semibold lead mb-0">
+                        {userAddress.full_name}
+                      </h2>
+                      <p className="my-1">{`${userAddress.address}, ${userAddress.address2}, ${userAddress.city}, ${userAddress.state}, ${userAddress.country}, ${userAddress.postcode}`}</p>
+                      <p className="mb-1">
+                        <strong>Phone Number: </strong>
+                        {userAddress.mobile}
+                      </p>
+                    </div>
+                  </Col>
+                  <Col xs={3} className="d-flex justify-content-end">
+                    <p className="editoption text-primary">Edit Address</p>
+                  </Col>
+                </Row>
+              ))}
           </Col>
 
           <Col xs={12} md={4} lg={3}>
@@ -134,7 +173,6 @@ const Checkout = () => {
           </Col>
         </Row>
       </Container>
-      {show && <NewAddress show={show} handleClose={handleClose} />}
     </>
   );
 };

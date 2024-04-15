@@ -20,6 +20,8 @@ import RatingStar from "../../components/ratingStar/RatingStar.jsx";
 import { toast } from "react-toastify";
 import ProductColor from "../../components/productColorSize/ProductColor.jsx";
 import ModalComponent from "../../components/modal/ModalComponent.jsx";
+import { updateCartCount } from "../../reducers/cartSlice.js";
+import { useDispatch } from "react-redux";
 
 const shareOptions = [
   {
@@ -87,7 +89,6 @@ const initialProductDetail = {
   variation_list: null,
   vendor_id: null,
   vendor_info: null,
-  product_id: null,
   product_variation_id: null,
   color_id: null,
   color_name: null,
@@ -103,8 +104,10 @@ const ProductDetails = () => {
   const [productDetail, setProductDetail] = useState(initialProductDetail);
   const [productCounter, setProductCounter] = useState(1);
   const [isaddCart, setIsaddCart] = useState(false);
+  const [chooseSize, setChooseSize] = useState();
   const [show, setShow] = useState(false);
   const token = localStorage.getItem("token");
+  const dispatch = useDispatch();
 
   const handleClose = () => {
     setShow(false);
@@ -181,6 +184,7 @@ const ProductDetails = () => {
             variation_list: result.variation_list,
             vendor_id: result.vendor_id,
             vendor_info: result.vendor_info,
+            // product_id: result.id,
           }));
 
           if (result?.variation_list?.length > 0) {
@@ -211,7 +215,7 @@ const ProductDetails = () => {
                 is_wishlisted: defaultVariation.is_wishlisted,
                 percentage_discount: defaultVariation.percentage_discount,
                 product_condition: defaultVariation.product_condition,
-                product_id: defaultVariation.product_id,
+                id: defaultVariation.product_id,
                 product_images: defaultVariation.product_images,
                 product_variation_id: defaultVariation.product_variation_id,
                 main_rrp: defaultVariation.rrp,
@@ -243,6 +247,7 @@ const ProductDetails = () => {
     navigate({ search: updatedUrl.toString() });
 
     if (selectColor) {
+      setIsaddCart(false);
       setProductDetail((prevproductDetail) => ({
         ...prevproductDetail,
         cart_qty_count: selectColor.cart_qty_count,
@@ -254,7 +259,7 @@ const ProductDetails = () => {
         is_wishlisted: selectColor.is_wishlisted,
         percentage_discount: selectColor.percentage_discount,
         product_condition: selectColor.product_condition,
-        product_id: selectColor.product_id,
+        id: selectColor.product_id,
         product_images: selectColor.product_images,
         product_variation_id: selectColor.product_variation_id,
         main_rrp: selectColor.rrp,
@@ -272,8 +277,9 @@ const ProductDetails = () => {
     const selectSize = productDetail.variation_list.find(
       (product) => product.size == Id && product.color == productDetail.color_id
     );
-    console.log("size change", selectSize);
     if (selectSize) {
+      setIsaddCart(false);
+      setChooseSize(selectSize.size);
       setProductDetail((prevproductDetail) => ({
         ...prevproductDetail,
         avg_rating: selectSize.variation_avg_rating,
@@ -288,7 +294,7 @@ const ProductDetails = () => {
         sale_price: selectSize.sale_price,
         percentage_discount: selectSize.percentage_discount,
         product_condition: selectSize.product_condition,
-        product_id: selectSize.product_id,
+        id: selectSize.product_id,
         product_variation_id: selectSize.product_variation_id,
         product_view: selectSize.product_view,
         stock: selectSize.stock,
@@ -301,7 +307,7 @@ const ProductDetails = () => {
 
   const addToCartCall = async () => {
     const apiData = {
-      product_id: productDetail.product_id,
+      product_id: productDetail.id,
       quantity: productCounter,
       product_variation_id: productDetail.product_variation_id,
     };
@@ -313,6 +319,7 @@ const ProductDetails = () => {
       });
       if (addToCartResponse.status === 200) {
         toast.success(addToCartResponse.data.message);
+        setIsaddCart(true);
       }
     } catch (error) {
       console.log("add to cart error", error);
@@ -322,8 +329,12 @@ const ProductDetails = () => {
   const handleAddToCart = async (e) => {
     e.preventDefault();
     if (token) {
-      setIsaddCart(true);
-      addToCartCall();
+      if (productDetail.size.length > 0 && !chooseSize) {
+        toast.warning("Please select size");
+      } else {
+        addToCartCall();
+        dispatch(updateCartCount(productCounter));
+      }
     } else {
       setShow(true);
     }
@@ -342,6 +353,8 @@ const ProductDetails = () => {
       setShow(true);
     }
   };
+
+  console.log("product detail", productDetail);
 
   return (
     <Container fluid className="mt-3 productDetailMain">
@@ -424,7 +437,7 @@ const ProductDetails = () => {
                 <ProductSize
                   productsize={productDetail.size}
                   handleSizeClick={handleSizeChange}
-                  selectedSize={productDetail.size_id}
+                  selectedSize={chooseSize}
                 />
               )}
               <Row className="mt-3">

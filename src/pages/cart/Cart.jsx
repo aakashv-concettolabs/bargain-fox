@@ -5,13 +5,13 @@ import PaymentSummary from "../../components/paymentSummary/PaymentSummary";
 import CartCard from "./CartCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { myCartApi } from "../../api/Apis";
+import { myCartApi, removeFromCartApi } from "../../api/Apis";
 import emptyCartImg from "../../assets/empty-cart.svg";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Cart = () => {
-  const [cartItem, setCartItem] = useState(null);
-  console.log("cartItem", cartItem);
+  const [cartItem, setCartItem] = useState();
 
   const myCart = async () => {
     try {
@@ -31,9 +31,32 @@ const Cart = () => {
       console.log("my cart error", error);
     }
   };
+
+  const handleDelete = (Id) => {
+    const removeFromCart = async () => {
+      try {
+        const RemoveFromCartResponse = await axios.post(
+          removeFromCartApi,
+          { cart_product_id: [Id] },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        if (RemoveFromCartResponse.status === 200) {
+          toast.success(RemoveFromCartResponse.data.message);
+        }
+      } catch (error) {
+        console.log("Remove from cart error", error);
+      }
+    };
+
+    removeFromCart();
+  };
   useEffect(() => {
     myCart();
-  }, []);
+  }, [handleDelete]);
 
   return (
     <Container fluid>
@@ -75,11 +98,9 @@ const Cart = () => {
                 className="mt-3"
               >
                 <CartCard
-                  productInfo={cartProductDetail?.product_info}
-                  quantity={cartProductDetail.quantity}
-                  id={cartProductDetail.id}
-                  myCart={myCart}
                   eachCart={cartProductDetail}
+                  handleDelete={handleDelete}
+                  myCart={myCart}
                 />
               </div>
             ))}

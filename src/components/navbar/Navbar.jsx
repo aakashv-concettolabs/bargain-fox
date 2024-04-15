@@ -14,19 +14,15 @@ import Searchbar from "../searchbar/Searchbar";
 import { useNavigate } from "react-router-dom";
 import { cartItemCountApi } from "../../api/Apis";
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import { addProductCount } from "../../reducers/cartSlice";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const { userDetails } = useContext(AuthContext);
   const userName = userDetails.name;
-  const noOfProduct = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  const [cartCount, setCartCount] = useState(
-    noOfProduct > 0 ? noOfProduct.productCount : 0
-  );
+  const noOfProduct = useSelector((state) => state.cart.cartCount);
+  const [cartCount, setCartCount] = useState(noOfProduct > 0 ? noOfProduct : 0);
 
   const handleClose = () => {
     setShow(false);
@@ -43,9 +39,6 @@ const Header = () => {
 
         if (itemCountResponse.status === 200) {
           setCartCount(itemCountResponse.data.result.cart_item_count);
-          dispatch(
-            addProductCount(itemCountResponse.data.result.cart_item_count)
-          );
         }
       } catch (error) {
         console.log("item count error", error);

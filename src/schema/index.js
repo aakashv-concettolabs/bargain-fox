@@ -22,10 +22,12 @@ export const addressSchema = Yup.object({
   fullName: Yup.string().min(2).max(25).required("Please enter your name"),
   number: Yup.string().matches(/^[0-9]{10}$/, "Phone Number must be 10 digits"),
   address: Yup.string().required("Address is required"),
-  apartment: Yup.string()
+  address2: Yup.string()
     .max(50, "Apartment/suite number is too long")
-    .nullable(),
+    .nullable()
+    .required("Aprtment is required"),
   city: Yup.string().min(4).max(25).required("City is required"),
+  state: Yup.string().min(3).max(15).required("State is required"),
   postcode: Yup.number().required("Postcode number is required"),
 });
 

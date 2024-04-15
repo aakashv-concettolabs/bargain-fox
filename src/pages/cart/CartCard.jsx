@@ -1,55 +1,60 @@
 import React, { useState } from "react";
 import { Row, Col, Button, Image, FormCheck } from "react-bootstrap";
 import Counter from "../../components/counter/Counter";
+import { addToCartApi } from "../../api/Apis";
 import { toast } from "react-toastify";
-import { removeFromCartApi } from "../../api/Apis";
 import axios from "axios";
 
-const CartCard = ({ id, myCart, eachCart }) => {
+const CartCard = ({ handleDelete, eachCart, myCart }) => {
   const { product_info } = eachCart;
-  const [productCounter, setProductCounter] = useState(eachCart?.quantity);
 
-  const removeFromCart = async () => {
+  const [productCounter, setProductCounter] = useState(eachCart.quantity);
+
+  const addToCartCall = async (Id, variationId, productIncrease) => {
+    const apiData = {
+      product_id: Id,
+      quantity: productIncrease ? productCounter + 1 : productCounter - 1,
+      product_variation_id: variationId,
+    };
+
     try {
-      const RemoveFromCartResponse = await axios.post(
-        removeFromCartApi,
-        { cart_product_id: [id] },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      if (RemoveFromCartResponse.status === 200) {
-        toast.success(RemoveFromCartResponse.data.message);
+      const addToCartResponse = await axios.post(addToCartApi, apiData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (addToCartResponse.status === 200) {
+        productIncrease
+          ? toast.success(addToCartResponse.data.message)
+          : toast.error("product remove successfully");
       }
     } catch (error) {
-      console.log("Remove from cart error", error.response.data);
+      console.log("add to cart error", error);
     }
   };
 
-  const handleDelete = () => {
-    removeFromCart();
-    myCart();
-  };
-
-  const handlePlus = () => {
-    if (productCounter >= product_info.stock) {
+  const handlePlus = (Id, variationId) => {
+    if (productCounter >= 40) {
       toast.error(`We have ${product_info.stock} items left only`);
     } else {
+      const productIncrease = true;
+      myCart();
       setProductCounter(productCounter + 1);
+      addToCartCall(Id, variationId, productIncrease);
     }
   };
 
-  const handleMinus = () => {
+  const handleMinus = (Id, variationId) => {
     if (productCounter > 1) {
+      myCart();
       setProductCounter(productCounter - 1);
+      addToCartCall(Id, variationId);
     }
   };
   return (
     <Row className="mt-3">
       <Col xs={12} xl={8} className="d-flex align-items-center gap-2">
-        <FormCheck />
+        {/* <FormCheck  /> */}
         <Image
           src={product_info?.product_images[0]?.product_image_url}
           className="productImg"
@@ -81,13 +86,17 @@ const CartCard = ({ id, myCart, eachCart }) => {
             <Col className="d-none d-sm-flex gap-2 mt-3">
               <Counter
                 productCounter={productCounter}
-                handlePlus={handlePlus}
-                handleMinus={handleMinus}
+                handlePlus={() =>
+                  handlePlus(product_info.id, eachCart.product_variation_id)
+                }
+                handleMinus={() =>
+                  handleMinus(product_info.id, eachCart.product_variation_id)
+                }
               />
               <div className="d-flex  align-items-center text-body-tertiary text-opacity-25">
                 <Button
                   className="border-0 text-black bg-transparent fw-bold"
-                  onClick={handleDelete}
+                  onClick={() => handleDelete(eachCart.id)}
                 >
                   Delete
                 </Button>
@@ -103,13 +112,17 @@ const CartCard = ({ id, myCart, eachCart }) => {
       <Col className="d-flex d-sm-none mt-2">
         <Counter
           productCounter={productCounter}
-          handlePlus={handlePlus}
-          handleMinus={handleMinus}
+          handlePlus={() =>
+            handlePlus(product_info.id, eachCart.product_variation_id)
+          }
+          handleMinus={() =>
+            handleMinus(product_info.id, eachCart.product_variation_id)
+          }
         />
         <div className="d-flex gap-1 align-items-center text-body-tertiary text-opacity-25">
           <Button
             className="border-0 text-black bg-transparent fw-medium pe-0"
-            onClick={handleDelete}
+            onClick={() => handleDelete(eachCart.id)}
           >
             Delete
           </Button>

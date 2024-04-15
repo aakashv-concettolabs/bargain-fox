@@ -2,14 +2,18 @@ import "./newAddress.scss";
 import { useFormik } from "formik";
 import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 import { addressSchema } from "../../schema";
+import axios from "axios";
+import { newAddress } from "../../api/Apis";
+import { toast } from "react-toastify";
 
 const initialValueAddress = {
   fullName: "",
   number: "",
   address: "",
-  appartment: "",
+  address2: "",
   city: "",
   postcode: "",
+  state: "",
 };
 
 const countryNames = [
@@ -27,13 +31,44 @@ const countryNames = [
   },
 ];
 
-const NewAddress = ({ show, handleClose }) => {
+const NewAddress = ({ show, handleClose, addressList }) => {
+  const addNewAddressCall = async () => {
+    try {
+      const addNewAddressResponse = await axios.post(
+        newAddress,
+        {
+          country: "India",
+          full_name: values.fullName,
+          address: values.address,
+          address2: values.address2,
+          city: values.city,
+          state: values.state,
+          postcode: values.postcode,
+          phone: values.number,
+          state: values.state,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (addNewAddressResponse.status == 200) {
+        toast.success(addNewAddressResponse.data.message);
+        console.log("add new address response", addNewAddressResponse);
+      }
+    } catch (error) {
+      console.log("add new address error", error);
+    }
+  };
+
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValueAddress,
       validationSchema: addressSchema,
       onSubmit: (values, action) => {
-        console.log(values);
+        addNewAddressCall();
+        addressList();
         action.resetForm();
         handleClose();
       },
@@ -53,7 +88,7 @@ const NewAddress = ({ show, handleClose }) => {
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>
-              Country/Region<span className="text-warning">*</span>
+              Country/Region<span className="text-primary">*</span>
             </Form.Label>
             <Form.Select className="rounded-5 shadow-none">
               {countryNames.map((countryName) => (
@@ -63,9 +98,10 @@ const NewAddress = ({ show, handleClose }) => {
               ))}
             </Form.Select>
           </Form.Group>
+
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>
-              Full Name<span className="text-warning">*</span>
+              Full Name<span className="text-primary">*</span>
             </Form.Label>
             <Form.Control
               type="text"
@@ -80,9 +116,10 @@ const NewAddress = ({ show, handleClose }) => {
               <p className="text-danger">{errors.fullName}</p>
             ) : null}
           </Form.Group>
+
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>
-              Address<span className="text-warning">*</span>
+              Address<span className="text-primary">*</span>
             </Form.Label>
             <Form.Control
               type="text"
@@ -98,25 +135,34 @@ const NewAddress = ({ show, handleClose }) => {
               <p className="text-danger">{errors.address}</p>
             ) : null}
           </Form.Group>
+
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Appartment,Suit,etc</Form.Label>
+            <Form.Label>
+              Appartment,Suit,etc<span className="text-primary">*</span>
+            </Form.Label>
             <Form.Control
               type="text"
               placeholder=""
               className="shadow-none rounded-5"
-              name="appartment"
-              value={values.appartment}
+              name="address2"
+              value={values.address2}
               onChange={handleChange}
               onBlur={handleBlur}
             />
+            {errors.address2 && touched.address2 ? (
+              <p className="text-danger">{errors.address2}</p>
+            ) : null}
           </Form.Group>
+
           <Row>
             <Col>
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlInput1"
               >
-                <Form.Label>City</Form.Label>
+                <Form.Label>
+                  City<span className="text-primary">*</span>
+                </Form.Label>
                 <Form.Control
                   type="text"
                   placeholder=""
@@ -126,10 +172,10 @@ const NewAddress = ({ show, handleClose }) => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
+                {errors.city && touched.city ? (
+                  <p className="text-danger">{errors.city}</p>
+                ) : null}
               </Form.Group>
-              {errors.city && touched.city ? (
-                <p className="text-danger">{errors.city}</p>
-              ) : null}
             </Col>
             <Col>
               <Form.Group
@@ -137,7 +183,31 @@ const NewAddress = ({ show, handleClose }) => {
                 controlId="exampleForm.ControlInput1"
               >
                 <Form.Label>
-                  PostCode<span className="text-warning">*</span>
+                  State<span className="text-primary">*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder=""
+                  className="shadow-none rounded-5"
+                  name="state"
+                  value={values.state}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {errors.state && touched.state ? (
+                  <p className="text-danger">{errors.state}</p>
+                ) : null}
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>
+                  PostCode<span className="text-primary">*</span>
                 </Form.Label>
                 <Form.Control
                   type="number"
@@ -153,22 +223,30 @@ const NewAddress = ({ show, handleClose }) => {
                 ) : null}
               </Form.Group>
             </Col>
+            <Col>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>
+                  Phone<span className="text-primary">*</span>
+                </Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder=""
+                  className="shadow-none rounded-5"
+                  name="number"
+                  value={values.number}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                {errors.number && touched.number ? (
+                  <p className="text-danger small m-1 ">{errors.number}</p>
+                ) : null}
+              </Form.Group>
+            </Col>
           </Row>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Phone</Form.Label>
-            <Form.Control
-              type="number"
-              placeholder=""
-              className="shadow-none rounded-5"
-              name="number"
-              value={values.number}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-            {errors.number && touched.number ? (
-              <p className="text-danger small m-1 ">{errors.number}</p>
-            ) : null}
-          </Form.Group>
+
           <Row>
             <Col className="small">
               <Form.Check label="Save this information for next time" />
