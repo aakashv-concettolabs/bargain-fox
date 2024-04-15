@@ -44,8 +44,7 @@ const NewAddress = ({ show, handleClose, addressList }) => {
           city: values.city,
           state: values.state,
           postcode: values.postcode,
-          phone: values.number,
-          state: values.state,
+          phone: values.number, 
         },
         {
           headers: {
