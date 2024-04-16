@@ -32,10 +32,9 @@ const NewAddress = ({ show, handleClose, addressList, editAddress }) => {
     state: editAddress?.state ? editAddress?.state : "",
     postcode: editAddress?.postcode ? editAddress?.postcode : "",
     number: editAddress?.mobile ? editAddress?.mobile : "",
-    is_default: editAddress?.is_default ? editAddress?.is_default : "",
+    is_default: editAddress?.default_address == 1 ? true : false,
   };
 
-  console.log("edit address", editAddress);
   const addNewAddressCall = async () => {
     try {
       const addNewAddressResponse = await axios.post(
@@ -134,7 +133,6 @@ const NewAddress = ({ show, handleClose, addressList, editAddress }) => {
             <Form.Control
               type="text"
               placeholder=""
-              // as="textarea"
               className="shadow-none rounded-5"
               name="address"
               value={values.address}
@@ -280,5 +278,3 @@ const NewAddress = ({ show, handleClose, addressList, editAddress }) => {
 };
 
 export default NewAddress;
-
-// the above components are checkout and newaddress components in i want to do when a user

@@ -13,7 +13,7 @@ import paypal from "../../assets/paypal.png";
 import mastercard from "../../assets/mastercard.png";
 import visa from "../../assets/visa.png";
 import american from "../../assets/american.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NewAddress from "../../components/newAddress/NewAddress";
 import { useEffect, useState } from "react";
 import NoAddress from "../../assets/no-address.svg";
@@ -49,6 +49,7 @@ const Checkout = () => {
   const [editAddress, setEditAddress] = useState();
   const token = localStorage.getItem("token");
   console.log("addresses", addresses);
+  const navigate = useNavigate();
 
   const userStoredAddressCall = async () => {
     if (token) {
@@ -86,6 +87,10 @@ const Checkout = () => {
   const handleAddNew = () => {
     setShow(true);
     setEditAddress();
+  };
+
+  const handleContinueToPayment = () => {
+    navigate("/checkout/payment");
   };
 
   return (
@@ -142,6 +147,7 @@ const Checkout = () => {
                     <Form.Check
                       type="radio"
                       name="address"
+                      // onChange={() => console.log("first", userAddress)}
                       defaultChecked={userAddress.default_address}
                     />
                     <div className=" d-flex flex-column">
@@ -153,7 +159,7 @@ const Checkout = () => {
                         <strong>Phone Number: </strong>
                         {userAddress.mobile}
                       </p>
-                      {userAddress.default_address === 1 && (
+                      {userAddress.default_address == 1 && (
                         <span className="defaultAddress rounded-5 py-1 px-3 text-center mt-2 bg-body-secondary">
                           Default
                         </span>
@@ -176,7 +182,10 @@ const Checkout = () => {
             <Card className="rounded-4">
               <Card.Body>
                 <div className="">
-                  <Button className="w-100 rounded-5 text-white" as={Link}>
+                  <Button
+                    className="w-100 rounded-5 text-white"
+                    onClick={handleContinueToPayment}
+                  >
                     Continue to Payment
                   </Button>
                 </div>

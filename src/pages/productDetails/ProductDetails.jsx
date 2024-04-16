@@ -184,7 +184,6 @@ const ProductDetails = () => {
             variation_list: result.variation_list,
             vendor_id: result.vendor_id,
             vendor_info: result.vendor_info,
-            // product_id: result.id,
           }));
 
           if (result?.variation_list?.length > 0) {
@@ -348,7 +347,7 @@ const ProductDetails = () => {
   const handleBuyNow = (e) => {
     e.preventDefault();
     if (token) {
-      navigate("/cart/checkout");
+      navigate("/checkout/address");
     } else {
       setShow(true);
     }

@@ -10,6 +10,7 @@ import Checkout from "./pages/checkout/Checkout";
 import { AuthProvider } from "./context/authContext/AuthContext";
 import { Provider } from "react-redux";
 import { store } from "./reducers/Store";
+import Payment from "./pages/payment/Payment";
 
 function App() {
   const router = createBrowserRouter([
@@ -35,14 +36,18 @@ function App() {
         },
         {
           path: "cart",
+          element: <Cart />,
+        },
+        {
+          path: "",
           children: [
             {
-              path: "",
-              element: <Cart />,
+              path: "checkout/address",
+              element: <Checkout />,
             },
             {
-              path: "/cart/checkout",
-              element: <Checkout />,
+              path: "checkout/payment",
+              element: <Payment />,
             },
           ],
         },

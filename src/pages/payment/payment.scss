@@ -1,0 +1,25 @@
+.paymentMain{
+    .paymentHeading{
+        border-bottom: 2px solid #f5f5fC;
+    }
+    .address{
+        border: 2px solid #f5f5fC;
+        border-radius: 20px;
+        padding: 20px;
+    }
+    .customborderleft{
+        border-left: 2px solid #f5f5fC;
+    }
+    h5{
+        color: #a4a4b8;
+        margin: 16px 0px;
+    }
+    .paymentImgDiv{
+        height: 180px;
+        width: 180px;
+    }
+    .cardImgDiv{
+        height: 28px;
+        width: 43px;
+    }
+}
