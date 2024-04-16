@@ -46,8 +46,9 @@ const paymentMethod = [
 const Checkout = () => {
   const [show, setShow] = useState(false);
   const [addresses, setAddresses] = useState([]);
+  const [editAddress, setEditAddress] = useState();
   const token = localStorage.getItem("token");
-  // console.log("addresses", addresses);
+  console.log("addresses", addresses);
 
   const userStoredAddressCall = async () => {
     if (token) {
@@ -66,12 +67,25 @@ const Checkout = () => {
     }
   };
 
+  const handleEditAddress = (Id) => {
+    setShow(true);
+    const addressToEdit = addresses.find(
+      (selectedAddress) => selectedAddress.id == Id
+    );
+    setEditAddress(addressToEdit);
+  };
+
   useEffect(() => {
     userStoredAddressCall();
   }, []);
 
   const handleClose = () => {
     setShow(false);
+  };
+
+  const handleAddNew = () => {
+    setShow(true);
+    setEditAddress();
   };
 
   return (
@@ -82,6 +96,7 @@ const Checkout = () => {
             show={show}
             handleClose={handleClose}
             addressList={userStoredAddressCall}
+            editAddress={editAddress}
           />
         )}
         <Row className="justify-content-around mt-3">
@@ -91,13 +106,12 @@ const Checkout = () => {
                 <h4>Select Delivery Address</h4>
               </Col>
               <Col className="d-flex justify-content-end align-items-center">
-                <Button className="gap-2 d-flex align-items-center text-black bg-white btn-outline-light">
-                  <Image
-                    src={addressIcon}
-                    height="20px"
-                    onClick={() => setShow(true)}
-                  />
-                  <span onClick={() => setShow(true)}>Add New</span>
+                <Button
+                  className="d-flex align-items-center gap-2 text-black bg-white btn-outline-light"
+                  onClick={handleAddNew}
+                >
+                  <Image src={addressIcon} height="20px" />
+                  <span>Add New</span>
                 </Button>
               </Col>
             </Row>
@@ -125,7 +139,11 @@ const Checkout = () => {
               addresses.map((userAddress) => (
                 <Row className="mt-3 pt-3 customborder" key={userAddress.id}>
                   <Col xs={9} className="d-flex gap-4">
-                    <Form.Check type="radio" name="address" />
+                    <Form.Check
+                      type="radio"
+                      name="address"
+                      defaultChecked={userAddress.default_address}
+                    />
                     <div className=" d-flex flex-column">
                       <h2 className="fw-semibold lead mb-0">
                         {userAddress.full_name}
@@ -135,10 +153,20 @@ const Checkout = () => {
                         <strong>Phone Number: </strong>
                         {userAddress.mobile}
                       </p>
+                      {userAddress.default_address === 1 && (
+                        <span className="defaultAddress rounded-5 py-1 px-3 text-center mt-2 bg-body-secondary">
+                          Default
+                        </span>
+                      )}
                     </div>
                   </Col>
                   <Col xs={3} className="d-flex justify-content-end">
-                    <p className="editoption text-primary">Edit Address</p>
+                    <p
+                      className="editoption text-primary"
+                      onClick={() => handleEditAddress(userAddress.id)}
+                    >
+                      Edit Address
+                    </p>
                   </Col>
                 </Row>
               ))}

@@ -6,16 +6,6 @@ import axios from "axios";
 import { newAddress } from "../../api/Apis";
 import { toast } from "react-toastify";
 
-const initialValueAddress = {
-  fullName: "",
-  number: "",
-  address: "",
-  address2: "",
-  city: "",
-  postcode: "",
-  state: "",
-};
-
 const countryNames = [
   {
     id: 1,
@@ -31,20 +21,36 @@ const countryNames = [
   },
 ];
 
-const NewAddress = ({ show, handleClose, addressList }) => {
+const NewAddress = ({ show, handleClose, addressList, editAddress }) => {
+  const initialValueAddress = {
+    id: editAddress?.id ? editAddress?.id : "",
+    country: editAddress?.country ? editAddress.country : "India",
+    fullName: editAddress?.full_name ? editAddress?.full_name : "",
+    address: editAddress?.address ? editAddress?.address : "",
+    address2: editAddress?.address2 ? editAddress?.address2 : "",
+    city: editAddress?.city ? editAddress?.city : "",
+    state: editAddress?.state ? editAddress?.state : "",
+    postcode: editAddress?.postcode ? editAddress?.postcode : "",
+    number: editAddress?.mobile ? editAddress?.mobile : "",
+    is_default: editAddress?.is_default ? editAddress?.is_default : "",
+  };
+
+  console.log("edit address", editAddress);
   const addNewAddressCall = async () => {
     try {
       const addNewAddressResponse = await axios.post(
         newAddress,
         {
-          country: "India",
+          id: values.id,
+          country: values.country,
           full_name: values.fullName,
           address: values.address,
           address2: values.address2,
           city: values.city,
           state: values.state,
           postcode: values.postcode,
-          phone: values.number, 
+          phone: values.number,
+          is_default: values.is_default,
         },
         {
           headers: {
@@ -54,7 +60,7 @@ const NewAddress = ({ show, handleClose, addressList }) => {
       );
       if (addNewAddressResponse.status == 200) {
         toast.success(addNewAddressResponse.data.message);
-        console.log("add new address response", addNewAddressResponse);
+        addressList();
       }
     } catch (error) {
       console.log("add new address error", error);
@@ -67,7 +73,7 @@ const NewAddress = ({ show, handleClose, addressList }) => {
       validationSchema: addressSchema,
       onSubmit: (values, action) => {
         addNewAddressCall();
-        addressList();
+        console.log("values", values);
         action.resetForm();
         handleClose();
       },
@@ -89,7 +95,12 @@ const NewAddress = ({ show, handleClose, addressList }) => {
             <Form.Label>
               Country/Region<span className="text-primary">*</span>
             </Form.Label>
-            <Form.Select className="rounded-5 shadow-none">
+            <Form.Select
+              className="rounded-5 shadow-none"
+              name="country"
+              value={values.country}
+              onChange={handleChange}
+            >
               {countryNames.map((countryName) => (
                 <option key={countryName.id} value={countryName.countryname}>
                   {countryName.countryname}
@@ -246,23 +257,19 @@ const NewAddress = ({ show, handleClose, addressList }) => {
             </Col>
           </Row>
 
-          <Row>
-            <Col className="small">
-              <Form.Check label="Save this information for next time" />
+          <Row className="small">
+            <Col>
+              <Form.Check
+                type="switch"
+                label="Make Default"
+                name="is_default"
+                value={values.is_default}
+                onChange={handleChange}
+                className="text-body-tertiary"
+              />
             </Col>
-            <Row className="small">
-              <Col xs={12} sm={6}>
-                <Form.Check label="Text me with news and offers" />
-              </Col>
-              <Col xs={12} sm={6} className="d-flex justify-content-sm-end">
-                <Form.Check
-                  type="switch"
-                  label="Make Default"
-                  className="text-body-tertiary"
-                />
-              </Col>
-            </Row>
           </Row>
+
           <Button type="submit" className="w-100 rounded-4 mt-2">
             Save Address
           </Button>
@@ -273,3 +280,5 @@ const NewAddress = ({ show, handleClose, addressList }) => {
 };
 
 export default NewAddress;
+
+// the above components are checkout and newaddress components in i want to do when a user

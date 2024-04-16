@@ -23,6 +23,7 @@ const Header = () => {
   const userName = userDetails.name;
   const noOfProduct = useSelector((state) => state.cart.cartCount);
   const [cartCount, setCartCount] = useState(noOfProduct > 0 ? noOfProduct : 0);
+  // console.log("user detail", userDetails);
 
   const handleClose = () => {
     setShow(false);

@@ -1,9 +1,12 @@
 .address-container {
   .editoption {
-    // color: #ff7900;
+    cursor: pointer;
   }
   .customborder {
     border-top: 2px solid #f2f2f8;
+    .defaultAddress{
+      max-width: fit-content;
+    }
   }
   .card {
     border: 2px solid #f2f2f8;
