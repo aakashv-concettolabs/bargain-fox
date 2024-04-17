@@ -34,3 +34,17 @@ export const addressSchema = Yup.object({
 export const newsletterSchema = Yup.object({
   email: Yup.string().email().required("Please enter your email"),
 });
+
+export const cardFormSchema = Yup.object().shape({
+  nameOnCard: Yup.string().required("Name on card is required"),
+  cardNumber: Yup.string()
+    .matches(/^[0-9]{16}$/, "Only 16 numeric values are allowed")
+    .required("Card number is required"),
+  month: Yup.string().required("Expiration month is required"),
+  year: Yup.string().required("Expiration year is required"),
+  cvv: Yup.string()
+    .matches(/^[0-9]+$/, "Only numeric values are allowed")
+    .length(3, "CVV must be 3 digits")
+    .required("CVV is required"),
+  terms: Yup.boolean(),
+});

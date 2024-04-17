@@ -5,10 +5,10 @@ const ProductPriceTag = ({ offerPrice, price }) => {
     <div className="d-flex gap-2 align-items-center">
       <span className="fw-semibold price">
         <sup>$</sup>
-        {offerPrice}
+        {Math.floor(offerPrice)}
       </span>
       <span className="originalPrice">
-        <strike>${price}</strike>
+        <strike>${Math.floor(price)}</strike>
       </span>
     </div>
   );

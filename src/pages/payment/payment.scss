@@ -17,9 +17,63 @@
     .paymentImgDiv{
         height: 180px;
         width: 180px;
+        padding: 5px;
     }
     .cardImgDiv{
         height: 28px;
         width: 43px;
+    }
+}
+
+
+@media (max-width: 1200px){
+    .paymentMain{
+        .customborderleft{
+            border-left: none;
+        }
+        .paymentImgDiv{
+            height: 126px;
+            width: 126px;
+            padding: 5px;
+        }
+    }
+}
+@media (max-width: 992px){
+    .paymentMain{
+        .paymentImgDiv{
+            height: 110px;
+            width: 110px;
+            padding: 5px;
+        }
+    }
+}
+
+@media (max-width: 767px){
+    .paymentMain{
+        .paymentImgDiv{
+            height: 160px;
+            width: 160px;
+            padding: 5px;
+        }
+    }
+}
+
+@media (max-width: 576px){
+    .paymentMain{
+        .paymentImgDiv{
+            height: 120px;
+            width: 120px;
+            padding: 5px;
+        }
+    }
+}
+
+@media(max-width: 425px){
+    .paymentMain{
+        .paymentImgDiv{
+            height: 92px;
+            width: 92px;
+            padding: 5px;
+        }
     }
 }

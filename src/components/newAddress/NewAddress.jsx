@@ -66,17 +66,24 @@ const NewAddress = ({ show, handleClose, addressList, editAddress }) => {
     }
   };
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
-    useFormik({
-      initialValues: initialValueAddress,
-      validationSchema: addressSchema,
-      onSubmit: (values, action) => {
-        addNewAddressCall();
-        console.log("values", values);
-        action.resetForm();
-        handleClose();
-      },
-    });
+  const {
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+  } = useFormik({
+    initialValues: initialValueAddress,
+    validationSchema: addressSchema,
+    onSubmit: (values, action) => {
+      addNewAddressCall();
+      console.log("values", values);
+      action.resetForm();
+      handleClose();
+    },
+  });
 
   return (
     <Modal
@@ -122,7 +129,7 @@ const NewAddress = ({ show, handleClose, addressList, editAddress }) => {
               onBlur={handleBlur}
             />
             {errors.fullName && touched.fullName ? (
-              <p className="text-danger">{errors.fullName}</p>
+              <p className="text-danger small m-1">{errors.fullName}</p>
             ) : null}
           </Form.Group>
 
@@ -140,7 +147,7 @@ const NewAddress = ({ show, handleClose, addressList, editAddress }) => {
               onBlur={handleBlur}
             />
             {errors.address && touched.address ? (
-              <p className="text-danger">{errors.address}</p>
+              <p className="text-danger small m-1">{errors.address}</p>
             ) : null}
           </Form.Group>
 
@@ -158,7 +165,7 @@ const NewAddress = ({ show, handleClose, addressList, editAddress }) => {
               onBlur={handleBlur}
             />
             {errors.address2 && touched.address2 ? (
-              <p className="text-danger">{errors.address2}</p>
+              <p className="text-danger small m-1">{errors.address2}</p>
             ) : null}
           </Form.Group>
 
@@ -181,7 +188,7 @@ const NewAddress = ({ show, handleClose, addressList, editAddress }) => {
                   onBlur={handleBlur}
                 />
                 {errors.city && touched.city ? (
-                  <p className="text-danger">{errors.city}</p>
+                  <p className="text-danger small m-1">{errors.city}</p>
                 ) : null}
               </Form.Group>
             </Col>
@@ -203,7 +210,7 @@ const NewAddress = ({ show, handleClose, addressList, editAddress }) => {
                   onBlur={handleBlur}
                 />
                 {errors.state && touched.state ? (
-                  <p className="text-danger">{errors.state}</p>
+                  <p className="text-danger small m-1">{errors.state}</p>
                 ) : null}
               </Form.Group>
             </Col>
@@ -227,7 +234,7 @@ const NewAddress = ({ show, handleClose, addressList, editAddress }) => {
                   onBlur={handleBlur}
                 />
                 {errors.postcode && touched.postcode ? (
-                  <p className="text-danger">{errors.postcode}</p>
+                  <p className="text-danger small m-1">{errors.postcode}</p>
                 ) : null}
               </Form.Group>
             </Col>
@@ -262,7 +269,8 @@ const NewAddress = ({ show, handleClose, addressList, editAddress }) => {
                 label="Make Default"
                 name="is_default"
                 value={values.is_default}
-                onChange={handleChange}
+                checked={values.is_default}
+                onChange={(e) => setFieldValue("is_default", e.target.checked)}
                 className="text-body-tertiary"
               />
             </Col>

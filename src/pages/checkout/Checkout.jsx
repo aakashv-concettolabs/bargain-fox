@@ -47,6 +47,7 @@ const Checkout = () => {
   const [show, setShow] = useState(false);
   const [addresses, setAddresses] = useState([]);
   const [editAddress, setEditAddress] = useState();
+  const [checkedAddress, setCheckedAddress] = useState();
   const token = localStorage.getItem("token");
   console.log("addresses", addresses);
   const navigate = useNavigate();
@@ -90,7 +91,7 @@ const Checkout = () => {
   };
 
   const handleContinueToPayment = () => {
-    navigate("/checkout/payment");
+    navigate("/checkout/payment", { state: checkedAddress });
   };
 
   return (
@@ -147,8 +148,8 @@ const Checkout = () => {
                     <Form.Check
                       type="radio"
                       name="address"
-                      // onChange={() => console.log("first", userAddress)}
                       defaultChecked={userAddress.default_address}
+                      onChange={() => setCheckedAddress(userAddress.id)}
                     />
                     <div className=" d-flex flex-column">
                       <h2 className="fw-semibold lead mb-0">

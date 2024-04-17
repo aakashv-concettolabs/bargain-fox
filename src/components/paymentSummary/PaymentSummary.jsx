@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 import "./paymentSummary.scss";
 import { Button, Card, Form, InputGroup } from "react-bootstrap";
 
-const PaymentSummary = ({ cartItem, paymentpage }) => {
+const PaymentSummary = ({ cartItem, paymentpage, placeOrderCall }) => {
+  const handlePayNow = () => {
+    placeOrderCall();
+  };
   return (
     <Card className="rounded-4" id="paymentSummary-main">
       <Card.Body>
@@ -57,7 +60,7 @@ const PaymentSummary = ({ cartItem, paymentpage }) => {
           </p>
         </div>
         {paymentpage ? (
-          <Button className="w-100 rounded-5 text-white" as={Link} to={""}>
+          <Button className="w-100 rounded-5 text-white" onClick={handlePayNow}>
             Pay Now
           </Button>
         ) : (
