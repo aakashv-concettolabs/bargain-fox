@@ -8,7 +8,6 @@ import cart from "../../assets/shopping-cart.png";
 import "./navbar.scss";
 import MobileMenubar from "../mobileMenubar/MobileMenubar";
 import SignRegisterHovermMenu from "../signRegisterHoverMenu/SignRegisterHovermMenu";
-import ModalComponent from "../modal/ModalComponent";
 import AuthContext from "../../context/authContext/AuthContext";
 import Searchbar from "../searchbar/Searchbar";
 import { useNavigate } from "react-router-dom";
@@ -17,17 +16,12 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const { userDetails } = useContext(AuthContext);
   const userName = userDetails.name;
   const noOfProduct = useSelector((state) => state.cart.cartCount);
   const [cartCount, setCartCount] = useState(noOfProduct > 0 ? noOfProduct : 0);
   // console.log("user detail", userDetails);
-
-  const handleClose = () => {
-    setShow(false);
-  };
 
   const cartItemCount = async () => {
     if (userName) {
@@ -61,8 +55,6 @@ const Header = () => {
 
   return (
     <header className="header-main mt-0">
-      {show && <ModalComponent show={show} handleClose={handleClose} />}
-
       <Container fluid>
         <Row className="justify-content-center align-items-center">
           <Col xs={6} md={4} className="ps-md-5">

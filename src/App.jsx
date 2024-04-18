@@ -11,6 +11,7 @@ import { AuthProvider } from "./context/authContext/AuthContext";
 import { Provider } from "react-redux";
 import { store } from "./reducers/Store";
 import Payment from "./pages/payment/Payment";
+import OrderList from "./pages/orderList/OrderList";
 
 function App() {
   const router = createBrowserRouter([
@@ -54,6 +55,10 @@ function App() {
         {
           path: "wishlist",
           element: <Wishlist />,
+        },
+        {
+          path: "orders",
+          element: <OrderList />,
         },
       ],
     },

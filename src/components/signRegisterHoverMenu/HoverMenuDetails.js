@@ -2,7 +2,7 @@ export const HoverMenuDetails = [
   {
     id: 1,
     linkto: "Your Profile",
-    linkUrl: "/",
+    linkUrl: "/profile",
   },
   {
     id: 2,
@@ -12,7 +12,7 @@ export const HoverMenuDetails = [
   {
     id: 3,
     linkto: "Your Orders",
-    linkUrl: "/",
+    linkUrl: "/orders",
   },
   {
     id: 4,

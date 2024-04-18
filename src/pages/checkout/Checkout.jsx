@@ -50,6 +50,8 @@ const Checkout = () => {
   const [checkedAddress, setCheckedAddress] = useState();
   const token = localStorage.getItem("token");
   console.log("addresses", addresses);
+  console.log("checked addresses", checkedAddress);
+
   const navigate = useNavigate();
 
   const userStoredAddressCall = async () => {
@@ -62,6 +64,11 @@ const Checkout = () => {
         });
         if (storedAddressResponse.status == 200) {
           setAddresses(storedAddressResponse.data.result);
+          setCheckedAddress(
+            storedAddressResponse.data.result.find(
+              (defaultaddress) => defaultaddress.default_address === 1
+            ).id
+          );
         }
       } catch (error) {
         console.log("store delivery address error", error);
@@ -92,6 +99,10 @@ const Checkout = () => {
 
   const handleContinueToPayment = () => {
     navigate("/checkout/payment", { state: checkedAddress });
+  };
+
+  const handleAddressChange = (event) => {
+    setCheckedAddress(event.target.value);
   };
 
   return (
@@ -148,8 +159,9 @@ const Checkout = () => {
                     <Form.Check
                       type="radio"
                       name="address"
+                      value={userAddress.id}
                       defaultChecked={userAddress.default_address}
-                      onChange={() => setCheckedAddress(userAddress.id)}
+                      onChange={handleAddressChange}
                     />
                     <div className=" d-flex flex-column">
                       <h2 className="fw-semibold lead mb-0">

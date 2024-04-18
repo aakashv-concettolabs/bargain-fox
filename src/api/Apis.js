@@ -17,3 +17,4 @@ export const removeFromCartApi = `${baseUrl}/remove-from-cart`;
 export const storedAddress = `${baseUrl}/get-delivery-address`;
 export const newAddress = `${baseUrl}/store-delivery-address`;
 export const placeOrderApi = `${baseUrl}/place-order`;
+export const emptyCart = `${baseUrl}/empty-cart`;

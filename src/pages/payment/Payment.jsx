@@ -1,4 +1,4 @@
-import { Col, Container, FormCheck, Image, Row } from "react-bootstrap";
+import { Col, Container, FormCheck, Image, Row, Form } from "react-bootstrap";
 import "./payment.scss";
 import PaymentSummary from "../../components/paymentSummary/PaymentSummary";
 import { Link, useLocation } from "react-router-dom";
@@ -8,13 +8,47 @@ import mastercard from "../../assets/mastercard.png";
 import visa from "../../assets/visa.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { myCartApi, placeOrderApi, storedAddress } from "../../api/Apis";
+import {
+  emptyCart,
+  myCartApi,
+  placeOrderApi,
+  storedAddress,
+} from "../../api/Apis";
 import PaymentCardForm from "../../components/paymentCardForm/PaymentCardForm";
 import SavedCreditDebitCards from "../../components/savedCreditDebitCards/SavedCreditDebitCards";
-import BillingAddressForm from "../../components/billingAddressForm/BillingAddressForm";
+import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import { addressSchema } from "../../schema";
+
+const initialValueAddress = {
+  country: "India",
+  fullName: "",
+  address: "",
+  address2: "",
+  city: "",
+  state: "",
+  postcode: "",
+  number: "",
+};
+
+const countryNames = [
+  {
+    id: 1,
+    countryname: "India",
+  },
+  {
+    id: 2,
+    countryname: "Indonesia",
+  },
+  {
+    id: 3,
+    countryname: "China",
+  },
+];
 
 const Payment = () => {
   const location = useLocation();
+  const address_Id = location.state;
   const paymentpage = true;
   const token = localStorage.getItem("token");
   const [selectedDeliveryAddress, setSelectedDeliveryAddress] = useState();
@@ -22,7 +56,16 @@ const Payment = () => {
   const [deliveryType, setDeliveryType] = useState("standard");
   const [paymentMethod, setPaymentMethod] = useState("debitCreditCard");
   const [addressType, setAddressType] = useState("sameAddress");
-  console.log("selected delivery address", selectedDeliveryAddress);
+  const [formData, setFormData] = useState();
+
+  const { values, errors, touched, handleBlur, handleSubmit, handleChange } =
+    useFormik({
+      initialValues: initialValueAddress,
+      validationSchema: addressSchema,
+      onSubmit: (values) => {
+        setFormData(values);
+      },
+    });
 
   const userStoredAddressCall = async () => {
     if (token) {
@@ -34,9 +77,10 @@ const Payment = () => {
         });
         if (storedAddressResponse.status == 200) {
           const result = storedAddressResponse.data.result;
-          setSelectedDeliveryAddress(
-            result.find((address) => address.id === location.state)
+          const deliveryAddress = result.find(
+            (address) => address.id == address_Id
           );
+          setSelectedDeliveryAddress(deliveryAddress);
         }
       } catch (error) {
         console.log("selected delivery address error", error);
@@ -78,10 +122,22 @@ const Payment = () => {
     };
 
     const billingAddressData =
-      addressType === "sameAddress" ? shippingAddressData : null;
+      addressType == "sameAddress"
+        ? shippingAddressData
+        : {
+            country: formData?.country,
+            full_name: formData?.fullName,
+            address: formData?.address,
+            address2: formData?.address2,
+            city: formData?.city,
+            state: formData?.state,
+            mobile: formData?.number.toString(),
+            postcode: formData?.postcode.toString(),
+          };
+
     const ApiData = {
       address_id: selectedDeliveryAddress?.id,
-      delivery_type_id: deliveryType === "standard" ? "1" : "0",
+      delivery_type_id: deliveryType === "standard" ? "1" : "2",
       shipping_address: shippingAddressData,
       billing_address: billingAddressData,
     };
@@ -94,9 +150,28 @@ const Payment = () => {
         });
         if (placeOrderResponse.status == 200) {
           console.log("place order response", placeOrderResponse);
+          toast.success(placeOrderResponse.data.message);
+          emptyCartCall();
         }
       } catch (error) {
         console.log("place order api error", error);
+      }
+    }
+  };
+
+  const emptyCartCall = async () => {
+    if (token) {
+      try {
+        const emptyCartResponse = await axios.get(emptyCart, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (emptyCartResponse.status == 200) {
+          console.log("empty cart response", emptyCartResponse);
+        }
+      } catch (error) {
+        console.log("empty cart error", error);
       }
     }
   };
@@ -279,7 +354,224 @@ const Payment = () => {
                     />
                     <label>Use Different Address</label>
                   </div>
-                  {addressType === "differentAddress" && <BillingAddressForm />}
+                  {addressType === "differentAddress" && (
+                    <Row>
+                      <Col
+                        lg={8}
+                        className="offset-lg-1 paymentCardForm-Main mt-3 p-4"
+                      >
+                        <Form onSubmit={handleSubmit}>
+                          <Row>
+                            <Col xs={12} sm={6}>
+                              <Form.Group
+                                className="mb-3"
+                                controlId="exampleForm.ControlInput1"
+                              >
+                                <Form.Label>
+                                  Country/Region
+                                  <span className="text-primary">*</span>
+                                </Form.Label>
+                                <Form.Select
+                                  className="rounded-5 shadow-none"
+                                  name="country"
+                                  value={values.country}
+                                  onChange={handleChange}
+                                >
+                                  {countryNames.map((countryName) => (
+                                    <option
+                                      key={countryName.id}
+                                      value={countryName.countryname}
+                                    >
+                                      {countryName.countryname}
+                                    </option>
+                                  ))}
+                                </Form.Select>
+                              </Form.Group>
+                            </Col>
+                            <Col xs={12} sm={6}>
+                              <Form.Group
+                                className="mb-3"
+                                controlId="exampleForm.ControlInput1"
+                              >
+                                <Form.Label>
+                                  Full Name
+                                  <span className="text-primary">*</span>
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  placeholder=""
+                                  className="shadow-none rounded-5"
+                                  name="fullName"
+                                  value={values.fullName}
+                                  onChange={handleChange}
+                                  onBlur={handleBlur}
+                                />
+                                {errors.fullName && touched.fullName ? (
+                                  <p className="text-danger small m-1">
+                                    {errors.fullName}
+                                  </p>
+                                ) : null}
+                              </Form.Group>
+                            </Col>
+                          </Row>
+
+                          <Row>
+                            <Col xs={12} sm={6}>
+                              <Form.Group
+                                className="mb-3"
+                                controlId="exampleForm.ControlInput1"
+                              >
+                                <Form.Label>
+                                  Address<span className="text-primary">*</span>
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  placeholder=""
+                                  className="shadow-none rounded-5"
+                                  name="address"
+                                  value={values.address}
+                                  onChange={handleChange}
+                                  onBlur={handleBlur}
+                                />
+                                {errors.address && touched.address ? (
+                                  <p className="text-danger small m-1">
+                                    {errors.address}
+                                  </p>
+                                ) : null}
+                              </Form.Group>
+                            </Col>
+                            <Col xs={12} sm={6}>
+                              <Form.Group
+                                className="mb-3"
+                                controlId="exampleForm.ControlInput1"
+                              >
+                                <Form.Label>
+                                  Appartment,Suit,etc
+                                  <span className="text-primary">*</span>
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  placeholder=""
+                                  className="shadow-none rounded-5"
+                                  name="address2"
+                                  value={values.address2}
+                                  onChange={handleChange}
+                                  onBlur={handleBlur}
+                                />
+                                {errors.address2 && touched.address2 ? (
+                                  <p className="text-danger small m-1">
+                                    {errors.address2}
+                                  </p>
+                                ) : null}
+                              </Form.Group>
+                            </Col>
+                          </Row>
+
+                          <Row>
+                            <Col xs={12} sm={6}>
+                              <Form.Group
+                                className="mb-3"
+                                controlId="exampleForm.ControlInput1"
+                              >
+                                <Form.Label>
+                                  City<span className="text-primary">*</span>
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  placeholder=""
+                                  className="shadow-none rounded-5"
+                                  name="city"
+                                  value={values.city}
+                                  onChange={handleChange}
+                                  onBlur={handleBlur}
+                                />
+                                {errors.city && touched.city ? (
+                                  <p className="text-danger small m-1">
+                                    {errors.city}
+                                  </p>
+                                ) : null}
+                              </Form.Group>
+                            </Col>
+                            <Col xs={12} sm={6}>
+                              <Form.Group
+                                className="mb-3"
+                                controlId="exampleForm.ControlInput1"
+                              >
+                                <Form.Label>
+                                  State<span className="text-primary">*</span>
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  placeholder=""
+                                  className="shadow-none rounded-5"
+                                  name="state"
+                                  value={values.state}
+                                  onChange={handleChange}
+                                  onBlur={handleBlur}
+                                />
+                                {errors.state && touched.state ? (
+                                  <p className="text-danger small m-1">
+                                    {errors.state}
+                                  </p>
+                                ) : null}
+                              </Form.Group>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col xs={12} sm={6}>
+                              <Form.Group
+                                className="mb-3"
+                                controlId="exampleForm.ControlInput1"
+                              >
+                                <Form.Label>
+                                  PostCode
+                                  <span className="text-primary">*</span>
+                                </Form.Label>
+                                <Form.Control
+                                  type="number"
+                                  placeholder=""
+                                  className="shadow-none rounded-5"
+                                  name="postcode"
+                                  value={values.postcode}
+                                  onChange={handleChange}
+                                  onBlur={handleBlur}
+                                />
+                                {errors.postcode && touched.postcode ? (
+                                  <p className="text-danger small m-1">
+                                    {errors.postcode}
+                                  </p>
+                                ) : null}
+                              </Form.Group>
+                            </Col>
+                            <Col xs={12} sm={6}>
+                              <Form.Group
+                                className="mb-3"
+                                controlId="exampleForm.ControlInput1"
+                              >
+                                <Form.Label>
+                                  Phone<span className="text-primary">*</span>
+                                </Form.Label>
+                                <Form.Control
+                                  type="number"
+                                  placeholder=""
+                                  className="shadow-none rounded-5"
+                                  name="number"
+                                  value={values.number}
+                                  onChange={handleChange}
+                                  onBlur={handleBlur}
+                                />
+                                {errors.number && touched.number ? (
+                                  <p className="text-danger small m-1 ">
+                                    {errors.number}
+                                  </p>
+                                ) : null}
+                              </Form.Group>
+                            </Col>
+                          </Row>
+                        </Form>
+                      </Col>
+                    </Row>
+                  )}
                 </div>
               </Col>
             </Row>
@@ -290,6 +582,7 @@ const Payment = () => {
               paymentpage={paymentpage}
               cartItem={deliveryItem}
               placeOrderCall={placeOrderCall}
+              handleBillingForm={handleSubmit}
             />
           </Col>
         </Row>

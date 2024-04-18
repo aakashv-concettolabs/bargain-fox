@@ -1,9 +1,9 @@
 import { Col, Form, Row } from "react-bootstrap";
 import { useFormik } from "formik";
 import { addressSchema } from "../../schema";
+import { useEffect, useState } from "react";
 
 const initialValueAddress = {
-  id: "",
   country: "India",
   fullName: "",
   address: "",
@@ -29,21 +29,24 @@ const countryNames = [
   },
 ];
 
-const BillingAddressForm = () => {
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+const BillingAddressForm = ({ handleBillingForm }) => {
+  const { values, errors, touched, handleBlur, handleSubmit, handleChange } =
     useFormik({
       initialValues: initialValueAddress,
       validationSchema: addressSchema,
-      onSubmit: (values, action) => {
-        console.log("values", values);
-        // action.resetForm();
+      onSubmit: (values) => {
+        handleBillingForm(values);
       },
     });
+
+  useEffect(() => {
+    handleSubmit();
+  }, [values]);
 
   return (
     <Row>
       <Col lg={8} className="offset-lg-1 paymentCardForm-Main mt-3 p-4">
-        <Form noValidate onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <Row>
             <Col xs={12} sm={6}>
               <Form.Group
