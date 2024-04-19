@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import "./signRegisterHoverMenuMain.scss";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HoverMenuDetails } from "./HoverMenuDetails";
 import ModalComponent from "../modal/ModalComponent";
 import axios from "axios";
@@ -10,6 +10,7 @@ import AuthContext from "../../context/authContext/AuthContext";
 
 const SignRegisterHovermMenu = () => {
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
   const { userDetails, setUserDetails, initialvalues } =
     useContext(AuthContext);
 
@@ -27,9 +28,18 @@ const SignRegisterHovermMenu = () => {
       if (response.status === 200) {
         setUserDetails(initialvalues);
         localStorage.clear();
+        navigate("/");
       }
     } catch (error) {
       console.log("logOut error", error);
+    }
+  };
+
+  const handleLink = (link) => {
+    if (localStorage.getItem("token")) {
+      navigate(link);
+    } else {
+      setShow(true);
     }
   };
 
@@ -54,10 +64,12 @@ const SignRegisterHovermMenu = () => {
       )}
       <ul className="p-0">
         {HoverMenuDetails.map((HoverMenuDetail) => (
-          <li className="py-2 px-3" key={HoverMenuDetail.id}>
-            <Link className="text-decoration-none" to={HoverMenuDetail.linkUrl}>
-              {HoverMenuDetail.linkto}
-            </Link>
+          <li
+            className="py-2 px-3"
+            key={HoverMenuDetail.id}
+            onClick={() => handleLink(HoverMenuDetail.linkUrl)}
+          >
+            {HoverMenuDetail.linkto}
           </li>
         ))}
       </ul>

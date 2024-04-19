@@ -17,6 +17,7 @@ const initialValueLogin = {
 const Login = ({ handleContinue }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
   const loginFormik = useFormik({
     initialValues: initialValueLogin,
     validationSchema: logInSchema,

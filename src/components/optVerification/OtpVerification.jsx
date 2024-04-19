@@ -90,6 +90,9 @@ const OtpVerification = ({ handleVerifyNew, handleVerifyOld }) => {
         const userResult = response.data.result;
         setUserDetails(userResult);
         localStorage.setItem("token", userResult.token);
+        localStorage.setItem("name", userResult.name);
+        localStorage.setItem("email", userResult.email);
+        localStorage.setItem("mobile", userResult.mobile);
         if (userResult.is_new_user) {
           handleVerifyNew();
         } else {

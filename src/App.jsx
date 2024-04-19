@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 import { store } from "./reducers/Store";
 import Payment from "./pages/payment/Payment";
 import OrderList from "./pages/orderList/OrderList";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   const router = createBrowserRouter([
@@ -59,6 +60,10 @@ function App() {
         {
           path: "orders",
           element: <OrderList />,
+        },
+        {
+          path: "profile",
+          element: <Profile />,
         },
       ],
     },

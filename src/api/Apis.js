@@ -18,3 +18,6 @@ export const storedAddress = `${baseUrl}/get-delivery-address`;
 export const newAddress = `${baseUrl}/store-delivery-address`;
 export const placeOrderApi = `${baseUrl}/place-order`;
 export const emptyCart = `${baseUrl}/empty-cart`;
+export const orderlist = `${baseUrl}/my-order-list`;
+export const updateProfile = `${baseUrl}/update-profile`;
+export const deleteUser = `${baseUrl}/user-delete`;

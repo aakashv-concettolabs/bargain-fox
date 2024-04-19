@@ -18,16 +18,11 @@ $themeColor: #0063ff;
           font-size: 15px;
           text-decoration: none;
           border-top: 1px solid #F2F2F8;
-          a{
-              color: #292D32;
-          }
+          color: #292d32;
           &:hover{
             background-color: #292d32;
             transition: all 0.2s ease-in-out;
-            a{
-            transition: all 0.2s ease-in-out;
             color: white;
-            }
           }
         }
       }

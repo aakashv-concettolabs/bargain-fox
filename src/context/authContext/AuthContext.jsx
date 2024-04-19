@@ -52,17 +52,20 @@ const initialvalues = {
 
 export const AuthProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(initialvalues);
+  const userName = localStorage.getItem("name");
 
   const currentUserDetail = async () => {
-    try {
-      let response = await axios.get(userDetail, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      setUserDetails(response.data.result);
-    } catch (error) {
-      console.log("current user error", error);
+    if (localStorage.getItem("token")) {
+      try {
+        let response = await axios.get(userDetail, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setUserDetails(response.data.result);
+      } catch (error) {
+        console.log("current user error", error);
+      }
     }
   };
 
@@ -71,7 +74,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       currentUserDetail();
     }
-  }, []);
+  }, [userName]);
 
   return (
     <AuthContext.Provider

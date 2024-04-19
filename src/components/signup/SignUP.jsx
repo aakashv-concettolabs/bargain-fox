@@ -29,7 +29,11 @@ const SignUP = ({ handleClose }) => {
         try {
           const response = await axios.post(registerUser, values);
           const data = await response.data.result;
+          console.log("first", data);
           setUserDetails(data);
+          localStorage.setItem("name", data.name);
+          localStorage.setItem("email", data.email);
+          localStorage.setItem("mobile", data.mobile);
           localStorage.setItem("token", data.token);
           action.resetForm();
           handleClose();
