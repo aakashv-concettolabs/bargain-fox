@@ -2,7 +2,7 @@ import "react-bootstrap-typeahead/css/Typeahead.css";
 import "./searchbar.scss";
 import axios from "axios";
 import searchIcon from "../../assets/search-normal.png";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import { productlist } from "../../api/Apis";
 import { Button, Image } from "react-bootstrap";
@@ -37,12 +37,13 @@ const Searchbar = () => {
       const query = typeaheadRef.current.getInput().value;
 
       if (selectedProduct) {
-        console.log("Selected Product:", selectedProduct);
         navigate(
           `/productdetail/${selectedProduct.slug}/${selectedProduct.unique_id}`
         );
       } else if (query) {
         navigate(`/search-results?searchText=${query}`);
+        typeaheadRef.current.toggleMenu(false);
+        event.target.blur();
       }
     }
   };
@@ -59,6 +60,12 @@ const Searchbar = () => {
     navigate(`/productDetail/${option.slug}/${option.unique_id}`);
   };
 
+  useEffect(() => {
+    if (window.location.pathname === "/") {
+      typeaheadRef.current.clear(true);
+    }
+  }, [window.location.pathname]);
+  
   return (
     <div className="searchbar-main d-flex align-items-center w-100">
       <AsyncTypeahead

@@ -21,7 +21,7 @@ import { toast } from "react-toastify";
 import ProductColor from "../../components/productColorSize/ProductColor.jsx";
 import ModalComponent from "../../components/modal/ModalComponent.jsx";
 import { updateCartCount } from "../../reducers/cartSlice.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const shareOptions = [
   {
@@ -102,6 +102,7 @@ const ProductDetails = () => {
   const params = new URLSearchParams(location.search);
   const urlSku = params.get("sku");
   const [productDetail, setProductDetail] = useState(initialProductDetail);
+  const cartCount = useSelector((state) => state.cart.cartCount);
   const [productCounter, setProductCounter] = useState(1);
   const [isaddCart, setIsaddCart] = useState(false);
   const [chooseSize, setChooseSize] = useState();
@@ -112,7 +113,6 @@ const ProductDetails = () => {
   const handleClose = () => {
     setShow(false);
   };
-  console.log("product detail", productDetail);
 
   const handlePlus = () => {
     if (productCounter < 40) {
@@ -319,6 +319,7 @@ const ProductDetails = () => {
       if (addToCartResponse.status === 200) {
         toast.success(addToCartResponse.data.message);
         setIsaddCart(true);
+        dispatch(updateCartCount(cartCount + 1));
       }
     } catch (error) {
       console.log("add to cart error", error);
@@ -331,8 +332,11 @@ const ProductDetails = () => {
       if (productDetail.size.length > 0 && !chooseSize) {
         toast.warning("Please select size");
       } else {
-        addToCartCall();
-        dispatch(updateCartCount(productCounter));
+        if (productCounter > 0) {
+          addToCartCall();
+        } else {
+          toast.warning("Please add at least 1 quantity");
+        }
       }
     } else {
       setShow(true);

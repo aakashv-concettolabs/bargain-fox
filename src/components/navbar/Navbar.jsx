@@ -13,8 +13,9 @@ import Searchbar from "../searchbar/Searchbar";
 import { useNavigate } from "react-router-dom";
 import { cartItemCountApi } from "../../api/Apis";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ModalComponent from "../modal/ModalComponent";
+import { updateCartCount } from "../../reducers/cartSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Header = () => {
   const userName = userDetails.name;
   const noOfProduct = useSelector((state) => state.cart.cartCount);
   const [cartCount, setCartCount] = useState(noOfProduct > 0 ? noOfProduct : 0);
+  const dispatch = useDispatch();
 
   const handleClose = () => {
     setShow(false);
@@ -39,14 +41,19 @@ const Header = () => {
 
         if (itemCountResponse.status === 200) {
           setCartCount(itemCountResponse.data.result.cart_item_count);
+          dispatch(
+            updateCartCount(itemCountResponse.data.result.cart_item_count)
+          );
         }
       } catch (error) {
         console.log("item count error", error);
       }
     }
   };
+  console.log("cartItemCount1", noOfProduct);
 
   useEffect(() => {
+    console.log("cartItemCount2", noOfProduct);
     cartItemCount();
   }, [userName, noOfProduct]);
 

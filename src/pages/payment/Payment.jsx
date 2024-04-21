@@ -1,4 +1,4 @@
-import { Col, Container, FormCheck, Image, Row, Form } from "react-bootstrap";
+  import { Col, Container, FormCheck, Image, Row, Form } from "react-bootstrap";
 import "./payment.scss";
 import PaymentSummary from "../../components/paymentSummary/PaymentSummary";
 import { Link, useLocation } from "react-router-dom";
@@ -19,6 +19,7 @@ import SavedCreditDebitCards from "../../components/savedCreditDebitCards/SavedC
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { addressSchema } from "../../schema";
+import BillingAddressForm from "../../components/billingAddressForm/BillingAddressForm";
 
 const initialValueAddress = {
   country: "India",
@@ -56,7 +57,7 @@ const Payment = () => {
   const [deliveryType, setDeliveryType] = useState("standard");
   const [paymentMethod, setPaymentMethod] = useState("debitCreditCard");
   const [addressType, setAddressType] = useState("sameAddress");
-  const [formData, setFormData] = useState();
+  const [formData, setFormData] = useState(initialValueAddress);
 
   const { values, errors, touched, handleBlur, handleSubmit, handleChange } =
     useFormik({
@@ -193,11 +194,19 @@ const Payment = () => {
     setAddressType(event.target.value);
   };
 
+  const handleAddressDetails = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   return (
     <div className="px-sm-4 py-4 py-lg-0">
       <Container fluid className="paymentMain">
         <Row>
           <Col sm={12} md={8}>
+          <div className="overflow-y-scroll overflow-x-hidden vh-100">
             <Row>
               <h2 className="paymentHeading pb-2">Payment</h2>
               <Col xl={6}>
@@ -338,243 +347,34 @@ const Payment = () => {
                     <FormCheck
                       type="radio"
                       name="billing-address"
+                      id="sameAddress"
                       value="sameAddress"
                       onChange={handleAddressType}
                       checked={addressType === "sameAddress"}
                     />
-                    <label>Same as Delivery Address</label>
+                    <label htmlFor="sameAddress">Same as Delivery Address</label>
                   </div>
                   <div className="d-flex gap-2 align-items-center">
                     <FormCheck
                       type="radio"
                       name="billing-address"
+                      id="differentAddress"
                       value="differentAddress"
                       checked={addressType === "differentAddress"}
                       onChange={handleAddressType}
                     />
-                    <label>Use Different Address</label>
+                    <label htmlFor="differentAddress">Use Different Address</label>
                   </div>
-                  {addressType === "differentAddress" && (
-                    <Row>
-                      <Col
-                        lg={8}
-                        className="offset-lg-1 paymentCardForm-Main mt-3 p-4"
-                      >
-                        <Form onSubmit={handleSubmit}>
-                          <Row>
-                            <Col xs={12} sm={6}>
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlInput1"
-                              >
-                                <Form.Label>
-                                  Country/Region
-                                  <span className="text-primary">*</span>
-                                </Form.Label>
-                                <Form.Select
-                                  className="rounded-5 shadow-none"
-                                  name="country"
-                                  value={values.country}
-                                  onChange={handleChange}
-                                >
-                                  {countryNames.map((countryName) => (
-                                    <option
-                                      key={countryName.id}
-                                      value={countryName.countryname}
-                                    >
-                                      {countryName.countryname}
-                                    </option>
-                                  ))}
-                                </Form.Select>
-                              </Form.Group>
-                            </Col>
-                            <Col xs={12} sm={6}>
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlInput1"
-                              >
-                                <Form.Label>
-                                  Full Name
-                                  <span className="text-primary">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  placeholder=""
-                                  className="shadow-none rounded-5"
-                                  name="fullName"
-                                  value={values.fullName}
-                                  onChange={handleChange}
-                                  onBlur={handleBlur}
-                                />
-                                {errors.fullName && touched.fullName ? (
-                                  <p className="text-danger small m-1">
-                                    {errors.fullName}
-                                  </p>
-                                ) : null}
-                              </Form.Group>
-                            </Col>
-                          </Row>
-
-                          <Row>
-                            <Col xs={12} sm={6}>
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlInput1"
-                              >
-                                <Form.Label>
-                                  Address<span className="text-primary">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  placeholder=""
-                                  className="shadow-none rounded-5"
-                                  name="address"
-                                  value={values.address}
-                                  onChange={handleChange}
-                                  onBlur={handleBlur}
-                                />
-                                {errors.address && touched.address ? (
-                                  <p className="text-danger small m-1">
-                                    {errors.address}
-                                  </p>
-                                ) : null}
-                              </Form.Group>
-                            </Col>
-                            <Col xs={12} sm={6}>
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlInput1"
-                              >
-                                <Form.Label>
-                                  Appartment,Suit,etc
-                                  <span className="text-primary">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  placeholder=""
-                                  className="shadow-none rounded-5"
-                                  name="address2"
-                                  value={values.address2}
-                                  onChange={handleChange}
-                                  onBlur={handleBlur}
-                                />
-                                {errors.address2 && touched.address2 ? (
-                                  <p className="text-danger small m-1">
-                                    {errors.address2}
-                                  </p>
-                                ) : null}
-                              </Form.Group>
-                            </Col>
-                          </Row>
-
-                          <Row>
-                            <Col xs={12} sm={6}>
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlInput1"
-                              >
-                                <Form.Label>
-                                  City<span className="text-primary">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  placeholder=""
-                                  className="shadow-none rounded-5"
-                                  name="city"
-                                  value={values.city}
-                                  onChange={handleChange}
-                                  onBlur={handleBlur}
-                                />
-                                {errors.city && touched.city ? (
-                                  <p className="text-danger small m-1">
-                                    {errors.city}
-                                  </p>
-                                ) : null}
-                              </Form.Group>
-                            </Col>
-                            <Col xs={12} sm={6}>
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlInput1"
-                              >
-                                <Form.Label>
-                                  State<span className="text-primary">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                  type="text"
-                                  placeholder=""
-                                  className="shadow-none rounded-5"
-                                  name="state"
-                                  value={values.state}
-                                  onChange={handleChange}
-                                  onBlur={handleBlur}
-                                />
-                                {errors.state && touched.state ? (
-                                  <p className="text-danger small m-1">
-                                    {errors.state}
-                                  </p>
-                                ) : null}
-                              </Form.Group>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col xs={12} sm={6}>
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlInput1"
-                              >
-                                <Form.Label>
-                                  PostCode
-                                  <span className="text-primary">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                  type="number"
-                                  placeholder=""
-                                  className="shadow-none rounded-5"
-                                  name="postcode"
-                                  value={values.postcode}
-                                  onChange={handleChange}
-                                  onBlur={handleBlur}
-                                />
-                                {errors.postcode && touched.postcode ? (
-                                  <p className="text-danger small m-1">
-                                    {errors.postcode}
-                                  </p>
-                                ) : null}
-                              </Form.Group>
-                            </Col>
-                            <Col xs={12} sm={6}>
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlInput1"
-                              >
-                                <Form.Label>
-                                  Phone<span className="text-primary">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                  type="number"
-                                  placeholder=""
-                                  className="shadow-none rounded-5"
-                                  name="number"
-                                  value={values.number}
-                                  onChange={handleChange}
-                                  onBlur={handleBlur}
-                                />
-                                {errors.number && touched.number ? (
-                                  <p className="text-danger small m-1 ">
-                                    {errors.number}
-                                  </p>
-                                ) : null}
-                              </Form.Group>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </Col>
-                    </Row>
-                  )}
+                  {addressType === "differentAddress" && 
+                    <BillingAddressForm
+                            handleBillingForm={handleAddressDetails}
+                            formData={formData} />
+                   
+                  }
                 </div>
               </Col>
             </Row>
+            </div>
           </Col>
 
           <Col sm={12} md={4} className="mt-4 mt-md-0">
