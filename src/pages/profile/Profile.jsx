@@ -1,17 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import axios from "axios";
-import { deleteUser, updateProfile } from "../../api/Apis";
+import { updateProfile } from "../../api/Apis";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/authContext/AuthContext";
 import DeleteUserWarnModal from "../../components/DeleteUserWarnModal/DeleteUserWarnModal";
-import { useNavigate } from "react-router-dom";
-
-// const ProfileSchema = Yup.object({
-//   name: Yup.string().min(1).max(25).required("Please enter your name"),
-// });
 
 const Profile = () => {
   const [loading, setLoading] = useState(false);
@@ -19,18 +12,12 @@ const Profile = () => {
   const [show, setShow] = useState(false);
   const token = localStorage.getItem("token");
   const { userDetails, setUserDetails } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const [initialValues, setInitialFormValues] = useState({
     name: "",
     mobile: "",
     email: "",
   });
-  // const initialValues = {
-  //   name: localStorage.getItem("name"),
-  //   mobile: localStorage.getItem("mobile"),
-  //   email: localStorage.getItem("email"),
-  // };
 
   useEffect(() => {
     setInitialFormValues(userDetails);
@@ -39,9 +26,8 @@ const Profile = () => {
     }
   }, [userDetails]);
 
-  // console.log("test123", initialValues);
   const updateProfileCall = async () => {
-    setPageLoading(true)
+    setPageLoading(true);
     if (token) {
       try {
         const response = await axios.post(
@@ -56,12 +42,11 @@ const Profile = () => {
           }
         );
         if (response.status == 200) {
-          localStorage.setItem("name", response.data.result.name);
           setUserDetails((prev) => ({
             ...prev,
             name: initialValues.name,
           }));
-          setPageLoading(false)
+          setPageLoading(false);
           toast.success(response.data.message);
           setLoading(false);
         }
@@ -81,22 +66,6 @@ const Profile = () => {
     }
   };
 
-  const deleteUserCall = async () => {
-    if (token) {
-      try {
-        const deleteResponse = await axios.get(deleteUser, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (deleteResponse.status == 200) {
-          console.log("delete user response", deleteResponse);
-        }
-      } catch (error) {
-        console.log("delete user error", error);
-      }
-    }
-  };
   const handleClose = () => {
     setShow(false);
   };
@@ -111,15 +80,6 @@ const Profile = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  // const { values, errors, touched, handleBlur, handleSubmit } = useFormik({
-  //   // initialValues,
-  //   validationSchema: ProfileSchema,
-  //   onSubmit: (values, action) => {
-  //     setLoading(true);
-  //     updateProfileCall();
-  //   },
-  // });
 
   return (
     <Container>
@@ -150,11 +110,7 @@ const Profile = () => {
                   onChange={(e) => {
                     handleChange(e);
                   }}
-                  // onBlur={handleBlur}
                 />
-                {/* {errors.name && touched.name ? (
-                  <p className="text-danger">{errors.name}</p>
-                ) : null} */}
               </Form.Group>
               <Form.Group
                 className="mb-3"

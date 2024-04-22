@@ -35,11 +35,22 @@ const SignRegisterHovermMenu = () => {
     }
   };
 
-  const handleLink = (link) => {
+  const handleLink = async (link) => {
     if (localStorage.getItem("token")) {
       navigate(link);
     } else {
       setShow(true);
+
+      await new Promise((resolve) => {
+        const interval = setInterval(() => {
+          if (!show && localStorage.getItem("token")) {
+            clearInterval(interval);
+            resolve();
+          }
+        }, 100);
+      });
+
+      navigate(link);
     }
   };
 

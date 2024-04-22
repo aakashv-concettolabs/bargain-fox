@@ -52,14 +52,14 @@ const initialvalues = {
 
 export const AuthProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(initialvalues);
-  const userName = localStorage.getItem("name");
+  const token = localStorage.getItem("token");
 
   const currentUserDetail = async () => {
-    if (localStorage.getItem("token")) {
+    if (token) {
       try {
         let response = await axios.get(userDetail, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         setUserDetails(response.data.result);
@@ -70,11 +70,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      currentUserDetail();
-    }
-  }, [userName]);
+    currentUserDetail();
+  }, []);
 
   return (
     <AuthContext.Provider

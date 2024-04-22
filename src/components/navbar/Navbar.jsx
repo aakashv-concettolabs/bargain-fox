@@ -11,11 +11,12 @@ import SignRegisterHovermMenu from "../signRegisterHoverMenu/SignRegisterHovermM
 import AuthContext from "../../context/authContext/AuthContext";
 import Searchbar from "../searchbar/Searchbar";
 import { useNavigate } from "react-router-dom";
-import { cartItemCountApi } from "../../api/Apis";
+import { cartItemCountApi, wishlistCount } from "../../api/Apis";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import ModalComponent from "../modal/ModalComponent";
 import { updateCartCount } from "../../reducers/cartSlice";
+import { updateWishCount } from "../../reducers/wishlistSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Header = () => {
   const { userDetails } = useContext(AuthContext);
   const userName = userDetails.name;
   const noOfProduct = useSelector((state) => state.cart.cartCount);
-  const [cartCount, setCartCount] = useState(noOfProduct > 0 ? noOfProduct : 0);
+  const noOfWishProduct = useSelector((state) => state.wish.wishCount);
   const dispatch = useDispatch();
 
   const handleClose = () => {
@@ -40,7 +41,6 @@ const Header = () => {
         });
 
         if (itemCountResponse.status === 200) {
-          setCartCount(itemCountResponse.data.result.cart_item_count);
           dispatch(
             updateCartCount(itemCountResponse.data.result.cart_item_count)
           );
@@ -50,16 +50,43 @@ const Header = () => {
       }
     }
   };
-  console.log("cartItemCount1", noOfProduct);
+
+  const wishlistCountCall = async () => {
+    if (userName) {
+      try {
+        const wishCountResponse = await axios.get(wishlistCount, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        if (wishCountResponse.status == 200) {
+          console.log("response", wishCountResponse.data.result);
+          dispatch(
+            updateWishCount(wishCountResponse.data.result.wishlistcount)
+          );
+        }
+      } catch (error) {
+        console.log("wishlist count error", error);
+      }
+    }
+  };
 
   useEffect(() => {
-    console.log("cartItemCount2", noOfProduct);
     cartItemCount();
-  }, [userName, noOfProduct]);
+    wishlistCountCall();
+  }, [userName, noOfProduct, noOfWishProduct]);
 
   const handleCartClick = () => {
     if (userName) {
       navigate("/cart");
+    } else {
+      setShow(true);
+    }
+  };
+
+  const handleWishlistClick = () => {
+    if (userName) {
+      navigate("wishlist");
     } else {
       setShow(true);
     }
@@ -88,19 +115,20 @@ const Header = () => {
             </Col>
             <Col xs={6} md={4} className="pe-md-5">
               <Nav className="d-flex gap-2 gap-sm-3 justify-content-end align-items-center">
-                <Nav.Link as={Link} to={"/wishlist"} className="p-0">
+                <Nav.Link onClick={handleWishlistClick} className="p-0">
                   <div className="position-relative ">
                     <img src={wishList} alt="wishlist" className="wishlist" />
                     <span className="wishlistCount small rounded-circle text-white d-flex justify-content-center align-items-center position-absolute">
-                      0
+                      {userName ? noOfWishProduct : 0}
                     </span>
                   </div>
                 </Nav.Link>
+
                 <Nav.Link className="p-0" onClick={handleCartClick}>
                   <div className="position-relative ">
                     <img src={cart} alt="" className="cartimg" />
                     <span className="cartCounter small text-white rounded-circle d-flex justify-content-center align-items-center position-absolute">
-                      {cartCount}
+                      {userName ? noOfProduct : 0}
                     </span>
                   </div>
                 </Nav.Link>

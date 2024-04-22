@@ -18,7 +18,6 @@ const Cart = () => {
   const cartCount = useSelector((state) => state.cart.cartCount);
   const dispatch = useDispatch();
 
-  console.log("cartCount11", cartCount);
   const myCart = async () => {
     try {
       const myCartResponse = await axios.post(
@@ -55,7 +54,7 @@ const Cart = () => {
         );
         if (RemoveFromCartResponse.status === 200) {
           myCart();
-          dispatch(updateCartCount(cartCount-1));
+          dispatch(updateCartCount(cartCount - 1));
           toast.success(RemoveFromCartResponse.data.message);
         }
       } catch (error) {

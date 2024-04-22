@@ -31,9 +31,9 @@ const SignUP = ({ handleClose }) => {
           const data = await response.data.result;
           console.log("first", data);
           setUserDetails(data);
-          localStorage.setItem("name", data.name);
-          localStorage.setItem("email", data.email);
-          localStorage.setItem("mobile", data.mobile);
+          // localStorage.setItem("name", data.name);
+          // localStorage.setItem("email", data.email);
+          // localStorage.setItem("mobile", data.mobile);
           localStorage.setItem("token", data.token);
           action.resetForm();
           handleClose();

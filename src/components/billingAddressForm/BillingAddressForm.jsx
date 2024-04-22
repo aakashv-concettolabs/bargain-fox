@@ -1,7 +1,6 @@
 import { Col, Form, Row } from "react-bootstrap";
 import { useFormik } from "formik";
 import { addressSchema } from "../../schema";
-import { useEffect, useState } from "react";
 
 const initialValueAddress = {
   country: "India",
@@ -30,15 +29,13 @@ const countryNames = [
 ];
 
 const BillingAddressForm = ({ handleBillingForm, formData }) => {
-  const { values, errors, touched, handleBlur, handleSubmit, handleChange } =
-    useFormik({
-      initialValues: initialValueAddress,
-      validationSchema: addressSchema,
-      onSubmit: (values) => {
-        handleBillingForm(values);
-      },
-    });
-
+  const { errors, touched, handleBlur, handleSubmit } = useFormik({
+    initialValues: initialValueAddress,
+    validationSchema: addressSchema,
+    onSubmit: (values) => {
+      handleBillingForm(values);
+    },
+  });
 
   return (
     <Row>
@@ -57,7 +54,9 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   className="rounded-5 shadow-none"
                   name="country"
                   value={formData.country}
-                  onChange={(e)=>{handleBillingForm(e)}}
+                  onChange={(e) => {
+                    handleBillingForm(e);
+                  }}
                 >
                   {countryNames.map((countryName) => (
                     <option
@@ -84,7 +83,9 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   className="shadow-none rounded-5"
                   name="fullName"
                   value={formData.fullName}
-                  onChange={(e)=>{handleBillingForm(e)}}
+                  onChange={(e) => {
+                    handleBillingForm(e);
+                  }}
                   onBlur={handleBlur}
                 />
                 {errors.fullName && touched.fullName ? (
@@ -109,7 +110,9 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   className="shadow-none rounded-5"
                   name="address"
                   value={formData.address}
-                  onChange={(e)=>{handleBillingForm(e)}}
+                  onChange={(e) => {
+                    handleBillingForm(e);
+                  }}
                   onBlur={handleBlur}
                 />
                 {errors.address && touched.address ? (
@@ -131,7 +134,9 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   className="shadow-none rounded-5"
                   name="address2"
                   value={formData.address2}
-                  onChange={(e)=>{handleBillingForm(e)}}
+                  onChange={(e) => {
+                    handleBillingForm(e);
+                  }}
                   onBlur={handleBlur}
                 />
                 {errors.address2 && touched.address2 ? (
@@ -156,7 +161,9 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   className="shadow-none rounded-5"
                   name="city"
                   value={formData.city}
-                  onChange={(e)=>{handleBillingForm(e)}}
+                  onChange={(e) => {
+                    handleBillingForm(e);
+                  }}
                   onBlur={handleBlur}
                 />
                 {errors.city && touched.city ? (
@@ -178,7 +185,9 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   className="shadow-none rounded-5"
                   name="state"
                   value={formData.state}
-                  onChange={(e)=>{handleBillingForm(e)}}
+                  onChange={(e) => {
+                    handleBillingForm(e);
+                  }}
                   onBlur={handleBlur}
                 />
                 {errors.state && touched.state ? (
@@ -202,7 +211,9 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   className="shadow-none rounded-5"
                   name="postcode"
                   value={formData.postcode}
-                  onChange={(e)=>{handleBillingForm(e)}}
+                  onChange={(e) => {
+                    handleBillingForm(e);
+                  }}
                   onBlur={handleBlur}
                 />
                 {errors.postcode && touched.postcode ? (
@@ -224,7 +235,9 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   className="shadow-none rounded-5"
                   name="number"
                   value={formData.number}
-                  onChange={(e)=>{handleBillingForm(e)}}
+                  onChange={(e) => {
+                    handleBillingForm(e);
+                  }}
                   onBlur={handleBlur}
                 />
                 {errors.number && touched.number ? (

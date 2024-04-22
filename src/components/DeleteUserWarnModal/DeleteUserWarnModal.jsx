@@ -1,8 +1,44 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { deleteUser } from "../../api/Apis";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../context/authContext/AuthContext";
 
 const DeleteUserWarnModal = ({ show, handleClose }) => {
-  const handleDelete = () => {};
+  const token = localStorage.getItem("token");
+  const { setUserDetails, initialvalues } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const deleteUserCall = async () => {
+    if (token) {
+      try {
+        const deleteResponse = await axios.get(deleteUser, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (deleteResponse.status == 200) {
+          toast.success(deleteResponse.data.message);
+          handleClose();
+          setUserDetails(initialvalues);
+          localStorage.clear();
+          navigate("/");
+        }
+        if (deleteResponse.status == 422) {
+        }
+      } catch (error) {
+        toast.error(error.response.data.message);
+        console.log("delete user error", error);
+      }
+    }
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    deleteUserCall();
+  };
 
   return (
     <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>

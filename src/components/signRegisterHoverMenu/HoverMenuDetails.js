@@ -27,6 +27,6 @@ export const HoverMenuDetails = [
   {
     id: 6,
     linkto: "Wishlists",
-    linkUrl: "/",
+    linkUrl: "/wishlist",
   },
 ];

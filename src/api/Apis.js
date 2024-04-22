@@ -21,3 +21,6 @@ export const emptyCart = `${baseUrl}/empty-cart`;
 export const orderlist = `${baseUrl}/my-order-list`;
 export const updateProfile = `${baseUrl}/update-profile`;
 export const deleteUser = `${baseUrl}/user-delete`;
+export const userWishlist = `${baseUrl}/wishlist`;
+export const wishlistManager = `${baseUrl}/manage-wishlist`;
+export const wishlistCount = `${baseUrl}/wishlist-count`;

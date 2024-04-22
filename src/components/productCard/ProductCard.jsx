@@ -8,21 +8,59 @@ import ProductPriceTag from "../productPriceTag/ProductPriceTag";
 import { useState } from "react";
 import SpinnerComponent from "../spinner/SpinnerComponent";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { wishlistManager } from "../../api/Apis";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { updateWishCount } from "../../reducers/wishlistSlice";
 
-const ProductCard = ({ btnClass, productData }) => {
+const ProductCard = ({ btnClass, productData, wishlistCall }) => {
+  const token = localStorage.getItem("token");
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const wishCount = useSelector((state) => state.wish.wishCount);
+  const dispatch = useDispatch();
+
+  const manageWishlistCall = async () => {
+    const apiData = {
+      product_id: productData.id,
+      product_variation_id: "",
+      action: btnClass ? "delete" : "add",
+    };
+
+    if (token) {
+      try {
+        const response = await axios.post(wishlistManager, apiData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.status == 200) {
+          if (btnClass) {
+            wishlistCall();
+            toast.success(response.data.message);
+          }
+        }
+      } catch (error) {
+        console.log("manage wishlist error", error);
+        toast.error(error.data.message);
+      }
+    }
+  };
 
   const wishOrDelClick = (e) => {
     e.preventDefault();
-    if (`${btnClass}` === "d-block") {
-      console.log("remove");
+    if (btnClass === "d-block") {
+      dispatch(updateWishCount(wishCount - 1));
+      manageWishlistCall();
     } else {
       setLoading(true);
+
       setTimeout(() => {
         setLoading(false);
         setLiked(!liked);
-        console.log(!liked);
+        dispatch(updateWishCount(wishCount + 1));
+        manageWishlistCall();
       }, 1000);
     }
   };
@@ -86,9 +124,11 @@ const ProductCard = ({ btnClass, productData }) => {
                 .padStart(2, "0")}
             />
           </div>
-          <Button className={`${btnClass} cardbtn w-100 rounded-5 mt-3 mb-2`}>
-            Add to cart
-          </Button>
+          {!btnClass && (
+            <Button className={`${btnClass} cardbtn w-100 rounded-5 mt-3 mb-2`}>
+              Add to cart
+            </Button>
+          )}
         </div>
       </Card>
     </div>
