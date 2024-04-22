@@ -1,4 +1,4 @@
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Col, Container, Image, Row, Spinner } from "react-bootstrap";
 import "./wishlist.scss";
 import ProductCard from "../../components/productCard/ProductCard";
 import noProduct from "../../assets/noorder.svg";
@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 
 const Wishlist = () => {
   const token = localStorage.getItem("token");
+  const [isLoading, setIsLoading] = useState(true);
   const [wishlistData, setWishlistData] = useState();
 
   const wishlistCall = async () => {
@@ -25,6 +26,7 @@ const Wishlist = () => {
         );
         if (response.status == 200) {
           setWishlistData(response.data.result.data);
+          setIsLoading(false);
         }
       } catch (error) {
         console.log("wishlist error", error);
@@ -43,41 +45,47 @@ const Wishlist = () => {
           <h4>Wishlist</h4>
         </Col>
       </Row>
-      <Row>
-        {wishlistData == undefined || wishlistData.length == 0 ? (
-          <Row className="my-5">
-            <Col className="text-center">
-              <div>
-                <Image src={noProduct} />
-              </div>
-              <h2 className="mt-4">No products found</h2>
-              <p className="my-3">
-                Look like you have not added any product in your wishlist yet.
-              </p>
-              <Link className="btn btn-primary rounded-5 px-3 py-2" to={"/"}>
-                Return to Shop
-              </Link>
-            </Col>
-          </Row>
-        ) : (
-          wishlistData.map((wishList) => (
-            <Col
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              key={wishList.id}
-              className="my-3"
-            >
-              <ProductCard
-                productData={wishList}
-                btnClass="d-block"
-                wishlistCall={wishlistCall}
-              />
-            </Col>
-          ))
-        )}
-      </Row>
+      {!isLoading ? (
+        <Row>
+          {wishlistData == undefined || wishlistData.length == 0 ? (
+            <Row className="my-5">
+              <Col className="text-center">
+                <div>
+                  <Image src={noProduct} />
+                </div>
+                <h2 className="mt-4">No products found</h2>
+                <p className="my-3">
+                  Look like you have not added any product in your wishlist yet.
+                </p>
+                <Link className="btn btn-primary rounded-5 px-3 py-2" to={"/"}>
+                  Return to Shop
+                </Link>
+              </Col>
+            </Row>
+          ) : (
+            wishlistData.map((wishList) => (
+              <Col
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                key={wishList.id}
+                className="my-3"
+              >
+                <ProductCard
+                  productData={wishList}
+                  btnClass="d-block"
+                  wishlistCall={wishlistCall}
+                />
+              </Col>
+            ))
+          )}
+        </Row>
+      ) : (
+        <Row className="justify-content-center vh-100">
+          <Spinner />
+        </Row>
+      )}
     </Container>
   );
 };

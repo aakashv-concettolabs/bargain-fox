@@ -38,6 +38,7 @@ const ProductCard = ({ btnClass, productData, wishlistCall }) => {
         if (response.status == 200) {
           if (btnClass) {
             wishlistCall();
+            dispatch(updateWishCount(wishCount - 1));
             toast.success(response.data.message);
           }
         }
@@ -51,7 +52,6 @@ const ProductCard = ({ btnClass, productData, wishlistCall }) => {
   const wishOrDelClick = (e) => {
     e.preventDefault();
     if (btnClass === "d-block") {
-      dispatch(updateWishCount(wishCount - 1));
       manageWishlistCall();
     } else {
       setLoading(true);
@@ -59,8 +59,8 @@ const ProductCard = ({ btnClass, productData, wishlistCall }) => {
       setTimeout(() => {
         setLoading(false);
         setLiked(!liked);
-        dispatch(updateWishCount(wishCount + 1));
         manageWishlistCall();
+        dispatch(updateWishCount(wishCount + 1));
       }, 1000);
     }
   };

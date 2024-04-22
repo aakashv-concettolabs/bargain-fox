@@ -14,9 +14,9 @@ const BreadcrumbComponent = () => {
             Home
           </Link>
         )}
-        {pathnames.map((individualpathname, index) => {
+        {pathnames.slice(0, 2).map((individualpathname, index) => {
           breadCrumbs += `/${individualpathname}`;
-          const isLast = index === pathnames.length - 1;
+          const isLast = index === pathnames.length - 2;
           return isLast ? (
             <p
               key={individualpathname}
@@ -30,7 +30,7 @@ const BreadcrumbComponent = () => {
               to={breadCrumbs}
               key={individualpathname}
             >
-              {individualpathname}
+              {individualpathname.slice(0, 30)}
             </Link>
           );
         })}

@@ -10,15 +10,9 @@ const PaymentSummary = ({
   paymentpage,
   placeOrderCall,
   handleBillingForm,
+  show,
+  handleClose,
 }) => {
-  const [show, setShow] = useState(false);
-  const navigate = useNavigate();
-
-  const handleClose = () => {
-    setShow(false);
-    navigate("/");
-  };
-
   const handlePayNow = () => {
     handleBillingForm();
     placeOrderCall();

@@ -31,7 +31,7 @@ const SavedCreditDebitCards = () => {
                 <Row>
                   <Col>
                     <p className="small mb-0">CARD HOLDER</p>
-                    <strong>John Doe</strong>
+                    <strong>Test Case</strong>
                   </Col>
                   <Col>
                     <p className="small mb-0">EXPIRES</p>

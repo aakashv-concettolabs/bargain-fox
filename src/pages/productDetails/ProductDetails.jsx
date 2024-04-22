@@ -295,7 +295,6 @@ const ProductDetails = () => {
         product_condition: selectSize.product_condition,
         id: selectSize.product_id,
         product_variation_id: selectSize.product_variation_id,
-        product_view: selectSize.product_view,
         stock: selectSize.stock,
         total_review: selectSize.total_review,
         share_url: selectSize.share_url,

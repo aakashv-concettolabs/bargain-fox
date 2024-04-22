@@ -1,17 +1,4 @@
 import { Col, Form, Row } from "react-bootstrap";
-import { useFormik } from "formik";
-import { addressSchema } from "../../schema";
-
-const initialValueAddress = {
-  country: "India",
-  fullName: "",
-  address: "",
-  address2: "",
-  city: "",
-  state: "",
-  postcode: "",
-  number: "",
-};
 
 const countryNames = [
   {
@@ -29,18 +16,10 @@ const countryNames = [
 ];
 
 const BillingAddressForm = ({ handleBillingForm, formData }) => {
-  const { errors, touched, handleBlur, handleSubmit } = useFormik({
-    initialValues: initialValueAddress,
-    validationSchema: addressSchema,
-    onSubmit: (values) => {
-      handleBillingForm(values);
-    },
-  });
-
   return (
     <Row>
       <Col lg={8} className="offset-lg-1 paymentCardForm-Main mt-3 p-4">
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleBillingForm}>
           <Row>
             <Col xs={12} sm={6}>
               <Form.Group
@@ -86,11 +65,7 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   onChange={(e) => {
                     handleBillingForm(e);
                   }}
-                  onBlur={handleBlur}
                 />
-                {errors.fullName && touched.fullName ? (
-                  <p className="text-danger small m-1">{errors.fullName}</p>
-                ) : null}
               </Form.Group>
             </Col>
           </Row>
@@ -113,11 +88,7 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   onChange={(e) => {
                     handleBillingForm(e);
                   }}
-                  onBlur={handleBlur}
                 />
-                {errors.address && touched.address ? (
-                  <p className="text-danger small m-1">{errors.address}</p>
-                ) : null}
               </Form.Group>
             </Col>
             <Col xs={12} sm={6}>
@@ -137,11 +108,7 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   onChange={(e) => {
                     handleBillingForm(e);
                   }}
-                  onBlur={handleBlur}
                 />
-                {errors.address2 && touched.address2 ? (
-                  <p className="text-danger small m-1">{errors.address2}</p>
-                ) : null}
               </Form.Group>
             </Col>
           </Row>
@@ -164,11 +131,7 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   onChange={(e) => {
                     handleBillingForm(e);
                   }}
-                  onBlur={handleBlur}
                 />
-                {errors.city && touched.city ? (
-                  <p className="text-danger small m-1">{errors.city}</p>
-                ) : null}
               </Form.Group>
             </Col>
             <Col xs={12} sm={6}>
@@ -188,11 +151,7 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   onChange={(e) => {
                     handleBillingForm(e);
                   }}
-                  onBlur={handleBlur}
                 />
-                {errors.state && touched.state ? (
-                  <p className="text-danger small m-1">{errors.state}</p>
-                ) : null}
               </Form.Group>
             </Col>
           </Row>
@@ -214,11 +173,7 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   onChange={(e) => {
                     handleBillingForm(e);
                   }}
-                  onBlur={handleBlur}
                 />
-                {errors.postcode && touched.postcode ? (
-                  <p className="text-danger small m-1">{errors.postcode}</p>
-                ) : null}
               </Form.Group>
             </Col>
             <Col xs={12} sm={6}>
@@ -238,11 +193,7 @@ const BillingAddressForm = ({ handleBillingForm, formData }) => {
                   onChange={(e) => {
                     handleBillingForm(e);
                   }}
-                  onBlur={handleBlur}
                 />
-                {errors.number && touched.number ? (
-                  <p className="text-danger small m-1 ">{errors.number}</p>
-                ) : null}
               </Form.Group>
             </Col>
           </Row>

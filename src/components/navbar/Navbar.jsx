@@ -60,7 +60,6 @@ const Header = () => {
           },
         });
         if (wishCountResponse.status == 200) {
-          console.log("response", wishCountResponse.data.result);
           dispatch(
             updateWishCount(wishCountResponse.data.result.wishlistcount)
           );
@@ -74,7 +73,7 @@ const Header = () => {
   useEffect(() => {
     cartItemCount();
     wishlistCountCall();
-  }, [userName, noOfProduct, noOfWishProduct]);
+  }, [userName]);
 
   const handleCartClick = () => {
     if (userName) {

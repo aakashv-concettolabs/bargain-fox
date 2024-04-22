@@ -19,7 +19,7 @@ const ProductList = () => {
   const { category, subcategory, collection } = useParams();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const perpage = 8;
+  const perpage = 12;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -66,10 +66,13 @@ const ProductList = () => {
 
         {!emptyProduct && (
           <Col lg={7} className="d-flex align-items-center">
-            <p className="fw-semibold fs-4">
-              {`Showing ${result.from} - ${result.to} of ${result.total} result `}
-              {params.get("searchText") && `for "${params.get("searchText")}"`}
-            </p>
+            {responseResult.length > 0 && (
+              <p className="fw-semibold fs-4">
+                {`Showing ${result.from} - ${result.to} of ${result.total} result `}
+                {params.get("searchText") &&
+                  `for "${params.get("searchText")}"`}
+              </p>
+            )}
           </Col>
         )}
 

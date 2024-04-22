@@ -1,6 +1,17 @@
 .customerReviewMain{
     .topBorder{
         border-top: 2px solid #f2f2f8;
+        .descriptionContainer {
+            .truncated-description {
+                display: -webkit-box;
+                -webkit-line-clamp: 3; 
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+              }
+              .full-description {
+                display: block; 
+              }
+          }
     }
     .rightBorder{
         border-right: 2px solid #f2f2f8;

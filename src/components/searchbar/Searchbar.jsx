@@ -14,7 +14,7 @@ const Searchbar = () => {
   const [selectedProduct, setselectedProduct] = useState(null);
   const typeaheadRef = useRef();
   const navigate = useNavigate();
-
+  // console.log("selected product", selectedProduct);
   const handleSearch = async (query) => {
     setIsLoading(true);
     try {
@@ -56,6 +56,7 @@ const Searchbar = () => {
       navigate(searchUrl);
     }
   };
+
   const handleProductClick = (option) => {
     navigate(`/productDetail/${option.slug}/${option.unique_id}`);
   };
@@ -65,7 +66,7 @@ const Searchbar = () => {
       typeaheadRef.current.clear(true);
     }
   }, [window.location.pathname]);
-  
+
   return (
     <div className="searchbar-main d-flex align-items-center w-100">
       <AsyncTypeahead

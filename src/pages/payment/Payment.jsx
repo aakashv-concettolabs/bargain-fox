@@ -1,7 +1,7 @@
-import { Col, Container, FormCheck, Image, Row, Form } from "react-bootstrap";
+import { Col, Container, FormCheck, Image, Row } from "react-bootstrap";
 import "./payment.scss";
 import PaymentSummary from "../../components/paymentSummary/PaymentSummary";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ProductPriceTag from "../../components/productPriceTag/ProductPriceTag";
 import american from "../../assets/american.png";
 import mastercard from "../../assets/mastercard.png";
@@ -34,21 +34,6 @@ const initialValueAddress = {
   number: "",
 };
 
-const countryNames = [
-  {
-    id: 1,
-    countryname: "India",
-  },
-  {
-    id: 2,
-    countryname: "Indonesia",
-  },
-  {
-    id: 3,
-    countryname: "China",
-  },
-];
-
 const Payment = () => {
   const location = useLocation();
   const address_Id = location.state;
@@ -61,7 +46,14 @@ const Payment = () => {
   const [addressType, setAddressType] = useState("sameAddress");
   const [formData, setFormData] = useState(initialValueAddress);
   const cartCount = useSelector((state) => state.cart.cartCount);
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    setShow(false);
+    navigate("/");
+  };
 
   const { handleSubmit } = useFormik({
     initialValues: initialValueAddress,
@@ -154,9 +146,11 @@ const Payment = () => {
         });
         if (placeOrderResponse.status == 200) {
           toast.success(placeOrderResponse.data.message);
+          setShow(true);
           emptyCartCall();
         }
       } catch (error) {
+        toast.error(error.response.data.message);
         console.log("place order api error", error);
       }
     }
@@ -392,6 +386,8 @@ const Payment = () => {
               cartItem={deliveryItem}
               placeOrderCall={placeOrderCall}
               handleBillingForm={handleSubmit}
+              show={show}
+              handleClose={handleClose}
             />
           </Col>
         </Row>

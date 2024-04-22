@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import NoAddress from "../../assets/no-address.svg";
 import axios from "axios";
 import { storedAddress } from "../../api/Apis";
+import { toast } from "react-toastify";
 
 const paymentMethod = [
   {
@@ -67,7 +68,7 @@ const Checkout = () => {
           setCheckedAddress(
             storedAddressResponse.data.result.find(
               (defaultaddress) => defaultaddress.default_address === 1
-            ).id
+            )?.id
           );
         }
       } catch (error) {
@@ -98,7 +99,11 @@ const Checkout = () => {
   };
 
   const handleContinueToPayment = () => {
-    navigate("/checkout/payment", { state: checkedAddress });
+    if (checkedAddress) {
+      navigate("/checkout/payment", { state: checkedAddress });
+    } else {
+      toast.warning("please select address");
+    }
   };
 
   const handleAddressChange = (event) => {

@@ -4,9 +4,10 @@ import fourstar from "../../assets/4Star.svg";
 import tick from "../../assets/tick.png";
 import brandlist from "../../assets/brandlist.svg";
 import star from "../../assets/star.svg";
-import { Col, Row, ProgressBar, Image } from "react-bootstrap";
+import { Col, Row, ProgressBar, Image, Button } from "react-bootstrap";
 import { customerComments } from "./customerReviewDetails.js";
 import RatingStar from "../ratingStar/RatingStar.jsx";
+import { useState } from "react";
 
 const rateTheProductData = [star, star, star, star, star];
 
@@ -18,6 +19,12 @@ const CustomerReview = ({
   totalReview,
   ratingCount,
 }) => {
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
   return (
     <>
       <Row className="customerReviewMain mt-3 px-md-4 flex-column-reverse flex-md-row">
@@ -51,7 +58,7 @@ const CustomerReview = ({
         <Col xs={12} md={6} className="topBorder px-3">
           <Row>
             <Col>
-              <p className="fw-bold fs-4 px-3 py-1">HighLight</p>
+              <h2 className="fw-bold fs-4 mt-3 py-1">HighLight</h2>
               <span className="d-flex align-items-center gap-1">
                 <img src={tick} alt="" height="20px" width="20px" />
                 {totalPurchase} Customers bought this item
@@ -60,8 +67,25 @@ const CustomerReview = ({
           </Row>
           <Row>
             <Col className="topBorder mt-3">
-              <p className="fw-bold fs-4 px-3 py-1">Product Description</p>
-              <span>{description}</span>
+              <h2 className="fw-bold fs-4 mt-3 py-1">Product Description</h2>
+              <div className="descriptionContainer">
+                <p
+                  className={
+                    showFullDescription
+                      ? "full-description"
+                      : "truncated-description"
+                  }
+                >
+                  {description}
+                </p>
+              </div>
+              <Button
+                variant="link"
+                onClick={toggleDescription}
+                className="text-decoration-none p-0 m-0 small"
+              >
+                {showFullDescription ? "Read Less" : "Read More"}
+              </Button>
               {specifications &&
                 specifications.map((specification) => (
                   <p className="d-flex gap-2 mt-2" key={specification.id}>
