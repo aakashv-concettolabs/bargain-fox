@@ -11,10 +11,9 @@ import { useNavigate } from "react-router-dom";
 const Searchbar = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
-  const [selectedProduct, setselectedProduct] = useState(null);
   const typeaheadRef = useRef();
   const navigate = useNavigate();
-  // console.log("selected product", selectedProduct);
+
   const handleSearch = async (query) => {
     setIsLoading(true);
     try {
@@ -32,22 +31,6 @@ const Searchbar = () => {
     }
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      const query = typeaheadRef.current.getInput().value;
-
-      if (selectedProduct) {
-        navigate(
-          `/productdetail/${selectedProduct.slug}/${selectedProduct.unique_id}`
-        );
-      } else if (query) {
-        navigate(`/search-results?searchText=${query}`);
-        typeaheadRef.current.toggleMenu(false);
-        event.target.blur();
-      }
-    }
-  };
-
   const handleButtonClick = () => {
     const query = typeaheadRef.current.inputNode.value;
     const searchUrl = `/search-results?searchText=${query}`;
@@ -58,7 +41,17 @@ const Searchbar = () => {
   };
 
   const handleProductClick = (option) => {
-    navigate(`/productDetail/${option.slug}/${option.unique_id}`);
+    navigate(
+      `/productDetail/${option.slug}/${option.unique_id}?sku=${option.sku}`
+    );
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key == "Enter") {
+      handleButtonClick();
+      typeaheadRef.current.toggleMenu(false);
+      event.target.blur();
+    }
   };
 
   useEffect(() => {
@@ -77,11 +70,17 @@ const Searchbar = () => {
         className="w-100"
         labelKey="name"
         minLength={1}
-        onInputChange={handleInputChange}
         onKeyDown={handleKeyDown}
+        onInputChange={handleInputChange}
         onSearch={handleSearch}
         options={options}
         placeholder="Search Product"
+        onChange={(selected) => {
+          navigate(
+            `/productDetail/${selected[0].slug}/${selected[0].unique_id}?sku=${selected[0].sku}`
+          );
+          typeaheadRef.current.clear(true);
+        }}
         renderMenuItemChildren={(option) => (
           <div onClick={() => handleProductClick(option)}>
             <Image
@@ -97,9 +96,6 @@ const Searchbar = () => {
             <span>{option.name}</span>
           </div>
         )}
-        onChange={(selected) => {
-          setselectedProduct(selected[0]);
-        }}
       />
       <Button
         className="searchIconBtn d-flex justify-content-center align-items-center"
