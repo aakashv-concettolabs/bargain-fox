@@ -74,7 +74,7 @@ const Cart = () => {
   return (
     <Container fluid>
       {cartItem?.user_cart == 0 ? (
-        <Row>
+        <Row className="my-5">
           <Col className="text-center">
             <div>
               <Image src={emptyCartImg} />
@@ -101,9 +101,14 @@ const Cart = () => {
                   </span>
                 )}
               </Col>
-              <Col className="d-flex gap-1 gap-md-2 justify-content-end align-items-center text-body-tertiary">
-                <img src={wishlistIcon} alt="wishlistIcon" />
-                <span>Go to Wishlist</span>
+              <Col className="text-end">
+                <Link
+                  className="d-inline-flex gap-1 gap-md-2 justify-content-end align-items-center text-body-tertiary text-decoration-none"
+                  to={"/wishlist"}
+                >
+                  <img src={wishlistIcon} alt="wishlistIcon" />
+                  <span>Go to Wishlist</span>
+                </Link>
               </Col>
             </Row>
             {!isLoading ? (

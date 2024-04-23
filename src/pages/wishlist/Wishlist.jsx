@@ -49,12 +49,12 @@ const Wishlist = () => {
         <Row>
           {wishlistData == undefined || wishlistData.length == 0 ? (
             <Row className="my-5">
-              <Col className="text-center">
-                <div>
-                  <Image src={noProduct} />
+              <Col className="d-flex justify-content-center align-items-center flex-column">
+                <div style={{ width: "150px" }}>
+                  <Image src={noProduct} className="h-100 w-100" />
                 </div>
                 <h2 className="mt-4">No products found</h2>
-                <p className="my-3">
+                <p className="my-3 text-center">
                   Look like you have not added any product in your wishlist yet.
                 </p>
                 <Link className="btn btn-primary rounded-5 px-3 py-2" to={"/"}>
