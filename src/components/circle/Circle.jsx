@@ -17,7 +17,7 @@ const Circle = ({ categoryData }) => {
     <div className="categoryCircle position-relative ">
       <div className="d-flex flex-column align-items-center justify-content-between">
         <Link
-          className="text-decoration-none d-flex flex-column justify-content-center align-items-center"
+          className="text-decoration-none d-flex flex-column justify-content-center align-items-center pb-1"
           to={`/${categoryData.slug}`}
         >
           <div className="categoryImageContainer d-flex flex-column justify-content-center align-items-center">

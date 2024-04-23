@@ -26,7 +26,8 @@ const CartCard = ({ handleDelete, eachCart, myCart }) => {
       if (addToCartResponse.status === 200) {
         productIncrease
           ? toast.success(addToCartResponse.data.message)
-          : toast.error("product remove successfully");
+          : toast.error("product removed successfully");
+        myCart();
       }
     } catch (error) {
       console.log("add to cart error", error);
@@ -34,11 +35,10 @@ const CartCard = ({ handleDelete, eachCart, myCart }) => {
   };
 
   const handlePlus = (Id, variationId) => {
-    if (productCounter >= 40) {
+    if (productCounter >= 15) {
       toast.error(`We have ${product_info.stock} items left only`);
     } else {
       const productIncrease = true;
-      myCart();
       setProductCounter(productCounter + 1);
       addToCartCall(Id, variationId, productIncrease);
     }
@@ -46,7 +46,6 @@ const CartCard = ({ handleDelete, eachCart, myCart }) => {
 
   const handleMinus = (Id, variationId) => {
     if (productCounter > 1) {
-      myCart();
       setProductCounter(productCounter - 1);
       addToCartCall(Id, variationId);
     }

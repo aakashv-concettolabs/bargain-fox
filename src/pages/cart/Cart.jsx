@@ -53,9 +53,10 @@ const Cart = () => {
           }
         );
         if (RemoveFromCartResponse.status === 200) {
-          myCart();
           dispatch(updateCartCount(cartCount - 1));
           toast.success(RemoveFromCartResponse.data.message);
+          setIsLoading(false);
+          myCart();
         }
       } catch (error) {
         setIsLoading(false);
@@ -107,7 +108,6 @@ const Cart = () => {
             </Row>
             {!isLoading ? (
               <>
-                {" "}
                 {cartItem?.user_cart.map((cartProductDetail) => (
                   <div
                     key={cartProductDetail.id}
